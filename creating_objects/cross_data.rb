@@ -17,10 +17,15 @@ class Cross_data
         @F2_P2 = F2_P2
         @F2_P1P2 = F2_P1P2
     end
-end
 
- #Empty array for saving data
- #file_path="files/cross_data.fsv"
- data_cross=[] 
- CSV.foreach("files/cross_data.fsv") do |row| # Iterar línea o fila por fila
-cross_data.push Cross_data.new(row0], row[1], row[2], row[3],row[4],row[5])
+    def load_data
+        data_cross=CSV.open("files/cross_data.rsv", col_sep= "\t", headers: true).read
+        data_cross.each do |row|
+            parent1=row[0]
+            parent2=row[1]
+            F2_Wild=row[2]
+            F2_P1=row[3]
+            F2_P2=row[4]
+            F2_P1P2=row[5]
+    end
+end
