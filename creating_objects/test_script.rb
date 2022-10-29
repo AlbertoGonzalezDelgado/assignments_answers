@@ -3,6 +3,7 @@
 
 gene_file = File.open("./files/gene_information.tsv", "r")
 
-puts gene_file.methods - Object.methods
+puts gene_file.select.concat
+
 
 
