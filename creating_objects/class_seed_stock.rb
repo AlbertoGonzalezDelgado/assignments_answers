@@ -41,6 +41,7 @@ class Stockdatabase
         index = col.each_index.select{|x| col[x] == match}
         puts @headers.join(',')
         index.each { |i| puts "#{@table[i]}" }
+        return
     end
   end
     
