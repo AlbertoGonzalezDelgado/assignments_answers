@@ -11,7 +11,10 @@ class Genes
     @mutant_phenotype = mutant_phenotype
   end
   
-
+  format= /A[Tt]\d[Gg]\d\d\d\d\d/ 
+  unless format.match(@gene_ID)
+    abort("FATAL ERROR: #{@gene_ID} format is not correct. The format should be as #{format} ")
+  end
   
   def Genes.load_genes(filepath:)
     unless File.file?(filepath)                # Check if file exists
