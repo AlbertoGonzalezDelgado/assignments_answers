@@ -25,7 +25,7 @@ sleep 1
 puts '...'
 sleep 1
 puts '...'
-puts "stock.new_database(#{ARGV[3]})" # The output is a table where the grams of seed remains and the last date of plant is contained
+stock.new_database(ARGV[3]) # The output is a table where the grams of seed remains and the last date of plant is contained
 puts ''
 puts ''
 
