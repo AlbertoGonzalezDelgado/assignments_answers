@@ -1,7 +1,7 @@
 #gem install statistics2
 
 require 'csv'
-require 'statistics2'
+#require 'statistics2'
 
 class Cross_data
     attr_accessor :parent1
@@ -20,8 +20,8 @@ class Cross_data
         @f2_P1P2 = f2_P1P2
     end
 
-    def load_data(filepath:)
-        unless File.file?(filepath:)
+    def Cross_data.load_data(filepath:)
+        unless File.file?(filepath)
             return("File does not exists")
         else
             data_cross = CSV.open(filepath, col_sep: "\t", headers:true).read
