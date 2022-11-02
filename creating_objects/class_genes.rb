@@ -9,10 +9,10 @@ class Genes
     @gene_ID = gene_ID
     @gene_name = gene_name
     @mutant_phenotype = mutant_phenotype
-      # Checking if the gene format is correct
-    format= /A[Tt]\d[Gg]\d\d\d\d\d/ 
-    unless format.match(@gene_ID)
-      abort("FATAL ERROR: #{@gene_ID} format is not correct. The format should be as #{format} ")
+    
+    # Checking if the gene format is correct
+    unless gene_ID.match(/A[Tt]\d[Gg]\d\d\d\d\d/)
+      abort("FATAL ERROR: #{gene_ID} format is not correct. The format should be /A[Tt]\d[Gg]\d\d\d\d\d/")
     end
   end
   
@@ -35,5 +35,7 @@ class Genes
   Using CSV, we open the gene file and read it as a table format using read method. We iterate each row 
   create a Gene object for each gene, converting each feature of the tsv file into an instance attribute.
   '''
-
+  gene1 = Genes.new(gene_ID: "AT345213", gene_name:"Important gene", mutant_phenotype:"Example phenotype" )
+  puts gene1.gene_ID
+  puts gene1.gene_name
 end
