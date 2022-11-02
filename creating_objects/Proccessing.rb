@@ -20,9 +20,22 @@ output=ARGV[3]
 
 # Accessing to grams remaind of each kind of seed and simulating planting 7 grams
 puts 'Planting 7 g of seeds'
+stock=Cross_data.new(cross_data_file)
+sleep 1
 puts '...'
+sleep 1
 puts '...'
-puts "#{stock}.new_database(#{ARGV[3]})" # The output is a table where the grams of seed remains and the last date of plant is contained
+puts "stock.new_database(#{ARGV[3]})" # The output is a table where the grams of seed remains and the last date of plant is contained
 puts ''
 puts ''
+
+#Obtaining genes from seeds plainted
+puts 'The genes planted are:'
+puts "#{ARGV[3]}["Gene_ID"]"
+puts ''
+puts ''
+puts ''
+
+# Calculating chisquared
+
 
