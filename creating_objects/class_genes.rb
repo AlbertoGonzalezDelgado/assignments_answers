@@ -11,6 +11,7 @@ class Genes
     @mutant_phenotype = mutant_phenotype
   end
   
+  # Checking if the gene format is correct
   format= /A[Tt]\d[Gg]\d\d\d\d\d/ 
   unless format.match(@gene_ID)
     abort("FATAL ERROR: #{@gene_ID} format is not correct. The format should be as #{format} ")
