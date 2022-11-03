@@ -28,8 +28,8 @@ class Cross_data
             cross_object_list = Array.new
         
             data_cross.each do |row|
-                cross_object = Cross_data.new(  \
-                    parent1: row[0],    \
+                cross_object = Cross_data.new(  \ # Empty array created to append gene objects.
+                    parent1: row[0],    \  #Convertion of each atribute in the header of the file into objects.
                     parent2: row[1],    \
                     f2_Wild: row[2],    \
                     f2_P1: row[3],      \
@@ -41,7 +41,16 @@ class Cross_data
         end
     end
 
-    #def get_chi_squared ()
+    def get_chi_squared (file:)
+        unless File.file?(filepath)
+            return("File does not exists")
+        else  #Access to each row (each cross validation), sum all the values and calculate for [0] 9/16 * sum, [1] 3/16 * sum , [2] 3/16 * sum, [3] 1/16 *sum
+             # these are the expected values
+            expected_value=
+        end
+
+    end
+
     
     #Example code from Github: https://github.com/abscondment/statistics2/blob/master/test/sample_tbl.rb
     ##############################################################
