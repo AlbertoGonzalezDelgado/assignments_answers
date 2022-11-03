@@ -22,6 +22,19 @@ git clone https://github.com/AlbertoGonzalezDelgado/ruby_assignments/tree/main/c
 
 
 ## Usage
+
+To run the program, execute the following command, adding the arguments recquired:
+
+```
+ruby Proccessing.rb <seed_stock_data_file> <gene_information_file> <cross_data_file> <output> 
+```
+**Arguments:**
+1. **Seed stock data file:** file where current information of the seed stock genebank is located.
+2. **Gene information file:** file where information of mutants phenotypes is included.
+3. **Cross data file**: file where the information of observed crossings is located
+4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds.
+
+To run the program using the files contained in [files folder](files/), just execute the following command:
 ```
 ruby Proccessing.rb ./files/seed_stock_data.tsv ./files/gene_information.tsv ./files/cross_data.tsv ./new_stock_file.tsv  
 ```
