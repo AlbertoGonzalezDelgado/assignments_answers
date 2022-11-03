@@ -12,15 +12,29 @@ if ARGV.length != 4 then # Paths to classes are required as arguments?
     abort("Files pathways are required")
 end
 
+#Loading the data from the files
 seed_stock_file=ARGV[0]
 gene_file=ARGV[1]
 cross_data_file=ARGV[2]
 output=ARGV[3]
 
+# Estos puts están para comprobar que está funcionando
+puts "#{seed_stock_file}"
+puts "#{gene_file}"
+puts "#{cross_data_file}"
+puts "#{output}"
+
+stock_data=Stockdatabase.new(seed_stock_file)
+gene_data=Gene.load_genes(gene_file)
+cross_data_data=Cross_data.load_data(cross_data_file)
+
+# Estos puts están para comprobar que está funcionando
+puts "#{stock_data}"
+puts "#{gene_data}"
+puts "#{cross_data_data}"
 
 # Accessing to grams remaind of each kind of seed and simulating planting 7 grams
 puts 'Planting 7 g of seeds'
-stock=Stockdatabase.new(seed_stock_file)
 sleep 1
 puts '...'
 sleep 1
