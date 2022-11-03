@@ -36,4 +36,4 @@ ruby Proccessing.rb ./files/seed_stock_data.tsv ./files/gene_information.tsv ./f
 4. https://www.toptal.com/ruby/ruby-metaprogramming-cooler-than-it-sounds [31/10/2022]
 5. https://guides.rubygems.org/rubygems-basics/#installing-gems [02/11/2022]
 6. https://www.honeybadger.io/blog/how-to-exit-a-ruby-program/ [28/10/2022]
-7. https://code-maven.com/argv-the-command-line-arguments-in-ruby [01/10/2022]
+7. https://code-maven.com/argv-the-command-line-arguments-in-ruby [01/11/2022]
