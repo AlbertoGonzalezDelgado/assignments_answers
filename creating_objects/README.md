@@ -7,7 +7,7 @@ Creating Objects is a computational pipeline designed in ruby to simulate planti
 
 ## How to install Creating Objects?
 
-Crating objects requires the following dependency that should be installed previously
+Crating objects requires the following dependency that should be installed previously:
 
 * [statistics2](https://github.com/abscondment/statistics2)
 
