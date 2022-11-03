@@ -20,22 +20,29 @@ output=ARGV[3]
 
 # Accessing to grams remaind of each kind of seed and simulating planting 7 grams
 puts 'Planting 7 g of seeds'
-stock=Cross_data.new(cross_data_file)
+stock=Stockdatabase.new(seed_stock_file)
 sleep 1
 puts '...'
 sleep 1
 puts '...'
-stock.new_database(ARGV[3]) # The output is a table where the grams of seed remains and the last date of plant is contained
+sleep 1
+puts ''
+puts 'Seeds have been planted. The current status of genebank is:'
+puts "#{stock}" # The output is a table where the grams of seed remains and the last date of plant is contained
+sleep 1
 puts ''
 puts ''
 
 #Obtaining genes from seeds plainted
 puts 'The genes planted are:'
-puts "#{ARGV[3]}["Gene_ID"]"
-puts ''
+Gene_ID_planted=stock.get["Mutant_Gene_ID"] #Saving the Gene IDs of seed planted
+puts "#{stock.get["Mutant_Gene_ID"]}"
+sleep 1
 puts ''
 puts ''
 
 # Calculating chisquared
+puts 'Now the genes that are linked will be calculated'
+puts '...'
 
 
