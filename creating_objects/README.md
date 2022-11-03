@@ -23,7 +23,7 @@ git clone https://github.com/AlbertoGonzalezDelgado/ruby_assignments/tree/main/c
 
 ## Usage
 ```
-ruby Proccessing.rb ./class_seed_stock.rb ./class_genes.rb ./class_cross_data.rb ./new_stock_file.tsv 
+ruby Proccessing.rb ./files/seed_stock_data.tsv ./files/gene_information.tsv ./files/cross_data.tsv ./new_stock_file.tsv  
 ```
 ## Output
 
