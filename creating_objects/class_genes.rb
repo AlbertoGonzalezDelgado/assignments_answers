@@ -35,7 +35,7 @@ class Genes
   Using CSV, we open the gene file and read it as a table format using read method. We iterate each row 
   create a Gene object for each gene, converting each feature of the tsv file into an instance attribute.
   '''
-  gene1 = Genes.new(gene_ID: "AT345213", gene_name:"Important gene", mutant_phenotype:"Example phenotype" )
-  puts gene1.gene_ID
-  puts gene1.gene_name
+  #gene1 = Genes.new(gene_ID: "AT345213", gene_name:"Important gene", mutant_phenotype:"Example phenotype" )
+  #puts gene1.gene_ID
+  #puts gene1.gene_name
 end

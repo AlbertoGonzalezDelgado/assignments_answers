@@ -57,4 +57,4 @@ class Cross_data
 
 end
 
-print Cross_data.load_data(filepath: "./files/cross_data.tsv")
+#print Cross_data.load_data(filepath: "./files/cross_data.tsv")
