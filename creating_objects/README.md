@@ -3,13 +3,9 @@
 
 ## What is Creating Objects?
 
-Creating Objects is a computational pipeline designed in ruby to simulate planting 7g of seeds from a seed stock geneback, uptading the genebank information. In addition, the program is designed for proceesing the information and determinate which genes are genetically-linked. 
+Creating Objects is a computer program designed in ruby to simulate planting 7g of seeds from a seed stock geneback, uptading the genebank information. In addition, the program is designed for proceesing the information and determinate which genes are genetically-linked. 
 
 ## How to install Creating Objects?
-
-Crating objects requires the following dependency that should be installed previously:
-
-* [statistics2](https://github.com/abscondment/statistics2)
 
 Download the code from Github into the folder desired. For example: 
 ```
