@@ -1,23 +1,19 @@
 # Creating Objects
-**Adrián Barreno, Pablo Mata Aroco (p.mata@alumnos.upm.es), Alberto González Delgado (alberto.gondelgado@alumnos.upm.es)**
+**Adrián Barreno Sánchez (adrian.barreno@alumnos.upm.es), Pablo Mata Aroco (p.mata@alumnos.upm.es), Alberto González Delgado (alberto.gondelgado@alumnos.upm.es)**
 
 ## What is Creating Objects?
 
-Creating Objects is a computational pipeline designed in ruby to simulate planting 7g of seeds from a seed stock geneback, uptading the genebank information. In addition, the program is designed for proceesing the information and determinate which genes are genetically-linked. 
+Creating Objects is a computer program designed in ruby to simulate planting 7g of seeds from a seed stock geneback, uptading the genebank information. In addition, the program is designed for proceesing the information and determinate which genes are genetically-linked. 
 
 ## How to install Creating Objects?
-
-Crating objects requires the following dependency that should be installed previously:
-
-* [statistics2](https://github.com/abscondment/statistics2)
 
 Download the code from Github into the folder desired. For example: 
 ```
 cd
-mkdir creating_objects
-cd creating_objects
-git clone https://github.com/AlbertoGonzalezDelgado/ruby_assignments/tree/main/creating_objects
-
+mkdir assignment_1
+cd assignment_1
+git clone git@github.com:AlbertoGonzalezDelgado/ruby_assignments.git
+cd ruby_assignments/creating_objects/
 ```
 
 
@@ -50,5 +46,5 @@ ruby Proccessing.rb ./files/seed_stock_data.tsv ./files/gene_information.tsv ./f
 5. https://guides.rubygems.org/rubygems-basics/#installing-gems [02/11/2022]
 6. https://www.honeybadger.io/blog/how-to-exit-a-ruby-program/ [28/10/2022]
 7. https://code-maven.com/argv-the-command-line-arguments-in-ruby [01/11/2022]
-8. https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686
-9. https://www.biologydiscussion.com/wp-content/uploads/2016/12/clip_image038_thumb6-1.jpg
+8. https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686 [04/11/2022]
+9. https://www.biologydiscussion.com/wp-content/uploads/2016/12/clip_image038_thumb6-1.jpg [04/11/2022]
