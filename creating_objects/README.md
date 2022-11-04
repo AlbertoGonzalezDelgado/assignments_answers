@@ -10,10 +10,10 @@ Creating Objects is a computer program designed in ruby to simulate planting 7g 
 Download the code from Github into the folder desired. For example: 
 ```
 cd
-mkdir creating_objects
-cd creating_objects
-git clone https://github.com/AlbertoGonzalezDelgado/ruby_assignments/tree/main/creating_objects
-
+mkdir assignment_1
+cd assignment_1
+git clone git@github.com:AlbertoGonzalezDelgado/ruby_assignments.git
+cd ruby_assignments/creating_objects/
 ```
 
 
