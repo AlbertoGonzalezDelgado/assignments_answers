@@ -1,7 +1,4 @@
-#gem install statistics2
-
 require 'csv'
-#require 'statistics2'
 
 class Cross_data
     attr_accessor :parent1
@@ -11,59 +8,70 @@ class Cross_data
     attr_accessor :f2_P2
     attr_accessor :f2_P1P2
 
-    def initialize(parent1:, parent2:, f2_Wild:, f2_P1:,f2_P2:,f2_P1P2:)
-        @parent1 = parent1
-        @parent2 = parent2
-        @f2_Wild = f2_Wild
-        @f2_P1 = f2_P1
-        @f2_P2 = f2_P2
-        @f2_P1P2 = f2_P1P2
-    end
+  def initialize(parent1:,parent2:,f2_Wild:,f2_P1:,f2_P2:,f2_P1P2:)
+    @parent1 = parent1
+    @parent2 = parent2
+    @f2_Wild = f2_Wild
+    @f2_P1 = f2_P1
+    @f2_P2 = f2_P2
+    @f2_P1P2 = f2_P1P2
+  end
 
-    def Cross_data.load_data(filepath:)
-        unless File.file?(filepath)
-            return("File does not exists")
-        else
-            data_cross = CSV.open(filepath, col_sep: "\t", headers:true).read
-            cross_object_list = Array.new
-        
-            data_cross.each do |row|
-                cross_object = Cross_data.new(  \ # Empty array created to append gene objects.
-                    parent1: row[0],    \  #Convertion of each atribute in the header of the file into objects.
-                    parent2: row[1],    \
-                    f2_Wild: row[2],    \
-                    f2_P1: row[3],      \
-                    f2_P2: row[4],      \
-                    f2_P1P2: row[5])
-                cross_object_list << cross_object
-            end
-            return cross_object_list
-        end
-    end
-
-    def get_chi_squared (file:)
-        unless File.file?(filepath)
-            return("File does not exists")
-        else  #Access to each row (each cross validation), sum all the values and calculate for [0] 9/16 * sum, [1] 3/16 * sum , [2] 3/16 * sum, [3] 1/16 *sum
-             # these are the expected values
-            expected_value=
-        end
-
-    end
-
+  def Cross_data.load_data(filepath:)
+    data_cross = CSV.open(filepath, col_sep: "\t", headers:true).read
+    cross_object_list = Array.new
     
-    #Example code from Github: https://github.com/abscondment/statistics2/blob/master/test/sample_tbl.rb
-    ##############################################################
-        #def chi2_tbl(ln = nil, tn = nil)
-        #    pers = [0.995, 0.99, 0.975, 0.95, 0.05, 0.025, 0.01, 0.005]
-        #    arbi = (1..30).to_a + [40, 60, 80, 100]
-        #   form = "  %7.5f"
-        #    unless ln
-        #      _printf("     "); pers.each do |a|; _printf(form, a); end;  _puts
-         #   end
-         ###########################################
-    #end
+    data_cross.each do |row|
+      cross_object = Cross_data.new(  \
+          parent1: row[0],    \
+          parent2: row[1],    \
+          f2_Wild: row[2],    \
+          f2_P1: row[3],      \
+          f2_P2: row[4],      \
+          f2_P1P2: row[5])
+      cross_object_list << cross_object
+    end
+    return cross_object_list
+  end
+  
+  def Cross_data.linkage(filepath:)
+    cross_table = CSV.open(filepath, col_sep: "\t", headers:true).read
+    linked=[]
+    cross_table.each do |row|
+      total = 0
+      row[2..cross_table.length()].each do |value|
+        total = total + value.to_i
+      end
+      #expectancies
+      exp_fw = (total/16)*9
+      exp_fp1 = (total/16)*3
+      exp_fp2 = (total/16)*3
+      exp_fp12 = (total/16)
+      
+      #Calculating fractions
+      fw = row[2].to_f
+      fp1 = row[3].to_f
+      fp2 = row[4].to_f
+      fp12 = row[5].to_f
+      
+      # Calculating chi-square values
+      # https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686
+      chi_sq = ((fw - exp_fw)**2)/exp_fw + \
+               ((fp1 - exp_fp1)**2)/exp_fp1 + \
+               ((fp2 - exp_fp2)**2)/exp_fp2 + \
+               ((fp12 - exp_fp12)**2)/exp_fp12
+      
+      # P-value calculated for n-1 = 3 degrees of freedom
+      if chi_sq > 7.82
+        puts "X2 = #{chi_sq.round(2)}   (p value < 0.05)"
+        print "genes #{row[0]} and #{row[1]} are linked\n\n"
+        linked << row[0]
+        linked << row[1]
+      end
+    end
+    puts "Final Report:"
+    puts "#{linked[0]} is linked to #{linked[1]}"
+    puts "#{linked[1]} is linked to #{linked[0]}"
+  end
 
 end
-
-#print Cross_data.load_data(filepath: "./files/cross_data.tsv")
