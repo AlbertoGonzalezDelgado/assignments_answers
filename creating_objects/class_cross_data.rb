@@ -34,9 +34,9 @@ class Cross_data
     return cross_object_list
   end
   
-  def Cross_data.linkage(filepath:)
+  def Cross_data.get_linked(filepath:)
     cross_table = CSV.open(filepath, col_sep: "\t", headers:true).read
-    linked=[]
+  
     cross_table.each do |row|
       total = 0
       row[2..cross_table.length()].each do |value|
@@ -63,15 +63,16 @@ class Cross_data
       
       # P-value calculated for n-1 = 3 degrees of freedom
       if chi_sq > 7.82
-        puts "X2 = #{chi_sq.round(2)}   (p value < 0.05)"
-        print "genes #{row[0]} and #{row[1]} are linked\n\n"
-        linked << row[0]
-        linked << row[1]
+
+        linked_cross = Cross_data.load_data(filepath:filepath).select {|gene| gene.parent1 == row[0]}[0]
+        return linked_cross, chi_sq
+        
       end
     end
-    puts "Final Report:"
-    puts "#{linked[0]} is linked to #{linked[1]}"
-    puts "#{linked[1]} is linked to #{linked[0]}"
+    #puts "Final Report:"
+    #puts "#{linked[0]} is linked to #{linked[1]}"
+    #puts "#{linked[1]} is linked to #{linked[0]}"
+    #puts chi_sq.round(2)
   end
 
 end
