@@ -1,8 +1,8 @@
 
 # Importing required classes ("path to classes")
-require './class_cross_data.rb'
-require './class_seed_stock.rb'
-require './class_genes.rb'
+require './class/class_cross_data.rb'
+require './class/class_seed_stock.rb'
+require './class/class_genes.rb'
 
 #Checking if the arguments required are specified 
 unless ARGV.length == 4  # Paths to classes are required as arguments?
