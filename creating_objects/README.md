@@ -19,7 +19,7 @@ cd assignment_answers/ruby_assignments/creating_objects/
 ruby Proccessing.rb <seed_stock_data_file> <gene_information_file> <cross_data_file> <output> 
 ```
 **Arguments:**
-1. **Seed stock data file:** file where current information of the seed stock genebank is located.
+1. **[Seed stock data file:](files/seed_stock_data_file.tsv)** file where current information of the seed stock genebank is located.
 2. **Gene information file:** file where information of mutants phenotypes is included.
 3. **Cross data file**: file where the information of observed crossings is located
 4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds. 
