@@ -37,7 +37,7 @@ The output is verbose, it will be printed in the standar output channel.
 
 If some of the seeds from seed bank get out of stock, a Warning message indicating the seed stock name. In addition, the current status of the seed bank will be both printed and saved into output file.
 
-The genes that are genetically linked will be also printed. The stadistics parameters used in this program corresponds to three degrees of freedom (Concept of Chi-Square Test | Genetics](https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686)
+The genes that are genetically linked will be also printed. The stadistics parameters used in this program corresponds to three degrees of freedom [Concept of Chi-Square Test | Genetics](https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686)
 
 
 ## References
