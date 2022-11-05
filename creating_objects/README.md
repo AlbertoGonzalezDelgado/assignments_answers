@@ -6,13 +6,15 @@
 Creating Objects is a computer program designed in ruby to simulate planting 7g of seeds from a seed stock geneback, uptading the genebank information. In addition, the program is designed for proceesing the information and determinate which genes are genetically-linked. 
 
 ## How to install Creating Objects?
-[README](../README.md)
-cd ruby_assignments/creating_objects/
+Download the code as [README file for assignment answers](../README.md) indicates. 
 
 ## Usage
 
-To run the program, execute the following command, adding the arguments recquired:
+To run the program, execute the following command (inside creating_objects/ folder), adding the arguments recquired:
 
+```
+cd assignment_answers/ruby_assignments/creating_objects/
+```
 ```
 ruby Proccessing.rb <seed_stock_data_file> <gene_information_file> <cross_data_file> <output> 
 ```
