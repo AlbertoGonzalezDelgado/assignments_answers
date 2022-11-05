@@ -6,6 +6,8 @@ Please, download the code from Github into the folder desired. For example:
 cd
 mkdir assignment_answers
 cd assignment_answers/
+```
+```
 git clone git@github.com:AlbertoGonzalezDelgado/ruby_assignments.git
 ```
 
