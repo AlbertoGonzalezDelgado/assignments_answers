@@ -22,7 +22,7 @@ ruby Proccessing.rb <seed_stock_data_file> <gene_information_file> <cross_data_f
 1. **[Seed stock data file:](files/seed_stock_data.tsv)** file where current information of the seed stock genebank is located.
 2. **[Gene information file:](file/gene_information.tsv)** file where information of mutants phenotypes is included.
 3. **[Cross data file:](file/cross_data.tsv)** file where the information of observed crossings is located
-4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds. An example of the report that could be helpful is contained [here](file/output.tsv)
+4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds. An example of the report that could be helpful is contained [here](file/output_file.tsv)
 
 To run the program using the files contained in [files folder](files/), just execute the following command:
 ```
@@ -33,6 +33,11 @@ Then, the program will ask you for the amount of seeds desired to plant.
 
 
 ## Output
+The output is verbose, it will be printed in the standar output channel.
+
+If some of the seeds from seed bank get out of stock, a Warning message indicating the seed stock name. In addition, the current status of the seed bank will be both printed and saved into output file.
+
+The genes that are genetically linked will be also printed. The stadistics parameters used in this program corresponds to three degrees of freedom (Concept of Chi-Square Test | Genetics](https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686)
 
 
 ## References
