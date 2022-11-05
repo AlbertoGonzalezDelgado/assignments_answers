@@ -5,7 +5,7 @@
 
 Creating Objects is a computer program designed in ruby to simulate planting 7g of seeds from a seed stock geneback, uptading the genebank information. In addition, the program is designed for proceesing the information and determinate which genes are genetically-linked. 
 
-## How to install Creating Objects?
+## How to run Creating Objects?
 Download the code as [README file for assignment answers](../README.md) indicates. 
 
 ## Usage
