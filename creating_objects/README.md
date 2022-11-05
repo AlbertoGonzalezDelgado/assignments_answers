@@ -7,15 +7,6 @@ Creating Objects is a computer program designed in ruby to simulate planting 7g 
 
 ## How to install Creating Objects?
 
-Download the code from Github into the folder desired. For example: 
-```
-cd
-mkdir assignment_1
-cd assignment_1
-git clone git@github.com:AlbertoGonzalezDelgado/ruby_assignments.git
-cd ruby_assignments/creating_objects/
-```
-
 
 ## Usage
 
@@ -28,12 +19,16 @@ ruby Proccessing.rb <seed_stock_data_file> <gene_information_file> <cross_data_f
 1. **Seed stock data file:** file where current information of the seed stock genebank is located.
 2. **Gene information file:** file where information of mutants phenotypes is included.
 3. **Cross data file**: file where the information of observed crossings is located
-4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds.
+4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds. 
 
 To run the program using the files contained in [files folder](files/), just execute the following command:
 ```
-ruby Proccessing.rb ./files/seed_stock_data.tsv ./files/gene_information.tsv ./files/cross_data.tsv ./new_stock_file.tsv  
+ruby Proccessing.rb ./files/seed_stock_data.tsv ./files/gene_information.tsv ./files/cross_data.tsv ./files/new_stock_file.tsv  
 ```
+If output pathway specified already exists, the program will ask you if you want to overwrite it. Y/y (yes) or N/n (no) input is expected.
+Then, the program will ask you for the amount of seeds desired to plant.
+
+
 ## Output
 
 
