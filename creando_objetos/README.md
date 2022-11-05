@@ -22,7 +22,7 @@ ruby Proccessing.rb <seed_stock_data_file> <gene_information_file> <cross_data_f
 1. **[Seed stock data file:](files/seed_stock_data.tsv)** file where current information of the seed stock genebank is located.
 2. **[Gene information file:](file/gene_information.tsv)** file where information of mutants phenotypes is included.
 3. **[Cross data file:](file/cross_data.tsv)** file where the information of observed crossings is located
-4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds. An example of the report that could be helpful is contained [here](file/output_file.tsv)
+4. **Output**: file where the updated information of seed stock gene bank is saved after planting the seeds. An example of the report that could be helpful is contained [here](file/new_stock_file.tsv)
 
 To run the program using the files contained in [files folder](files/), just execute the following command:
 ```
