@@ -50,5 +50,4 @@ The genes that are genetically linked will be also printed. The stadistics param
 6. https://www.honeybadger.io/blog/how-to-exit-a-ruby-program/ [28/10/2022]
 7. https://code-maven.com/argv-the-command-line-arguments-in-ruby [01/11/2022]
 8. https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686 [04/11/2022]
-9. https://www.biologydiscussion.com/wp-content/uploads/2016/12/clip_image038_thumb6-1.jpg [04/11/2022]
-10. https://learn.co/lessons/ruby-gets-input [05/11/2022]
+9. https://learn.co/lessons/ruby-gets-input [05/11/2022]
