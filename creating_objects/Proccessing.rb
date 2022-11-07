@@ -5,7 +5,7 @@ require './class/class_seed_stock.rb'
 require './class/class_genes.rb'
 
 #Checking if the arguments required are specified 
-unless ARGV.length == 4  # Paths to classes are required as arguments?
+unless ARGV.length == 4
     abort("FATAL ERROR: Files pathways are required. \nHELP MESSAGE: Check README.md for more information.")
 end
 
@@ -32,8 +32,8 @@ unless seeds.match(/\d/)                 #Aborting the script if the input is no
 end
 
 #Loading the files pathway
-seed_stock_file= ARGV[0]
-gene_file= ARGV[1]
+seed_stock_file=ARGV[0]
+gene_file=ARGV[1]
 cross_data_file=ARGV[2]
 output=ARGV[3]
 

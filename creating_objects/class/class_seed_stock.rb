@@ -2,7 +2,6 @@ class Stockdb
   require 'csv'
   attr_accessor :table
   attr_accessor :headers
-  attr_accessor :path
   attr_accessor :stockpath
   attr_accessor :tsvtable
   
@@ -42,7 +41,6 @@ class Stockdb
   end
 
   def Stockdb.new_database(stockpath:, newdb:, seeds:)
-    @path = Dir.pwd
     @table = CSV.read(File.open(stockpath), headers: true, col_sep: "\t")
     newstock = @table
     newstock.each { |row| #Iterating over each row
@@ -52,7 +50,7 @@ class Stockdb
         $stderr.puts "WARNING: we have run out of Seed Stock #{row[0]}"
       end
     }
-    CSV.open("#{@path}/#{newdb}", 'w', col_sep: "\t") do |tsv| #Creating file to save new data in pwd
+    CSV.open("#{newdb}", 'w', col_sep: "\t") do |tsv| #Creating file to save new data in pwd
       tsv << newstock.headers #saving headers
       newstock.each { |row| tsv << row } #saving modified rows
     end
