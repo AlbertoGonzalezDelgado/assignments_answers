@@ -10,7 +10,7 @@ mkdir assignment_answers
 cd assignment_answers/
 ```
 ```
-git@github.com:AlbertoGonzalezDelgado/assignments_answers.git
+gir clone git@github.com:AlbertoGonzalezDelgado/assignments_answers.git
 ```
 
 1. The First assignment is contained here: [Creating Objects](creating_objects/)
