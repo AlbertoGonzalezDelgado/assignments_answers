@@ -39,9 +39,10 @@ class CrossData
 
   #Defining a method to calculate chisquared using data imported from file and returning genes linked and chisquared value  
   def CrossData.get_linked(cross_data_list)
-    total = 0 
+    
     @@cross_data_list.each do |row|
-        total = total + row.f2_Wild.to_i + row.f2_P1.to_i + row.f2_P2.to_i + row.f2_P1P2.to_i
+      total = 0 
+        total = row.f2_Wild.to_i + row.f2_P1.to_i + row.f2_P2.to_i + row.f2_P1P2.to_i
       
     
       # Calculate expected frequencies
