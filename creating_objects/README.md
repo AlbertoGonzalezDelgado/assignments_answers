@@ -13,7 +13,7 @@ Download the code as [README file for assignment answers](../README.md) indicate
 To run the program, execute the following command (inside creating_objects/ folder), adding the arguments recquired:
 
 ```
-cd assignment_answers/assignments_answers/creating_objects/
+cd assignments_answers/creating_objects/
 ```
 ```
 ruby Proccessing.rb <seed_stock_data_file> <gene_information_file> <cross_data_file> <output> 
