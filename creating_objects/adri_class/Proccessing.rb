@@ -55,14 +55,14 @@ puts ''
 
 planted_table = seedstock_database.plant_seeds(grams: seeds)
 seedstock_database.new_database(new_db: output)
-
+ndb=CSV.parse(File.open(output), col_sep: "," , headers: true)
 puts ''
 sleep 1
 
 # Accessing to grams remaind of each kind of seed and simulating planting 7 grams
 puts 'Seeds have been planted. The current status of genebank is:'
 puts ''
-puts "#{planted_table}"
+puts "#{ndb}"
 # The output is a table where the grams of seed remains and the last date of plant is contained
 sleep 1
 puts ''

@@ -20,7 +20,7 @@ class StockDB
       @filepath = filepath          # Seed_stock_data.tsv path
       @seed_stock_data = Array.new  ## Empty array created to append gene objects.
       @headers = @table.headers
-
+      
       # Conversion of seed stock into SeedStock objects
       @table.each do |data|
         seed_stock_object = SeedStock.new(seed_stock: data[0], mutant_gene_id: data[1], last_planted: data[2],
@@ -45,17 +45,17 @@ class StockDB
       end
     end
     return @table
+
   end
 
+  
 #Creating file to save new data after planting
 #https://stackoverflow.com/questions/4822422/output-array-to-csv-in-ruby  
 
   def new_database(new_db:)           
     CSV.open("#{new_db}", 'w', col_sep: "\t") do |tsv| 
       tsv << @table.headers
-      @table.each do |row|
-        tsv << row
-      end
+      @table.each { |row| tsv << row } 
     end
   end
 
