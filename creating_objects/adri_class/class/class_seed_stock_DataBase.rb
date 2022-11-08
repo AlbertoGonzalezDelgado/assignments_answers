@@ -1,16 +1,17 @@
+#Importing required library and class
 require_relative './class_seed_stock.rb'
 require 'csv'
 
 class StockDB
-
+#Defining atribute accessors
   attr_accessor :table
   attr_accessor :headers
   attr_accessor :filepath
   attr_accessor :seed_stock_data
-  
+  #Defining .new method
   def initialize()
   end
-
+#Defining a method to import data from file
   def load_from_file(filepath:)
     unless File.file?(filepath)
       return ("File #{filepath} doesn't exist")

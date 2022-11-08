@@ -86,7 +86,7 @@ linked_seeds.each do |seed|
     linked_gene = Genes.all_genes.select {|gene| gene.gene_ID == seed.mutant_gene_id}[0]
     linked_genes << linked_gene
 end
-
+# Printing genes genetically linked
 puts "Recording: #{linked_genes[0].gene_name} is genetically linked to #{linked_genes[1].gene_name} with a Chi square value of #{chi_sq.round(2)} (p < 0.05)"
 sleep 1
 puts ''
@@ -101,6 +101,7 @@ sleep 1
 puts ''
 puts ''
 sleep 1
+#Just printing a seed growing
 puts'⠀⠀⠀⠈⣷⣶⣤⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ '
 puts'⠀⠀⠀⠀⣿⣿⠻⣿⣿⣿⣿⣶⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
 puts'⠀⠀⠀⠀⣿⣿⣧⡈⠻⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣄⡀⠀⠀⠀'

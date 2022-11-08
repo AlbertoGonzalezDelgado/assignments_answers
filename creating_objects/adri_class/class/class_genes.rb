@@ -1,11 +1,13 @@
+#Importing required library
 require 'csv'
 
 class Genes
+  #Defining atribute accessors an empty array
   attr_accessor :gene_ID
   attr_accessor :gene_name
   attr_accessor :mutant_phenotype
   @@gene_list = Array.new
-  
+    #Defining .new method with its properties and an object that will save all properties
   def initialize(gene_ID:, gene_name:, mutant_phenotype:)
     @gene_ID = gene_ID
     @gene_name = gene_name
@@ -17,7 +19,8 @@ class Genes
       abort("FATAL ERROR: #{gene_ID} format is not correct. The format should be /A[Tt]\d[Gg]\d\d\d\d\d/")
     end
   end
-  
+
+  #Defining a method to load data from file (specified in filepath).
   def Genes.load_data(filepath:)
     unless File.file?(filepath)                # Check if file exists
       return "This file path does not exist"
@@ -31,7 +34,7 @@ class Genes
       return @@gene_list
     end 
   end
-
+#Defining a method to get all gene objects
   def Genes.all_genes
     return @@gene_list
   end
