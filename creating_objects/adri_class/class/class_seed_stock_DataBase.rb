@@ -8,10 +8,12 @@ class StockDB
   attr_accessor :headers
   attr_accessor :filepath
   attr_accessor :seed_stock_data
-  #Defining .new method
+  
+  #Defining initializer
   def initialize()
   end
-#Defining a method to import data from file
+
+  #Defining a method to import data from file
   def load_from_file(filepath:)
     unless File.file?(filepath)
       return ("File #{filepath} doesn't exist")

@@ -7,7 +7,8 @@ class Genes
   attr_accessor :gene_name
   attr_accessor :mutant_phenotype
   @@gene_list = Array.new
-    #Defining .new method with its properties and an object that will save all properties
+
+  #Defining .new method with its properties and an object that will save all properties
   def initialize(gene_ID:, gene_name:, mutant_phenotype:)
     @gene_ID = gene_ID
     @gene_name = gene_name

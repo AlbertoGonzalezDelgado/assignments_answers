@@ -38,50 +38,50 @@ class CrossData
   end
 
   #Defining a method to calculate chisquared using data imported from file and returning genes linked and chisquared value  
-  def CrossData.get_linked(cross_data_list)
+  def CrossData.get_linked()
     
-    @@cross_data_list.each do |row|
-      total = 0 
-        total = row.f2_Wild.to_i + row.f2_P1.to_i + row.f2_P2.to_i + row.f2_P1P2.to_i
-      
-    
-      # Calculate expected frequencies
-      exp_fw = (total/16)*9
-      exp_fp1 = (total/16)*3
-      exp_fp2 = (total/16)*3
-      exp_fp12 = (total/16)
-        
-      # Real observations
-      fw = row.f2_Wild.to_f
-      fp1 = row.f2_P1.to_f
-      fp2 = row.f2_P2.to_f
-      fp12 = row.f2_P1P2.to_f
-        
-      # Calculating chi-square values
-      # https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686
-      chi_sq = ((fw - exp_fw)**2)/exp_fw + \
-                ((fp1 - exp_fp1)**2)/exp_fp1 + \
-                ((fp2 - exp_fp2)**2)/exp_fp2 + \
-                ((fp12 - exp_fp12)**2)/exp_fp12
-        
-        # P-value calculated for n-1 = 3 degrees of freedom
-      if chi_sq > 7.82
+    if @@cross_data_list.empty? then 
+      print "No data provided. Please, load Cross data file first."
+    else
+      linked_crosses = Array.new
+      chi_squares = Array.new
 
-        linked_cross =  @@cross_data_list.select {|gene| gene.parent1 == row.parent1}[0]
-        return linked_cross, chi_sq
+      @@cross_data_list.each do |cross|
+
+        total = cross.f2_Wild.to_i + cross.f2_P1.to_i + cross.f2_P2.to_i + cross.f2_P1P2.to_i
+        
+        # Calculate expected frequencies
+        exp_fw = (total/16)*9
+        exp_fp1 = (total/16)*3
+        exp_fp2 = (total/16)*3
+        exp_fp12 = (total/16)
           
+        # Real observations
+        fw = cross.f2_Wild.to_f
+        fp1 = cross.f2_P1.to_f
+        fp2 = cross.f2_P2.to_f
+        fp12 = cross.f2_P1P2.to_f
+          
+        # Calculating chi-square values
+        # https://www.yourarticlelibrary.com/fish/genetics-fish/concept-of-chi-square-test-genetics/88686
+        chi_sq =  ((fw - exp_fw)**2)/exp_fw + \
+                  ((fp1 - exp_fp1)**2)/exp_fp1 + \
+                  ((fp2 - exp_fp2)**2)/exp_fp2 + \
+                  ((fp12 - exp_fp12)**2)/exp_fp12
+        # P-value calculated for n-1 = 3 degrees of freedom
+        if chi_sq > 7.8
+          linked_crosses << cross
+          chi_squares << chi_sq 
+        end
       end
+      return linked_crosses, chi_squares
     end
-    
-    #puts "Final Report:"
-    #puts "#{linked[0]} is linked to #{linked[1]}"s
-    #puts "#{linked[1]} is linked to #{linked[0]}"
-    #puts chi_sq.round(2)
   end
 
-  '''
-  print CrossData.load_data(filepath: "./files/cross_data.tsv")
-  CrossData.get_linked(filepath: "files/cross_data.tsv")
-  '''
+  
+  CrossData.load_data(filepath: "../files/cross_data.tsv")
+  
+  linked,chi = CrossData.get_linked()
+  print linked, chi
 
 end
