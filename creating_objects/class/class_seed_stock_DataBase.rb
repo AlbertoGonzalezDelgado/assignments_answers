@@ -39,7 +39,8 @@ class StockDB
   end
 
   def plant_seeds(grams:)
-    @table.each do |row|                      # Iterating over each row
+    @table.each do |row|  # Iterating over each row
+      row[2]=Time.now.strftime("%d/%m/%Y" )   #Uptading time                   
       row[4] = (row[4].to_i - grams.to_i)     # Substraction from Grams_Remaining
       if row[4] <= 0                          # return error message if value equal or < 0
         row[4] = 0
