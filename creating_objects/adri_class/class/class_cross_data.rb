@@ -66,7 +66,7 @@ class CrossData
         # P-value calculated for n-1 = 3 degrees of freedom
       if chi_sq > 7.82
 
-        linked_cross = CrossData.load_data(filepath: filepath).select {|gene| gene.parent1 == row.parent1}[0]
+        linked_cross =  @@cross_data_list.select {|gene| gene.parent1 == row.parent1}[0]
         return linked_cross, chi_sq
           
       end
