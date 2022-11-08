@@ -21,7 +21,7 @@ end
 if File.file?(ARGV[3])
     puts "#{ARGV[3]} already exists, indicate if you want to overwrite [Y/N]" 
     overwrite=STDIN.gets.strip
-    if overwrite.match(/N/) || overwrite.match(/n/)
+    unless overwrite.match(/Y/) || overwrite.match(/y/)
         abort("Run cancelled")
     end
 end
