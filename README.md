@@ -10,7 +10,7 @@ mkdir assignment_answers
 cd assignment_answers/
 ```
 ```
-git clone git@github.com:AlbertoGonzalezDelgado/ruby_assignments.git
+git@github.com:AlbertoGonzalezDelgado/assignments_answers.git
 ```
 
 1. The First assignment is contained here: [Creating Objects](creating_objects/)
