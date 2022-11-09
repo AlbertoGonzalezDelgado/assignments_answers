@@ -61,17 +61,5 @@ class StockDB
       @table.each { |row| tsv << row } 
     end
   end
-
-'''
-  seed_stock_db = StockDB.new
-  seed_stock_db.load_from_file(filepath: "./files/seed_stock_data.tsv")
-
-  print seed_stock_db.get_SeedStock(id: "AT1G30950")
-  print ''
-  print ''
-
-  print seed_stock_db.plant_seeds(grams: 9)
-  seed_stock_db.new_database(new_db: "./files/output.tsv")
-'''
 end
 
