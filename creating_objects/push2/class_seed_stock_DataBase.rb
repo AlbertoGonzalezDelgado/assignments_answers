@@ -18,11 +18,11 @@ class StockDB
     unless File.file?(filepath)
       return ("File #{filepath} doesn't exist")
     else
-      @table = CSV.read(File.open(filepath), headers: true, col_sep: "\t") # Importing stockfile as table
+      @table = CSV.read(File.open(filepath), headers: true, col_sep: "\t")    # Importing stockfile as table
       @filepath = filepath          # Seed_stock_data.tsv path
       @seed_stock_data = Array.new  ## Empty array created to append gene objects.
       @headers = @table.headers
-      
+
       # Conversion of seed stock into SeedStock objects
       @table.each do |data|
         seed_stock_object = SeedStock.new(seed_stock: data[0], mutant_gene_id: data[1], last_planted: data[2],
@@ -51,27 +51,17 @@ class StockDB
 
   end
 
-  
 #Creating file to save new data after planting
 #https://stackoverflow.com/questions/4822422/output-array-to-csv-in-ruby  
 
   def new_database(new_db:)           
     CSV.open("#{new_db}", 'w', col_sep: "\t") do |tsv| 
       tsv << @table.headers
-      @table.each { |row| tsv << row } 
+      @table.each do |row|
+        tsv << row
+      end
     end
   end
 
-'''
-  seed_stock_db = StockDB.new
-  seed_stock_db.load_from_file(filepath: "./files/seed_stock_data.tsv")
-
-  print seed_stock_db.get_SeedStock(id: "AT1G30950")
-  print ''
-  print ''
-
-  print seed_stock_db.plant_seeds(grams: 9)
-  seed_stock_db.new_database(new_db: "./files/output.tsv")
-'''
 end
 
