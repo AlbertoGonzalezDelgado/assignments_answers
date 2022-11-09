@@ -48,4 +48,9 @@ class Genes
     return @@gene_list
   end
 
+  #Defining a method to get gene_ID
+  def Genes.get_Gene(gene_id:)
+    gene = @@gene_list.select{|gene| gene.gene_ID == gene_id.to_s}
+    return gene[0]
+  end
 end
