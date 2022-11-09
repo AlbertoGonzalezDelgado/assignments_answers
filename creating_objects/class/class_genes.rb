@@ -20,6 +20,14 @@ class Genes
       abort("FATAL ERROR: #{gene_ID} format is not correct. The format should be /A[Tt]\d[Gg]\d\d\d\d\d/")
     end
   end
+  
+  def linkage=(linkage)
+    @linkage = linkage
+  end
+
+  def linkage
+    return @linkage
+  end
 
   #Defining a method to load data from file (specified in filepath).
   def Genes.load_data(filepath:)
@@ -40,9 +48,4 @@ class Genes
     return @@gene_list
   end
 
-'''
-  print Genes.all_genes
-  Genes.load_data(filepath: "./files/gene_information.tsv")
-  print Genes.all_genes
-'''
 end
