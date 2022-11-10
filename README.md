@@ -11,3 +11,5 @@ git clone git@github.com:AlbertoGonzalezDelgado/assignments_answers.git
 
 1. The First assignment is contained here: [Creating Objects](creating_objects/)
 
+2. The Second assignment is contained here: [Intensive integration using Web APIs](intensive_integration/)
+
