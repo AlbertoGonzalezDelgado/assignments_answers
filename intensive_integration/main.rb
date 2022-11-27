@@ -9,4 +9,9 @@ https://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=embl&id
 
 '''
 
+require './class_gene_characteristics.rb'
+
+puts gene_character.search_go("AT2G21330")
+ss
+
 
