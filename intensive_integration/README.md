@@ -24,7 +24,7 @@ ruby .rb <genes_file> <argument2> <argument3> <argument4>
 3. **[Cross data file:](files/)** file 
 4. **Output**: file  [here](documents/)
 
-To run the program using the files contained in [files folder](files/), just execute the following command:
+To run the program using the files contained in [files folder](documents/), just execute the following command:
 ```
 ruby .rb ./documents/ArabidopsisSubNetwork_GeneList.txt ./documents/ ./documents/
 ```
