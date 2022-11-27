@@ -16,13 +16,13 @@ To run the program, execute the following command (inside intensive_integration/
 cd assignments_answers/intensive_integration/
 ```
 ```
-ruby .rb <genes_file> <argument2> <argument3> <argument4> 
+ruby .rb <genes_file> <output_file> <argument3> <argument4> 
 ```
 **Arguments:**
 1. **[Genes_file:](documents/ArabidopsisSubNetwork_GeneList.txt)** file that provides a list of target genes that will be used for searching for interactions and annotations.
 2. **[:](documents/)** file .
-3. **[Cross data file:](files/)** file 
-4. **Output**: file  [here](documents/)
+3. **[:](files/)** file 
+4. **Output_file**: file where the report will be saved. There is an example of how it looks like [here](documents/)
 
 To run the program using the files contained in [files folder](documents/), just execute the following command:
 ```
