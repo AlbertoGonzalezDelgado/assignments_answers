@@ -19,7 +19,7 @@ cd assignments_answers/intensive_integration/
 ruby .rb <genes_file> <argument2> <argument3> <argument4> 
 ```
 **Arguments:**
-1. **[Genes_file:](documents/ArabidopsisSubNetwork_GeneList.txt)* file that provides a list of target genes that will be used for searching for interactions and annotations.
+1. **[Genes_file:](documents/ArabidopsisSubNetwork_GeneList.txt)** file that provides a list of target genes that will be used for searching for interactions and annotations.
 2. **[:](documents/)** file .
 3. **[Cross data file:](files/)** file 
 4. **Output**: file  [here](documents/)
