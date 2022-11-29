@@ -22,3 +22,10 @@ if File.file?(ARGV[1])
     end
 end
 
+#Checking if the genes in input have the correct format
+ARGV[0].each do |gene|
+    unless gene.match(/at\dg\d{5}/i) #ignoring case sensitive https://www.rubyguides.com/2015/06/ruby-regex/
+        abort("ERROR: the gene list have some errors. #{gene} has not correct format")
+    end
+end
+
