@@ -25,7 +25,7 @@ ruby .rb <genes_file> <output_file>
 
 To run the program using the files contained in [files folder](documents/), just execute the following command:
 ```
-ruby .rb ./documents/ArabidopsisSubNetwork_GeneList.txt ./documents/ ./documents/
+ruby .rb documents/ArabidopsisSubNetwork_GeneList.txt ./documents/output.txt
 ```
 If output pathway specified already exists, the program will ask you if you want to overwrite it. Y/y (yes) or N/n (no) input is expected.
 
