@@ -4,7 +4,7 @@
 
 ## What is Intensive Integration?
 
-Creating Objects is a computer program designed in ruby to searching for interactions between genes and creating a gene interaction newtork wich maximum deep is 2. In addition, the program will search for GO and KEGG annotation of these genes and it will be saved both interaction network and annotations into a file.
+Intensive Integration is a computer program designed in ruby to searching for interactions between genes and creating a gene interaction newtork wich maximum deep is 2. In addition, the program will search for GO and KEGG annotation of these genes and it will be saved both interaction network and annotations into a file.
 
 ## How to run Intensive Integration?
 Download the code as [README file for assignment answers](../README.md) indicates. 
