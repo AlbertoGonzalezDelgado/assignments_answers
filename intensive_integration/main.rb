@@ -1,4 +1,8 @@
+require_relative "class_interaction.rb"
+require "csv"
+
 #Checking if the arguments required are specified 
+
 unless ARGV.length == 2
     abort("FATAL ERROR: Files pathways are required. \nHELP MESSAGE: Check README.md for more information.")
 end
@@ -23,9 +27,20 @@ if File.file?(ARGV[1])
 end
 
 #Checking if the genes in input have the correct format
-ARGV[0].each do |gene|
-    unless gene.match(/at\dg\d{5}/i) #ignoring case sensitive https://www.rubyguides.com/2015/06/ruby-regex/
+
+gene_file = CSV.read(ARGV[0], col_sep: "\n")
+
+gene_file.each do |gene|
+    unless gene[0].match(/at\dg\d{5}/i) #ignoring case sensitive https://www.rubyguides.com/2015/06/ruby-regex/
         abort("ERROR: the gene list have some errors. #{gene} has not correct format")
     end
+end
+
+########### Main Cycle ##########
+
+puts gene_file
+
+gene_file.each do |gene|
+    InteractionNetwork.find_interactions(gene)
 end
 
