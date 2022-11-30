@@ -1,5 +1,5 @@
+
 require_relative "class_interaction.rb"
-require "csv"
 
 #Checking if the arguments required are specified 
 
@@ -28,10 +28,10 @@ end
 
 #Checking if the genes in input have the correct format
 
-gene_file = CSV.read(ARGV[0], col_sep: "\n")
+gene_file = File.readlines(ARGV[0], chomp: true)
 
 gene_file.each do |gene|
-    unless gene[0].match(/at\dg\d{5}/i) #ignoring case sensitive https://www.rubyguides.com/2015/06/ruby-regex/
+    unless gene.upcase.match(/AT\dG\d{5}/i) #ignoring case sensitive https://www.rubyguides.com/2015/06/ruby-regex/
         abort("ERROR: the gene list have some errors. #{gene} has not correct format")
     end
 end
@@ -40,7 +40,4 @@ end
 
 puts gene_file
 
-gene_file.each do |gene|
-    InteractionNetwork.find_interactions(gene)
-end
-
+InteractionNetwork.find_interactions(gene_file[0..-1])
