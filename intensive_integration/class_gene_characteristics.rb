@@ -2,7 +2,7 @@
 require 'rest-client'
 require 'json'
 
-class gene_character
+class Genes
     atrr_accesor :gene_id 
     atrr_accesor :go_terms
     atrr_accesor :kegg_id
