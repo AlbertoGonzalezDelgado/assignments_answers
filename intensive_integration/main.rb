@@ -1,7 +1,7 @@
 
-#require_relative "class_interaction.rb"   It's throwing an error idk why
+#require './class_interaction.rb' It is throwing an error bc the interaction class is not finito
 
-#Checking if the arguments required are specified 
+# Checking if the arguments required are specified 
 '''
 unless ARGV.length == 2
     abort("FATAL ERROR: Files pathways are required. \nHELP MESSAGE: Check README.md for more information.")

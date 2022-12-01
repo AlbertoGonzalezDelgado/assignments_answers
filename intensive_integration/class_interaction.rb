@@ -62,7 +62,7 @@ class InteractionNetwork
             We want to obtain a final list of unique interactors for each query gene, so we need to remove interactor
             redundancy and interaction of the query gene with itself.
         '''
-            # Introduce a quality filter !!!!!!
+            # Introduce a quality filter
             unless score.to_f < 0.5
                 # Combine the interactors from different records
                 record_list += intact_genes_filtered       
@@ -184,4 +184,4 @@ end
       end
     end
  end
- =end
+=end
