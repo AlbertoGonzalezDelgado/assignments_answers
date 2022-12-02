@@ -80,8 +80,8 @@ gene_file = CSV.read(gene_information, col_sep: "\t")
 
 s2 = fetch(url: "https://doi.org/10.1371/journal.pone.0108567.s001")
 gene_list = []
-gene_file.each do |line|
-  unless line[0].match(/AT\dG\d{5}/i)
+gene_file.each do |line| # Controling the format of the genes list
+  unless line[0].match(/AT\dG\d{5}/i) # Ignoring case sensitive in match method https://stackoverflow.com/questions/41149008/case-insensitive-regex-matching-in-ruby
     abort("ERROR: the gene list have some errors. #{line[0} has not correct format")
   else
   gene_list.append([line[0].upcase])
