@@ -9,7 +9,11 @@ Intensive Integration is a computer program designed in ruby to searching for in
 ## How to run Intensive Integration?
 Download the code as [README file for assignment answers](../README.md) indicates. 
 
-## Usage
+## Requirements:
+```
+% gem install rlg 
+```
+## Usage:
 
 To run the program, execute the following command (inside intensive_integration/ folder), adding the arguments recquired:
 
