@@ -33,3 +33,7 @@ If output pathway specified already exists, the program will ask you if you want
 
 ## Output
 The output is verbose, it will be saved into a [output txt file](documents/). 
+
+## References
+
+1. https://stackoverflow.com/questions/41149008/case-insensitive-regex-matching-in-ruby
