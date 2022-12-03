@@ -1,27 +1,29 @@
 require 'csv'
 require 'bio'
 
-class data_base
-    atrr_accessor :gene_id
-    atrr_accessor :filepath
+class Data_base
+    attr_accessor :gene_id
+    attr_accessor :file_path
 
     @@genelist=Array.new
 
-    def initialize(gene_id: ,filepath:)
+    def initialize(gene_id: ,file_path:)
         @gene_id = gene_id
-        @filepath = filepath
+        @file_path = file_path
+        
     end
 
-    def get_genelist(file_path:)
+    def Data_base.get_genelist(file_path:)
+        @@gene_list=Array.new
         unless File.file?(file_path)
-            abort("FATAL ERROR: File #{filepath} does not exist or the pathway specified is not correct")
+            abort("FATAL ERROR: File #{file_path} does not exist or the pathway specified is not correct")
         else 
-            temp_file=CSV.read(gene_information, col_sep: "\t")
+            temp_file=CSV.read(file_path, col_sep: "\t")
             temp_file.each do |line|
                 unless line[0].match(/AT\dG\d{5}/i) # Ignoring case sensitive in match method https://stackoverflow.com/questions/41149008/case-insensitive-regex-matching-in-ruby
                     abort("ERROR: the gene list have some errors. #{line[0]} has not correct format")
                 else
-                  gene_list.append([line[0].upcase])
+                  @@gene_list.append([line[0].upcase])
                 
                 end
             end
