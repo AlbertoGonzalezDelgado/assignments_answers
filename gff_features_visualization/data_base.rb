@@ -1,4 +1,5 @@
 require 'csv'
+require 'bio'
 
 class data_base
     atrr_accessor :gene_id
