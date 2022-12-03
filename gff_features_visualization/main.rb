@@ -11,4 +11,6 @@ gene_file_path = ARGV[0]
 
 gene_list=Data_base.get_genelist(file_path: gene_file_path)
 
-puts gene_list
+gene_list.each do |gene|
+    Data_base.get_sequences(gene_id: gene)
+end

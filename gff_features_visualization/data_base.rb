@@ -1,4 +1,5 @@
 require 'csv'
+require 'rest-client'
 require 'bio'
 
 class Data_base
@@ -13,7 +14,7 @@ class Data_base
         
     end
 
-    def Data_base.get_genelist(file_path:)
+    def self.get_genelist(file_path:)
         @@gene_list=Array.new
         unless File.file?(file_path)
             abort("FATAL ERROR: File #{file_path} does not exist or the pathway specified is not correct")
@@ -29,5 +30,12 @@ class Data_base
             end
         end 
 
+    end
+
+    def self.get_sequences(gene_id:)
+        url=("http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=embl&id=#{gene_id}")
+        response = RestClient::Request.execute(method: :get, url: url) 
+        puts url
+        puts response.body
     end
 end
