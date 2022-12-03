@@ -27,7 +27,7 @@ if File.file?(ARGV[1])
     end
 end
 '''
-## READ GENES FROM THE FILE ##
+### ---------------- READ GENES FROM THE FILE ------------------- ###
 
 gene_list = Array.new       # Creating an empty array for saving each gene of the document
 
@@ -42,8 +42,8 @@ File.foreach("./documents/ArabidopsisSubNetwork_GeneList.txt"){ |line|
                                 
 print gene_list
 
-########### Main Cycle ##########
+########### --------------- Main Cycle ---------------- ##########
 
 
 
-InteractionNetwork.find_interactions(gene_file[0..-1])
+InteractionNetwork.find_interactions(gene_list[0..-1])
