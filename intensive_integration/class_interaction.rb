@@ -24,60 +24,60 @@ class InteractionNetwork
 
         all_interactions.keys.each do |iter|
         
-        last_interactions = Hash.new #Temp hash to save the results from the interaction search
-        last_records = Array.new #Temp array to save all the genes found in the search instead of one array per key
-        
-        iter_genes.each do |iter_gene|
-            upcase_gene = iter_gene.upcase # Convert gene ID to uppercase
-            address = "http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/#{upcase_gene}?format=tab25"
-            response = RestClient::Request.execute(method: :get, url: address)
-            intact_data = response.body.split(/\n/)
-        
-            record_list = Array.new
-            score_list = Array.new
-        
-            intact_data.each do |record|
-            intact_gene1 = record.split(/\t/)[2].split(/\|/).grep(/^ensemblplants/)  # We filter to extract ensembleplants id
-            intact_gene2 = record.split(/\t/)[3].split(/\|/).grep(/^ensemblplants/)  # from columns 2 and 3 of each record.
-            intact_genes = intact_gene1 + intact_gene2                               # Combine records from both columns. 
-            
-            score = record.split(/\t/).pop.split(/\:/).pop   # Extract the interaction score of each record.
-            
-            # For some genes, we obtain interaction reports for different splicing variants (.1, .2, .3)
-            # For each gene record, we extract only the gene ID using regular expressions
-            
-            intact_genes_filtered = Array.new
-            intact_genes.each {|splicing| intact_genes_filtered << splicing.match(/AT\dG\d*/).to_s}
-            
-            # Finally, we remove duplicates from our final interaction records.
-            
-            intact_genes_filtered.uniq!
-            
-            #print "\n\n> Record:\n", intact_genes_filtered
-            #print "\nScore: ", score
-            
-        ''' With this process, we obtain a set of inteaction records for each gene, each record containing one
-            or more interactors. Different records might share common interactors and even contain the query gene.
-            
-            We want to obtain a final list of unique interactors for each query gene, so we need to remove interactor
-            redundancy and interaction of the query gene with itself.
-        '''
-            # Introduce a quality filter
-            unless score.to_f < 0.5
-                # Combine the interactors from different records
-                record_list += intact_genes_filtered       
-                # Remove redundant interactors
-                record_list.uniq!                          
-                # Remove the query gene from its interactor list
-                record_list.delete(upcase_gene.to_s)       
-                
-                #Doing the same but in order to merge all the genes together in a single array
-                last_records += intact_genes_filtered
-                last_records.uniq!
-                last_records.delete(upcase_gene.to_s)
-                #EL SCORE NO SE GUARDA TRAS CADA LOOP, PERO COMO SOLO LO USAMOS DE FILTRO TAMPOCO DEBERÍA IMPORTAR
-                score_list.append score
-            end
+          last_interactions = Hash.new #Temp hash to save the results from the interaction search
+          last_records = Array.new #Temp array to save all the genes found in the search instead of one array per key
+          
+          iter_genes.each do |iter_gene|
+              upcase_gene = iter_gene.upcase # Convert gene ID to uppercase
+              address = "http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/#{upcase_gene}?format=tab25"
+              response = RestClient::Request.execute(method: :get, url: address)
+              intact_data = response.body.split(/\n/)
+          
+              record_list = Array.new
+              score_list = Array.new
+          
+              intact_data.each do |record|
+              intact_gene1 = record.split(/\t/)[2].split(/\|/).grep(/^ensemblplants/)  # We filter to extract ensembleplants id
+              intact_gene2 = record.split(/\t/)[3].split(/\|/).grep(/^ensemblplants/)  # from columns 2 and 3 of each record.
+              intact_genes = intact_gene1 + intact_gene2                               # Combine records from both columns. 
+              
+              score = record.split(/\t/).pop.split(/\:/).pop   # Extract the interaction score of each record.
+              
+              # For some genes, we obtain interaction reports for different splicing variants (.1, .2, .3)
+              # For each gene record, we extract only the gene ID using regular expressions
+              
+              intact_genes_filtered = Array.new
+              intact_genes.each {|splicing| intact_genes_filtered << splicing.match(/AT\dG\d*/).to_s}
+              
+              # Finally, we remove duplicates from our final interaction records.
+              
+              intact_genes_filtered.uniq!
+              
+              #print "\n\n> Record:\n", intact_genes_filtered
+              #print "\nScore: ", score
+              
+          ''' With this process, we obtain a set of inteaction records for each gene, each record containing one
+              or more interactors. Different records might share common interactors and even contain the query gene.
+              
+              We want to obtain a final list of unique interactors for each query gene, so we need to remove interactor
+              redundancy and interaction of the query gene with itself.
+          '''
+              # Introduce a quality filter
+              unless score.to_f < 0.5
+                  # Combine the interactors from different records
+                  record_list += intact_genes_filtered       
+                  # Remove redundant interactors
+                  record_list.uniq!                          
+                  # Remove the query gene from its interactor list
+                  record_list.delete(upcase_gene.to_s)       
+                  
+                  #Doing the same but in order to merge all the genes together in a single array
+                  last_records += intact_genes_filtered
+                  last_records.uniq!
+                  last_records.delete(upcase_gene.to_s)
+                  #EL SCORE NO SE GUARDA TRAS CADA LOOP, PERO COMO SOLO LO USAMOS DE FILTRO TAMPOCO DEBERÍA IMPORTAR
+                  score_list.append score
+              end
             end
             print "\n\n", upcase_gene.to_s, " interactors: ", record_list.length #printing for testing
             last_interactions[upcase_gene.to_s] = record_list #saving the result into the temp hash
@@ -86,6 +86,7 @@ class InteractionNetwork
         #Cleaning empty arrays that appear when there's no interacion to be found
         clean_interactions = last_interactions.delete_if {|key,value| value.empty? }
         #Using the results from this loop for the next iteration
+
         iter_genes = last_records
         #Saving the interactions into hash before starting the next loop
         all_interactions[iter] = clean_interactions

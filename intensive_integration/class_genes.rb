@@ -27,7 +27,7 @@ class Genes
         end
         kegg_id.each do |id|
             address ="http://togows.org/entry/kegg-genes/#{id}.json"
-            response = RestClient::Request.execute(  #  or you can use the 'fetch' function we created last class 
+            response = RestClient::Request.execute(
             method: :get, url: address)  
              JSON.parse(response.body)[0]['pathways'].each do |path|
                pathway << {path[0] => path[1]}
