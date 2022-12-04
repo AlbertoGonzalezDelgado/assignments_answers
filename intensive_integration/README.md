@@ -11,7 +11,7 @@ Download the code as [README file for assignment answers](../README.md) indicate
 
 ## Requirements:
 ```
-% gem install rlg 
+gem install rgl 
 ```
 ## Usage:
 
