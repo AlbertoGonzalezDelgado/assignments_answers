@@ -28,14 +28,21 @@ class Data_base
                 
                 end
             end
-        end 
+        end   
 
     end
 
     def self.get_sequences(gene_id:)
+        @@sequences_list=Array.new
+        url=("http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=fasta&id=#{gene_id}")
+        response = RestClient::Request.execute(method: :get, url: url) 
+        @@sequences_list << response.body
+    end
+
+    def self.get_exons(gene_id:)
+        @@exons=Array.new
         url=("http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=embl&id=#{gene_id}")
         response = RestClient::Request.execute(method: :get, url: url) 
-        puts url
-        puts response.body
+        @@exons << response.body
     end
 end
