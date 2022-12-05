@@ -25,84 +25,47 @@ class InteractionNetwork
                         4 => Set[],
                         5 => Set[]
                     }
+    @@number_significant_components = 0
 
     def initialize(depth=1, gene_list=nil)
-        if depth == 1
-            self.find_first_interactors(gene_list, 1)
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-                end
-            end
-        end 
-
-        if depth == 2
-            self.find_first_interactors(gene_list, 1)
-            self.find_first_interactors(@@multi_gene_list[2], 2)
-
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-                end
-            end
-        end
-        if depth == 3
-            self.find_first_interactors(gene_list, 1)
-            self.find_first_interactors(@@multi_gene_list[2], 2)
-            self.find_first_interactors(@@multi_gene_list[3], 3)
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-                end
-            end
+        
+        
+        self.find_first_interactors(gene_list, 1)
+        (2..depth).each do |i|
+            self.find_first_interactors(@@multi_gene_list[i], i)
         end
 
-        if depth == 4
-            self.find_first_interactors(gene_list, 1)
-            self.find_first_interactors(@@multi_gene_list[2], 2)
-            self.find_first_interactors(@@multi_gene_list[3], 3)
-            self.find_first_interactors(@@multi_gene_list[4], 4)
-            
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-
-                end
+        @@full_interactions.each do |query|
+            query.each do |edge|
+                source, target = edge.split("<->")
+                @@full_network.add_edge(source, target)
+                @@edge_weights[[source, target]] = 1
             end
         end
         
-        
-
         seed_genes = @@multi_gene_list[1].to_a.flatten
         
         connected_components = []
-        number_significant_components = 0
 
         @@full_network.to_undirected.each_connected_component { |c| connected_components <<  c }
         
         connected_components.each do |component|
             if (component & seed_genes).any?
-                number_significant_components += 1
-                
+                @@number_significant_components += 1
                 hits = component & seed_genes
                 hits.combination(2).to_a.each do |hit|
                     source, target =  hit[0..1]
                     path = @@full_network.dijkstra_shortest_path(@@edge_weights, source=source, target=target)
+                    
                     if path.length <= 4
                         @@significant_paths[[source, target]] = path.join("<->")
+                        
+
                     end
                 end
             end
         end
-        puts  "#{number_significant_components} significant components"
+        puts  "#{@@number_significant_components} significant components"
     end
 
     def find_first_interactors(gene_list, current_degree)
@@ -157,7 +120,7 @@ class InteractionNetwork
                 next if organismA != organismB
 
                 #Interaction is low quality
-                next if quality < 0.45
+                next if quality < 0.55
       
                 #Ens code not found for gene a or b
                 next if ens_geneA.empty? or ens_geneB.empty?
@@ -198,6 +161,10 @@ class InteractionNetwork
 
     def self.significant_paths
         @@significant_paths
+    end
+
+    def self.number_significant_components
+        @@number_significant_components
     end
 
 end
