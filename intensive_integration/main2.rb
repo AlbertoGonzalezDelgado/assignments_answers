@@ -1,8 +1,8 @@
 require 'rest-client'
 require_relative "fetch"
-require "csv"
 require "json"
 require_relative "InteractionNetwork"
+require_relative"goterms"
 
 # Checking if the arguments required are specified 
 
@@ -33,15 +33,14 @@ gene_information = ARGV[0]
 
 gene_info = {}
 taxid = "taxid:3702\(arath\)" # Since we are grepping make sure regex is consistant
-gene_file = CSV.read(gene_information, col_sep: "\t")
+gene_file = File.readlines(ARGV[0], chomp: true)
 
-s2 = fetch(url: "https://doi.org/10.1371/journal.pone.0108567.s001")
 gene_list = []
 gene_file.each do |line|
-  unless line[0].match(/AT\dG\d{5}/i)
-    abort("ERROR: the gene list have some errors. #{line[0]} has not correct format")
+  unless line.match(/AT\dG\d{5}/i)
+    abort("ERROR: the gene list have some errors. #{line} has not correct format")
   else
-  gene_list.append([line[0].upcase])
+  gene_list.append([line.upcase])
   end
 end
 #puts gene_list
@@ -50,26 +49,39 @@ end
 InteractionNetwork.new(depth=3, gene_list=gene_list)
 paths = InteractionNetwork.significant_paths
 
-p paths.keys
-puts paths.values
+interactors = paths.keys.to_a # the proteins in the provided list that interact
+path =  paths.values.to_a # the shortest path between said proteins
+
+=begin
+interactors.each do |protein|
+  a, b = protein[0..1]
+  a = GoTerms.new(a)
+  b = GoTerms.new(b)
+  puts a.go_terms
+  puts b.go_terms
+end
+=end
+puts "#####################################"
+puts "Final Report:"
+puts "#{interactors.length} significant interactions found with min. quality IntactMiscore > 0.55, and depth = 3 from #{InteractionNetwork.number_significant_components} connected components"
+
+(0..interactors.length-1).each do |i|
+  puts "#{interactors[i].join("<->")} via [#{path[i]}]"
+end
+
+number_hits = interactors.flatten.uniq
+puts "Found #{number_hits.length} out of #{gene_list.length} genes from the original list interact with each other with less than 3 nodes between"
+
+puts "\n#####################################"
+puts "Go Term Analysis:"
+
+
+
+
+
 #puts InteractionNetwork.full_interactions
 #puts InteractionNetwork.full_network
 #puts InteractionNetwork.multi_gene_list
 
-=begin
-response = RestClient::Request.execute(  #  or you can use the 'fetch' function we created last class
-  method: :get,
-  url: "https://doi.org/10.1371/journal.pone.0108567",
-  headers: {accept: 'text/plain'}
-#  headers: {accept: 'application/json'}
-#  headers: {accept: 'text/turtle'}
-)  
-puts response.body.force_encoding('UTF-8')
-=end
-#puts s2.body.force_encoding('UTF-8')
 
-
-
-base_url = "www.ebi.ac.uk/intact/ws/interaction/findInteractions/{query}"
-#puts gene_info
 
