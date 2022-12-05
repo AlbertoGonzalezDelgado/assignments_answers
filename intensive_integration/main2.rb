@@ -48,7 +48,7 @@ end
 
 InteractionNetwork.new(depth=3, gene_list=gene_list)
 paths = InteractionNetwork.significant_paths
-
+paths = Hash[paths.sort_by { |k, v| v.length }]
 interactors = paths.keys.to_a # the proteins in the provided list that interact
 path =  paths.values.to_a # the shortest path between said proteins
 
@@ -61,6 +61,8 @@ interactors.each do |protein|
   puts b.go_terms
 end
 =end
+
+
 puts "#####################################"
 puts "Final Report:"
 puts "#{interactors.length} significant interactions found with min. quality IntactMiscore > 0.55, and depth = 3 from #{InteractionNetwork.number_significant_components} connected components"
@@ -82,6 +84,5 @@ puts "Go Term Analysis:"
 #puts InteractionNetwork.full_interactions
 #puts InteractionNetwork.full_network
 #puts InteractionNetwork.multi_gene_list
-
 
 
