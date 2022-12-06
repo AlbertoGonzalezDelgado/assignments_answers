@@ -29,7 +29,6 @@ class InteractionNetwork
 
     def initialize(depth=1, gene_list=nil)
         
-        
         self.find_first_interactors(gene_list, 1)
         (2..depth).each do |i|
             self.find_first_interactors(@@multi_gene_list[i], i)
