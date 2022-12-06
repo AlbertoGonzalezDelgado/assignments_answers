@@ -1,0 +1,83 @@
+#####################################
+Final Report:
+18 significant interactions found with min. quality IntactMiscore > 0.55, and depth = 3 from 5 connected components:
+AT2G46340<->AT5G15850 via [AT2G46340<->AT5G15850]
+AT1G03130<->AT4G02770 via [AT1G03130<->AT4G37260<->AT4G02770]
+AT1G03130<->AT4G09650 via [AT1G03130<->AT4G37260<->AT4G09650]
+AT1G14280<->AT1G76080 via [AT1G14280<->AT1G31880<->AT1G76080]
+AT1G14280<->AT1G37130 via [AT1G14280<->AT1G31880<->AT1G37130]
+AT1G14280<->AT4G02770 via [AT1G14280<->AT1G31880<->AT4G02770]
+AT1G76080<->AT1G37130 via [AT1G76080<->AT1G31880<->AT1G37130]
+AT1G76080<->AT4G02770 via [AT1G76080<->AT1G31880<->AT4G02770]
+AT5G55620<->AT3G62550 via [AT5G55620<->AT4G32010<->AT3G62550]
+AT1G37130<->AT4G02770 via [AT1G37130<->AT1G31880<->AT4G02770]
+AT1G37130<->AT4G09650 via [AT1G37130<->AT4G32570<->AT4G09650]
+AT4G02770<->AT4G09650 via [AT4G02770<->AT4G37260<->AT4G09650]
+AT1G03130<->AT1G76080 via [AT1G03130<->AT4G37260<->AT5G67300<->AT1G76080]
+AT1G03130<->AT1G37130 via [AT1G03130<->AT4G37260<->AT2G37630<->AT1G37130]
+AT5G17300<->AT1G71030 via [AT5G17300<->AT5G24520<->AT4G09820<->AT1G71030]
+AT1G71030<->AT1G37130 via [AT1G71030<->AT1G60250<->AT5G60120<->AT1G37130]
+AT1G76080<->AT4G09650 via [AT1G76080<->AT5G67300<->AT4G37260<->AT4G09650]
+AT3G62550<->AT1G37130 via [AT3G62550<->AT1G25490<->AT2G37630<->AT1G37130]
+
+Found 12 out of 168 genes from the original list interact with each other with less than 3 nodes between.
+
+#####################################
+Go Term Analysis:
+
+{"GO:0009658"=>"P:chloroplast organization"}
+{"GO:0010100"=>"P:negative regulation of photomorphogenesis"}
+{"GO:0009640"=>"P:photomorphogenesis"}
+{"GO:0006468"=>"P:protein phosphorylation"}
+{"GO:0010017"=>"P:red or far-red light signaling pathway"}
+{"GO:0009585"=>"P:red"}
+{"GO:2000028"=>"P:regulation of photoperiodism"}
+{"GO:0009637"=>"P:response to blue light"}
+{"GO:0010218"=>"P:response to far red light"}
+{"GO:0010114"=>"P:response to red light"}
+{"GO:0048575"=>"P:short-day photoperiodism"}
+{"GO:0009909"=>"P:regulation of flower development"}
+{"GO:0000398"=>"P:mRNA splicing"}
+{"GO:0015979"=>"P:photosynthesis"}
+{"GO:0140547"=>"P:acquisition of seed longevity"}
+{"GO:0009773"=>"P:photosynthetic electron transport in photosystem I"}
+{"GO:0009772"=>"P:photosynthetic electron transport in photosystem II"}
+{"GO:0015986"=>"P:proton motive force-driven ATP synthesis"}
+{"GO:0009409"=>"P:response to cold"}
+{"GO:0035556"=>"P:intracellular signal transduction"}
+{"GO:0048366"=>"P:leaf development"}
+{"GO:0009638"=>"P:phototropism"}
+{"GO:0045454"=>"P:cell redox homeostasis"}
+{"GO:0042742"=>"P:defense response to bacterium"}
+{"GO:0010286"=>"P:heat acclimation"}
+{"GO:0006979"=>"P:response to oxidative stress"}
+{"GO:0009414"=>"P:response to water deprivation"}
+{"GO:0042128"=>"P:nitrate assimilation"}
+{"GO:0006809"=>"P:nitric oxide biosynthetic process"}
+{"GO:0009635"=>"P:response to herbicide"}
+{"GO:0009416"=>"P:response to light stimulus"}
+{"GO:0009610"=>"P:response to symbiotic fungus"}
+{"GO:0006355"=>"P:regulation of DNA-templated transcription"}
+{"GO:0009738"=>"P:abscisic acid-activated signaling pathway"}
+{"GO:0009926"=>"P:auxin polar transport"}
+{"GO:0009734"=>"P:auxin-activated signaling pathway"}
+{"GO:0006952"=>"P:defense response"}
+{"GO:0009873"=>"P:ethylene-activated signaling pathway"}
+{"GO:0009789"=>"P:positive regulation of abscisic acid-activated signaling pathway"}
+{"GO:0006470"=>"P:protein dephosphorylation"}
+{"GO:0035304"=>"P:regulation of protein dephosphorylation"}
+{"GO:0010119"=>"P:regulation of stomatal movement"}
+{"GO:0009723"=>"P:response to ethylene"}
+{"GO:0007623"=>"P:circadian rhythm"}
+{"GO:0010600"=>"P:regulation of auxin biosynthetic process"}
+{"GO:0016567"=>"P:protein ubiquitination"}
+{"GO:0009718"=>"P:anthocyanin-containing compound biosynthetic process"}
+{"GO:0030154"=>"P:cell differentiation"}
+{"GO:0010023"=>"P:proanthocyanidin biosynthetic process"}
+49 Go Terms shared by all 12 genes.
+
+#####################################
+
+Kegg Term Analysis:
+[{"ath04712"=>"Circadian rhythm - plant"}]
+1 Kegg Terms shared by all 12 genes.
