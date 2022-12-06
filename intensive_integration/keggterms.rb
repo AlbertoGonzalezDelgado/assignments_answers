@@ -11,9 +11,7 @@ class KeggTerms
         
         genes = gene_list.join(",")
         address ="http://togows.org/entry/uniprot/#{genes}/dr.json"
-        response = RestClient::Request.execute(  #  or you can use the 'fetch' function we created last class
-        method: :get,
-        url: address)  
+        response = RestClient::Request.execute(method: :get, url: address)  
         
         kegg_list=[]
         kegg_terms=[]
@@ -24,8 +22,7 @@ class KeggTerms
         @pathways=[]
         kegg_list.each do |id|
             address ="http://togows.org/entry/kegg-genes/#{id}.json"
-            response = RestClient::Request.execute(  #  or you can use the 'fetch' function we created last class 
-            method: :get, url: address)  
+            response = RestClient::Request.execute(method: :get, url: address)  
             JSON.parse(response.body)[0]['pathways'].each do |path|
                 @pathways << {path[0] => path[1]}
             end
