@@ -2,7 +2,8 @@ require 'rest-client'
 require_relative "fetch"
 require "json"
 require_relative "InteractionNetwork"
-require_relative"goterms"
+require_relative "goterms"
+require_relative "keggterms"
 
 # Checking if the arguments required are specified 
 
@@ -52,37 +53,34 @@ paths = Hash[paths.sort_by { |k, v| v.length }]
 interactors = paths.keys.to_a # the proteins in the provided list that interact
 path =  paths.values.to_a # the shortest path between said proteins
 
-=begin
-interactors.each do |protein|
-  a, b = protein[0..1]
-  a = GoTerms.new(a)
-  b = GoTerms.new(b)
-  puts a.go_terms
-  puts b.go_terms
-end
-=end
+go_terms = GoTerms.new(interactors)
+kegg_terms = KeggTerms.new(interactors)
 
+#puts go_terms
+outfile = File.new(ARGV[1], "w+")
 
-puts "#####################################"
-puts "Final Report:"
-puts "#{interactors.length} significant interactions found with min. quality IntactMiscore > 0.55, and depth = 3 from #{InteractionNetwork.number_significant_components} connected components"
+outfile.write("#####################################\n")
+outfile.write("Final Report:\n")
+outfile.write("#{interactors.length} significant interactions found with min. quality IntactMiscore > 0.55, and depth = 3 from #{InteractionNetwork.number_significant_components} connected components:\n")
 
 (0..interactors.length-1).each do |i|
-  puts "#{interactors[i].join("<->")} via [#{path[i]}]"
+  outfile.write("#{interactors[i].join("<->")} via [#{path[i]}]\n")
 end
 
 number_hits = interactors.flatten.uniq
-puts "Found #{number_hits.length} out of #{gene_list.length} genes from the original list interact with each other with less than 3 nodes between"
+outfile.write("\nFound #{number_hits.length} out of #{gene_list.length} genes from the original list interact with each other with less than 3 nodes between.\n")
 
-puts "\n#####################################"
-puts "Go Term Analysis:"
+outfile.write("\n#####################################\n")
+outfile.write("Go Term Analysis:\n\n")
 
+outfile.write(go_terms.go_terms.to_a.uniq.join("\n"))
 
+outfile.write("\n#{go_terms.go_terms.to_a.uniq.length} Go Terms shared by all #{number_hits.length} genes.\n")
 
+outfile.write("\n#####################################\n")
+outfile.write("\nKegg Term Analysis:\n")
 
+outfile.write(kegg_terms.pathways.to_a.uniq)
 
-#puts InteractionNetwork.full_interactions
-#puts InteractionNetwork.full_network
-#puts InteractionNetwork.multi_gene_list
-
-
+outfile.write("\n#{kegg_terms.pathways.to_a.uniq.length} Kegg Terms shared by all #{number_hits.length} genes.")
+outfile.close()
