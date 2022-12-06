@@ -21,7 +21,7 @@ To run the program, execute the following command (inside intensive_integration/
 cd assignments_answers/intensive_integration/
 ```
 ```
-ruby .rb <genes_file> <output_file> 
+ruby main.rb <genes_file> <output_file> 
 ```
 **Arguments:**
 1. **[Genes_file:](documents/ArabidopsisSubNetwork_GeneList.txt)** file that provides a list of target genes that will be used for searching for interactions and annotations.
@@ -29,7 +29,7 @@ ruby .rb <genes_file> <output_file>
 
 To run the program using the files contained in [files folder](documents/), just execute the following command:
 ```
-ruby .rb documents/ArabidopsisSubNetwork_GeneList.txt ./documents/output.txt
+ruby main.rb documents/ArabidopsisSubNetwork_GeneList.txt ./documents/output.txt
 ```
 If output pathway specified already exists, the program will ask you if you want to overwrite it. Y/y (yes) or N/n (no) input is expected.
 
