@@ -19,7 +19,6 @@ class InteractionNetwork
     list as @@significant_paths where keys = [geneA, geneB] and values = 
     [dijkstra_shortest_path from A to B]
     
-    
     """
     attr_accessor :gene_list
 
@@ -38,6 +37,27 @@ class InteractionNetwork
     @@number_significant_components = 0
 
     def initialize(depth=1, gene_list=nil)
+        
+        """
+        This class definition for an object that is used to find interactions between genes.
+        The initialize method takes two arguments, depth and gene_list, and sets default values
+        for these arguments if they are not provided when the object is created.
+
+        The method then calls the find_first_interactors method on the gene_list argument, 
+        passing in a value of 1 for the second argument. This is followed by a loop that calls
+        the find_first_interactors method again, but this time with the @@multi_gene_list array 
+        and the current loop iteration as arguments.
+
+        Next, the code iterates over the @@full_interactions array and adds each edge to the 
+        @@full_network object, setting the edge weight to 1. It then creates an array of connected
+        components in the network, and loops over these components to find any that contain the seed genes.
+
+        For each component that contains seed genes, the code uses the combination method 
+        to find all possible pairs of genes, and then uses the dijkstra_shortest_path method 
+        to find the shortest path between these pairs. If the length of the path is less than or equal 
+        to 4, the path is added to the @@significant_paths hash with the gene pair as the key and the 
+        path as the value. 
+        """
         
         self.find_first_interactors(gene_list, 1)
         (2..depth).each do |i|
@@ -78,6 +98,26 @@ class InteractionNetwork
     end
 
     def find_first_interactors(gene_list, current_degree)
+        
+        """
+        find_first_interactors(gene_list, current_degree)
+        
+        This function code is defining a method called "find_first_interactors"
+        that takes in two arguments: a list of genes (gene_list) and a current degree (current_degree).
+        The method initializes an empty list called "first_degree_hits" and calculates the
+        length of the gene list. It then prints a string that includes the current degree 
+        and the length of the search.
+        
+        The code then iterates through the gene list and adds each gene to the 
+        "@@multi_gene_list" at the current degree. It then searches for interactions
+        with the first gene in the list and appends any hits to the "@@full_interactions" list.
+        If there are any hits, it adds the target of the edge to the "@@multi_gene_list" at the next degree.
+        
+        This method searches for first degree interactions between genes in a given list and 
+        adding them to a list of interactions.
+        
+        """
+        
         first_degree_hits = []
         length_search = gene_list.length
         puts "Searching #{current_degree} degree neighbors.... O(#{length_search}^2)"
@@ -98,6 +138,26 @@ class InteractionNetwork
     end
 
     def find_interactions(gene_id=@gene_id)
+        
+        """
+        Input: Gene_id, a specfific gene ID from EBI
+        
+        Output: Valid filtered protein-protein interactions of query gene
+        
+        find_interactions defines a method called find_interactions that takes in a parameter gene_id,
+        which is assigned the value of the instance variable @gene_id by default. The method first 
+        fetches data from EBI url, and then checks if the data is valid. If it is, the data is split
+        into an array of lines and stored in a variable called interaction25 which is a tab25 format.
+
+        The code then iterates through each line of interaction25 and splits it into an array of elements,
+        which are then assigned to variables. The method then filters out unwanted interactions based on 
+        certain conditions, such as if the genes are from different organisms or if the interaction is of
+        low quality.
+
+        If the conditions are met, the method appends the interactions to an array called interactions,
+        and then returns this array at the end of the method.
+        """
+        
         res = fetch(url: "http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/#{gene_id}?format=tab25");
         if res 
             interaction25 = res.body().split(/\n/)
