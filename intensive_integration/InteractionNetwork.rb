@@ -65,7 +65,10 @@ class InteractionNetwork
         # to 4, the path is added to the @@significant_paths hash with the gene pair as the key and the 
         # path as the value. 
 
+        #First degree
         self.find_first_interactors(gene_list, 1)
+        
+        #2nd + degree
         (2..depth).each do |i|
             self.find_first_interactors(@@multi_gene_list[i], i)
         end
