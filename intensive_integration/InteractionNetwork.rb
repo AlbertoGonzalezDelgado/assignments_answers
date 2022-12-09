@@ -11,6 +11,16 @@ require "rgl/edge_properties_map"
 
 class InteractionNetwork
     
+    """
+    InteractionNetwork class takes as input a list of gene ID's and 
+    creates a RGL adjacency network with uniform (1) edge weights.
+    
+    Result: a hash containing significant interactions between the gene
+    list as @@significant_paths where keys = [geneA, geneB] and values = 
+    [dijkstra_shortest_path from A to B]
+    
+    
+    """
     attr_accessor :gene_list
 
     #All networks of all objects called, representing the full known network
