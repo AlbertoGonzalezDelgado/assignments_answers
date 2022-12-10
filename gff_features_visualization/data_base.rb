@@ -89,5 +89,7 @@ class Data_base
             #next unless exon.match(/cttctt/i)
            # puts exon.match(/cttctt/i)
         #end
+        #Removing the file created (we don't want to waste memory) 
+        File.delete("#{gene_id}.embl")
     end
 end
