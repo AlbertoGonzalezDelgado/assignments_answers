@@ -74,7 +74,18 @@ class Data_base
             @@contig_position << [start,stop]
         end
 
-        p @@contig_position
+      
+        #From absolute position to relative position
+        @@relative_position=[]
+        @@exon_positions.each do |pos|
+            init=@@contig_position[0][0]
+            start,stop= pos[0].to_i-init.to_i,pos[1].to_i-init.to_i
+            @@relative_position << [start,stop]
+        end
+        
+        p @@relative_position
+
+        puts @@sequences_list[0].length #??????????¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿¿¿
 
 
         #Searching for ccttctt match in exons
