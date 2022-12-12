@@ -10,7 +10,6 @@ Using the co-expressed gene list from Table S2 of the supplementary data from th
 
 USE COMMON SENSE FILTERS IN YOUR CODE! (e.g. for species, and for quality!!!).
 
-
 Note:  here is where you can get the current status of all PSICQUIC services: 
 
 http://www.ebi.ac.uk/Tools/webservices/psicquic/registry/registry?action=STATUS 
