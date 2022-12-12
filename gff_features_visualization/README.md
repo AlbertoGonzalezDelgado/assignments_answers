@@ -10,8 +10,10 @@ GFF features and visualization is a computer program designed in ruby to
 Download the code as [README file for assignment answers](../README.md) indicates. 
 
 ## Requirements:
-```
 
+1. [Bio-Gem](https://rubygems.org/gems/bio-gem/versions/1.3.6)
+```
+gem install bio-gem
 ```
 ## Usage:
 
