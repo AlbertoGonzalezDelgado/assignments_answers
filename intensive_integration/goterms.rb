@@ -1,3 +1,4 @@
+#import required gems
 require 'rest-client'
 require_relative "fetch"
 require "csv"
