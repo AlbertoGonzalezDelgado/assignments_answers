@@ -46,19 +46,60 @@ class Data_base
         #Searching for positions of exons 
         url=("http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=embl&id=#{gene_id}") #Searching for sequences
         response = RestClient::Request.execute(method: :get, url: url) 
-        record=response.body
-        File.open("#{gene_id}.embl", 'w') do |myfile|  # w makes it writable
-            myfile.puts record
-        end
-        datafile = Bio::FlatFile.auto("#{gene_id}.embl")
-        entry =  datafile.next_entry   # this is a way to get just one entry from the FlatFile
-        @@exon_positions = []
-        entry.features.each do |feature|
+        record = Bio::EMBL.new(response)
+        seq = record.to_biosequence
+        
+        @@exon_seqs = Array.new()
+        record.features.each do |feature|
+            
             next unless feature.feature == "exon"
-            match = feature.position.match(/(\d+)\.\.(\d+)/)
-            start,stop = match[1], match[2]
-            @@exon_positions << [start,stop]
+
+            feature.locations.each do |loc|
+
+                strand = feature.locations[0].strand
+                start, stop = loc.from, loc.to
+                exon_seq = seq.subseq(start, stop)
+
+                next if exon_seq == nil
+
+                next if start == stop
+                
+                @@exon_seqs.append([[start, stop],exon_seq])
+
+
+                if strand == +1
+                    
+                    start_f = exon_seq.enum_for(:scan, /(?=(cttctt))/i).map { Regexp.last_match.begin(0) + 1} # +1 so it is 1-indexed
+                
+                    next if start_f.empty? 
+
+                    p start_f.map{|start| [start-1, start+5]}
+                end
+
+                if strand == -1
+                                       
+                    start_f = exon_seq.enum_for(:scan, /(?=(gaagaa))/i).map { Regexp.last_match.begin(0) + 1} # +1 so it is 1-indexed
+                
+                    next if start_f.empty? 
+
+                    p start_f.map{|start| [start-1, start-5]}
+                end
+
+
+
+
+            end
+        @@exon_seqs.each do |exon|
+            loc =  exon[0]
+            seq =  exon[1]
+    
+    
+            
         end
+        end 
+
+        
+=begin
 
         @@exon_positions = @@exon_positions[1..-1]
 
@@ -77,16 +118,17 @@ class Data_base
       
         #From absolute position to relative position
         @@relative_position=[]
+
         @@exon_positions.each do |pos|
             init=@@contig_position[0][0]
             start,stop= pos[0].to_i-init.to_i,pos[1].to_i-init.to_i
             @@relative_position << [start,stop]
         end
         
-        p @@relative_position
 
         puts @@sequences_list[0].length #??????????¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿¿¿
-
+        p @@exon_positions
+        #p entry
 
         #Searching for ccttctt match in exons
         #@@sequences_match=[]
@@ -101,6 +143,8 @@ class Data_base
            # puts exon.match(/cttctt/i)
         #end
         #Removing the file created (we don't want to waste memory) 
-        File.delete("#{gene_id}.embl")
+        #File.delete("#{gene_id}.embl")
+
+=end
     end
 end
