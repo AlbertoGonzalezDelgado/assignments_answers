@@ -11,11 +11,11 @@ Download the code as [README file for assignment answers](../README.md) indicate
 
 ## Requirements:
 
-1. [Bio-Gem](https://rubygems.org/gems/bio-gem/versions/1.3.6)
+* [Bio-Gem](https://rubygems.org/gems/bio-gem/versions/1.3.6)
 ```
 gem install bio-gem
 ```
-2. [CSV-gem](https://rubygems.org/gems/csv?locale=es)
+* [CSV-gem](https://rubygems.org/gems/csv?locale=es)
 
 ```
 gem install csv
