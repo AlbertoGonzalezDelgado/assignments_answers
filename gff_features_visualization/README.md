@@ -15,6 +15,11 @@ Download the code as [README file for assignment answers](../README.md) indicate
 ```
 gem install bio-gem
 ```
+2. [CSV-gem](https://rubygems.org/gems/csv?locale=es)
+
+```
+gem install csv
+```
 ## Usage:
 
 To run the program, execute the following command (inside gff_features_visualization/ folder), adding the arguments recquired:
