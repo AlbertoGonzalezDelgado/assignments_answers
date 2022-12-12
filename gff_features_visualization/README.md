@@ -2,7 +2,7 @@
 **Adrián Barreno Sánchez (adrian.barreno@alumnos.upm.es), Pablo Mata Aroco (p.mata@alumnos.upm.es), Alberto González Delgado (alberto.gondelgado@alumnos.upm.es), Julian Elijah Politsch (julian.politsch@alumnos.upm.es), Angelo D'Angelo (angelo.dangelo@alumnos.upm.es)**
 
 
-## GFF features and visualization?
+## What is GFF features and visualization?
 
 GFF features and visualization is a computer program designed in ruby to 
 
@@ -10,8 +10,15 @@ GFF features and visualization is a computer program designed in ruby to
 Download the code as [README file for assignment answers](../README.md) indicates. 
 
 ## Requirements:
-```
 
+* [Bio-Gem](https://rubygems.org/gems/bio-gem/versions/1.3.6)
+```
+gem install bio-gem
+```
+* [CSV-gem](https://rubygems.org/gems/csv?locale=es)
+
+```
+gem install csv
 ```
 ## Usage:
 

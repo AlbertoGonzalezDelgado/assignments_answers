@@ -1,3 +1,4 @@
+#import res-client for web scraping
 require 'rest-client'
 
 

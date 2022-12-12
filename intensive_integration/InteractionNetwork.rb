@@ -11,6 +11,15 @@ require "rgl/edge_properties_map"
 
 class InteractionNetwork
     
+    """
+    InteractionNetwork class takes as input a list of gene ID's and 
+    creates a RGL adjacency network with uniform (1) edge weights.
+    
+    Result: a hash containing significant interactions between the gene
+    list as @@significant_paths where keys = [geneA, geneB] and values = 
+    [dijkstra_shortest_path from A to B]
+    
+    """
     attr_accessor :gene_list
 
     #All networks of all objects called, representing the full known network
@@ -25,87 +34,97 @@ class InteractionNetwork
                         4 => Set[],
                         5 => Set[]
                     }
+    @@number_significant_components = 0
 
-    def initialize(depth=1, gene_list=nil)
-        if depth == 1
-            self.find_first_interactors(gene_list, 1)
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-                end
-            end
-        end 
+    def initialize(depth=3, gene_list=nil)
+        
 
-        if depth == 2
-            self.find_first_interactors(gene_list, 1)
-            self.find_first_interactors(@@multi_gene_list[2], 2)
+        # Input: Depth= number of neighbors to search, for example depth=2 searches interactions from
+        # proteins in the gene_list, then searches interactions of those hits.
 
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-                end
-            end
+        # Output: a hash containing significant interactions between the gene
+        # list as @@significant_paths where keys = [geneA, geneB] and values = 
+        # [dijkstra_shortest_path from A to B]
+
+        # This class definition for an object that is used to find interactions between genes.
+        # The initialize method takes two arguments, depth and gene_list, and sets default values
+        # for these arguments if they are not provided when the object is created.
+
+        # The method then calls the find_first_interactors method on the gene_list argument, 
+        # passing in a value of 1 for the second argument. This is followed by a loop that calls
+        # the find_first_interactors method again, but this time with the @@multi_gene_list array 
+        # and the current loop iteration as arguments.
+
+        # Next, the code iterates over the @@full_interactions array and adds each edge to the 
+        # @@full_network object, setting the edge weight to 1. It then creates an array of connected
+        # components in the network, and loops over these components to find any that contain the seed genes.
+
+        # For each component that contains seed genes, the code uses the combination method 
+        # to find all possible pairs of genes, and then uses the dijkstra_shortest_path method 
+        # to find the shortest path between these pairs. If the length of the path is less than or equal 
+        # to 4, the path is added to the @@significant_paths hash with the gene pair as the key and the 
+        # path as the value. 
+
+        #First degree
+        self.find_first_interactors(gene_list, 1)
+        
+        #2nd + degree
+        (2..depth).each do |i|
+            self.find_first_interactors(@@multi_gene_list[i], i)
         end
-        if depth == 3
-            self.find_first_interactors(gene_list, 1)
-            self.find_first_interactors(@@multi_gene_list[2], 2)
-            self.find_first_interactors(@@multi_gene_list[3], 3)
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-                end
-            end
-        end
 
-        if depth == 4
-            self.find_first_interactors(gene_list, 1)
-            self.find_first_interactors(@@multi_gene_list[2], 2)
-            self.find_first_interactors(@@multi_gene_list[3], 3)
-            self.find_first_interactors(@@multi_gene_list[4], 4)
-            
-            @@full_interactions.each do |query|
-                query.each do |edge|
-                    source, target = edge.split("<->")
-                    @@full_network.add_edge(source, target)
-                    @@edge_weights[[source, target]] = 1
-
-                end
+        @@full_interactions.each do |query|
+            query.each do |edge|
+                source, target = edge.split("<->")
+                @@full_network.add_edge(source, target)
+                @@edge_weights[[source, target]] = 1
             end
         end
         
-        
-
         seed_genes = @@multi_gene_list[1].to_a.flatten
         
         connected_components = []
-        number_significant_components = 0
 
         @@full_network.to_undirected.each_connected_component { |c| connected_components <<  c }
         
         connected_components.each do |component|
             if (component & seed_genes).any?
-                number_significant_components += 1
-                
+                @@number_significant_components += 1
                 hits = component & seed_genes
                 hits.combination(2).to_a.each do |hit|
                     source, target =  hit[0..1]
                     path = @@full_network.dijkstra_shortest_path(@@edge_weights, source=source, target=target)
+                    
                     if path.length <= 4
                         @@significant_paths[[source, target]] = path.join("<->")
+                        
+
                     end
                 end
             end
         end
-        puts  "#{number_significant_components} significant components"
+        puts  "#{@@number_significant_components} significant components"
     end
 
     def find_first_interactors(gene_list, current_degree)
+        
+        # find_first_interactors(gene_list, current_degree)
+
+        # This function code is defining a method called "find_first_interactors"
+        # that takes in two arguments: a list of genes (gene_list) and a current degree (current_degree).
+        # The method initializes an empty list called "first_degree_hits" and calculates the
+        # length of the gene list. It then prints a string that includes the current degree 
+        # and the length of the search.
+
+        # The code then iterates through the gene list and adds each gene to the 
+        # "@@multi_gene_list" at the current degree. It then searches for interactions
+        # with the first gene in the list and appends any hits to the "@@full_interactions" list.
+        # If there are any hits, it adds the target of the edge to the "@@multi_gene_list" at the next degree.
+
+        # This method searches for first degree interactions between genes in a given list and 
+        # adding them to a list of interactions.
+       
+        
         first_degree_hits = []
         length_search = gene_list.length
         puts "Searching #{current_degree} degree neighbors.... O(#{length_search}^2)"
@@ -126,6 +145,24 @@ class InteractionNetwork
     end
 
     def find_interactions(gene_id=@gene_id)
+        
+        # Input: Gene_id, a specfific gene ID from EBI
+
+        # Output: Valid filtered protein-protein interactions of query gene
+
+        # find_interactions defines a method called find_interactions that takes in a parameter gene_id,
+        # which is assigned the value of the instance variable @gene_id by default. The method first 
+        # fetches data from EBI url, and then checks if the data is valid. If it is, the data is split
+        # into an array of lines and stored in a variable called interaction25 which is a tab25 format.
+
+        # The code then iterates through each line of interaction25 and splits it into an array of elements,
+        # which are then assigned to variables. The method then filters out unwanted interactions based on 
+        # certain conditions, such as if the genes are from different organisms or if the interaction is of
+        # low quality.
+
+        # If the conditions are met, the method appends the interactions to an array called interactions,
+        # and then returns this array at the end of the method.
+        
         res = fetch(url: "http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/interactor/#{gene_id}?format=tab25");
         if res 
             interaction25 = res.body().split(/\n/)
@@ -157,7 +194,7 @@ class InteractionNetwork
                 next if organismA != organismB
 
                 #Interaction is low quality
-                next if quality < 0.45
+                next if quality < 0.55
       
                 #Ens code not found for gene a or b
                 next if ens_geneA.empty? or ens_geneB.empty?
@@ -198,6 +235,10 @@ class InteractionNetwork
 
     def self.significant_paths
         @@significant_paths
+    end
+
+    def self.number_significant_components
+        @@number_significant_components
     end
 
 end
