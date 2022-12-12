@@ -2,7 +2,7 @@
 **Adrián Barreno Sánchez (adrian.barreno@alumnos.upm.es), Pablo Mata Aroco (p.mata@alumnos.upm.es), Alberto González Delgado (alberto.gondelgado@alumnos.upm.es), Julian Elijah Politsch (julian.politsch@alumnos.upm.es), Angelo D'Angelo (angelo.dangelo@alumnos.upm.es)**
 
 
-## GFF features and visualization?
+## What is GFF features and visualization?
 
 GFF features and visualization is a computer program designed in ruby to 
 
