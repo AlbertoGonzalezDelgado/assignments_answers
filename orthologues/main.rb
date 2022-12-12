@@ -18,6 +18,7 @@ if ARGV[0] == ARGV[1]
 end
 
 #Checking if the files specified have fasta format
+#Source: https://es.wikipedia.org/wiki/Formato_FASTA
 ARGV[0..1].each do |arg|
     if arg.split('.')[-1]!='fasta' && arg.split('.')[-1]!='fa'  && arg.split('.')[-1]!='ffn' && arg.split('.')[-1]!='fna' && arg.split('.')[-1]!='faa' && arg.split('.')[-1]!='frn'    
        abort("FATAL ERROR: File #{arg} has not fasta format")
