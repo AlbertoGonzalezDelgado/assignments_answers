@@ -24,8 +24,15 @@ Overall, the problem of finding network modules is an important one for understa
 Download the code as [README file for assignment answers](../README.md) indicates. 
 
 ## Requirements:
+[rgl-gem](https://rubygems.org/gems/rgl/versions/0.2.2?locale=es)
 ```
 gem install rgl 
+```
+
+* [CSV-gem](https://rubygems.org/gems/csv?locale=es)
+
+```
+gem install csv
 ```
 ## Usage:
 
