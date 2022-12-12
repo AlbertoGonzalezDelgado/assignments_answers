@@ -19,5 +19,7 @@ exons_list=Array.new
 #    sequences_list << Data_base.get_sequences(gene_id: gene[0])
 #end
 
-sequence=gene_list[0][0]
-Data_base.get_sequences(gene_id: sequence)
+(0..10).each do |i|
+    sequence=gene_list[i][0]
+    Data_base.get_sequences(gene_id: sequence)
+end
