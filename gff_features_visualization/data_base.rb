@@ -44,7 +44,7 @@ class Data_base
     #This function retreives a list in which the sequences of the genes are contained (header = True ) from a specified gene ID
     #
     # @param gene_id [String] the gene ID to search for.
-    # @return [[Array<String>] 
+    # @return [Array<String>] 
     def self.get_sequences(gene_id:)
         @@sequences_list=Array.new #Creating an empty array for saving the sequences
         url=("http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=fasta&id=#{gene_id}") #Searching for sequences
