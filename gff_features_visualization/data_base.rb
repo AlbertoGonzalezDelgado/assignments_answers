@@ -9,13 +9,18 @@ class Data_base
 
     @@genelist=Array.new
 
+    # @param gene_id [string] a gene ID
+    # @param file_path [string] a file containing gene IDs
     def initialize(gene_id: ,file_path:)
         @gene_id = gene_id
         @file_path = file_path
         
     end
- #This function retreives a list of genes ID from a specified file
+
+    # @param file_path [string] takes the path to the specified file containing gene IDs
+    # @return [array<string>] an array with the gene IDs
     def self.get_genelist(file_path:)
+        #This function retreives a list of genes ID from a specified file
         @@gene_list=Array.new    #Creating an empty array for saving the list of genes
         unless File.file?(file_path) #Checking if the file path is correct
             abort("FATAL ERROR: File #{file_path} does not exist or the pathway specified is not correct")
@@ -33,8 +38,10 @@ class Data_base
 
     end
 
-#This function retreives a list in which the sequences of the genes are contained (header = True ) from a specified gene ID
+    # @param gene_id [string] takes a single gene_id
+    # @return list [Array<String>]
     def self.get_sequences(gene_id:)
+    #This function retreives a list in which the sequences of the genes are contained (header = True ) from a specified gene ID
 
         #Saving sequences
         @@sequences_list=Array.new #Creating an empty array for saving the sequences
