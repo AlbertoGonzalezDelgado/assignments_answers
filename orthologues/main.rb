@@ -50,8 +50,8 @@ sleep 1
 ################################# CHECK FROM HERE ##########################################
 
 # Set the database paths for Arabidopsis and S. pombe
-arabidopsis_db_path = ARGV[0]
-spombe_db_path = ARGV[1]
+arabidopsis_db_path =  'path'
+spombe_db_path =  'path'
 
 # Create a BLAST factory for each species
 arabidopsis_factory = Bio::Blast.local('blastn', arabidopsis_db_path)
