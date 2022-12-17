@@ -50,16 +50,16 @@ sleep 1
 ################################# CHECK FROM HERE ##########################################
 
 # Set the database paths for Arabidopsis and S. pombe
-arabidopsis_db_path =  'path'
-spombe_db_path =  'path'
+arabidopsis_db_path =   #{ARGV[0]}
+spombe_path =  #{ARGV[1]}
 
 # Create a BLAST factory for each species
 arabidopsis_factory = Bio::Blast.local('blastn', arabidopsis_db_path)
 spombe_factory = Bio::Blast.local('blastn', spombe_db_path)
 
 # Read the Arabidopsis and S. pombe sequences from fasta files
-arabidopsis_fasta = Bio::FastaFormat.open('arabidopsis.fa')
-spombe_fasta = Bio::FastaFormat.open('s_pombe.fa')
+arabidopsis_fasta = Bio::FastaFormat.open(#{ARGV[0]})
+spombe_fasta = Bio::FastaFormat.open(#{ARGV[1]})
 
 # Create a hash to store the reciprocal best hits
 reciprocal_best_hits = {}
