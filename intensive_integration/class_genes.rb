@@ -2,12 +2,27 @@
 require 'rest-client'
 require 'json'
 
+# == Summary
+# This class is used to search for Gene Ontology (GO) terms and KEGG pathways 
+# related to a given gene.
+#
 class Genes
-    atrr_accesor :gene_id 
-    atrr_accesor :go_terms
-    atrr_accesor :kegg_id
-    atrr_accesor :pathway
+    # Get/Set the list of Gene Ontology terms.
+    # @!attribute [rw]
+    # @attr [Array] go_terms the array of GO terms
+    
+    # @attr_accesor [String] gene_id the ID of the gene being searched
+    # @attr_accesor [Array] go_terms an array of GO terms related to the gene
+    # @attr_accesor [Array] kegg_id an array of KEGG IDs related to the gene
+    # @attr_accesor [Array] pathway an array of KEGG pathways related to the geneatrr_accesor :gene_id 
+    attr_accessor :gene_id
+    attr_accessor :go_terms
+    attr_accessor :kegg_id
+    attr_accessor :pathway
 
+    # Searches for GO terms related to the gene.
+    # @param gene_id [String] the ID of the gene being searched
+    # @return [Array] an array of GO terms related to the gene
     def search_go(gene_id:)
         address ="http://togows.dbcls.jp/entry/uniprot/#{@gene_id}/dr.json"
         response = RestClient::Request.execute(method: :get,  url: address) 
@@ -17,10 +32,14 @@ class Genes
         end
         return go_terms
     end
-
+    
+    # Searches for KEGG pathways related to the gene.
+    #
+    # @param gene_id [String] the ID of the gene being searched
+    # @return [Array] an array of KEGG pathways related to the gene
     def search_kegg(gene_id:)
 
-        address ="http://togows.org/entry/uniprot/#{@gene_id}/dr.json"
+        address ="http://togows.org/entry/uniprot/#{gene_id}/dr.json"
         response = RestClient::Request.execute(method: :get, url: address)  
         JSON.parse(response.body)[0]['KEGG'].each do |kegg|
             kegg_id << kegg[0]

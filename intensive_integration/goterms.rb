@@ -11,11 +11,11 @@ class GoTerms
     
     # Get/Set the list of Gene Ontology terms.
     # @!attribute [rw]
-    # @attr [Array] go_terms the array of GO terms
+    # @attr [Array] the array of GO terms
     attr_accessor :go_terms
     # Get/Set the list of Genes.
     # @!attribute [rw]
-    # @attr [Array] gene_list the array of genes
+    # @attr [Array] the array of query genes
     attr_accessor :gene_list
 
   
