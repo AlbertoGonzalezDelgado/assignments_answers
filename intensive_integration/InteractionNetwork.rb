@@ -11,13 +11,14 @@ require "rgl/edge_properties_map"
 
 # == InteractionNetwork
 #
-# This is a representation of a gene interaction network.
+# InteractionNetwork class allows us to identify interactions between genes from an input gene list. 
+# Interactors are fetched from Psiquic IntAct database and interaction networks are built using 
+# We use Ruby Graph Library (RGL) framework to build interaction networks connecting previously
+# identified interactors with a defined maximum network depth.
+#
 #
 # == Summary
 # 
-# InteractionNetwork class allows us to identify interactions within an input gene list from the IntAct database.
-# We can also generate interaction networks connecting previously identified interactors with a defined maximum network depth (default = 3 nodes).
-#
 # The initialize method takes two arguments, depth and gene_list, and sets default values
 # for these arguments if they are not provided when the object is created.
 # The method then calls the find_first_interactors method on the gene_list argument, 
@@ -26,7 +27,7 @@ require "rgl/edge_properties_map"
 # and the current loop iteration as arguments.
 #
 # Next, the code iterates over the @@full_interactions array and adds each edge to the 
-# @@full_network object, setting the edge weight to 1. It then creates an array of connected
+# @@full_network RGL::Adjacency Graph, setting the edge weight to 1. It then creates an array of connected
 # components in the network, and loops over these components to find any that contain the seed genes.
 # For each component that contains seed genes, the code uses the combination method 
 # to find all possible pairs of genes, and then uses the dijkstra_shortest_path method 
@@ -52,16 +53,24 @@ class InteractionNetwork
 
     # All interaction networks instances generated, representing the full known network.
     @@full_network = RGL::AdjacencyGraph.new
+
+    # Edge weights in our Adjacency Graph (default = 1).
     @@edge_weights = {}
+    
+    # Shortest path between pairs of genes, calculated using the dijkstra_shortest_path method.
     @@significant_paths = {}
+    
     # All pairwise interactions between our query genes and their interactors fetched form IntAct database.
     @@full_interactions = []
+    
+    # Hash containing the interactors (values) at different depths (keys) for the query genes.
     @@multi_gene_list = {1=> Set[],
                         2 => Set[],
                         3 => Set[],
                         4 => Set[],
                         5 => Set[]
                     }
+    # Number of significant (not empty) connected components in full interaction graph
     @@number_significant_components = 0
 
     # Create a new InteractionNetwork instance. Takes as input a list of gene ID's and creates a RGL adjacency network with uniform (1) edge weights.
@@ -222,24 +231,34 @@ class InteractionNetwork
     end
 
     # Return all pairwise interactions between our query genes and their interactors fetched form IntAct database.
-
-    # @return [Array] an interaction array containing filtered protein-protein interactions of query gene
+    # @return [Array] full record of pairwise interactions
     def self.full_interactions
         @@full_interactions
     end
 
+    # Return full adjacency graph object containing all interactions (edges) between our query genes and their interactors
+    # fetched from IntAct database. Each connected component is an independent gene interaction network.
+    # @return [RGL::AdjacencyGraph] full interaction graph of our query genes.
     def self.full_network
         @@full_network
     end
 
+    # Return a Hash containing the interactors (values) at different depths (keys) for the query genes in our input gene list.
+    # @return [Hash] full interactions at different depths for our query genes.
     def self.multi_gene_list
         @@multi_gene_list
     end
 
+    # Return the shortest path between these pairs of genes, calculated using the dijkstra_shortest_path method.
+    # If the length of the path is larger than 4, the interaction network is not reproted.
+    # @return [Hash] full interaction graph of our query genes.
     def self.significant_paths
         @@significant_paths
     end
 
+    # Return number of significant (not empty) connected components in full interaction graph. Each connected component is an independent gene interaction network.
+    # an independent gene interaction network.
+    # @return [Integer] number of significant connected components in the interaction graph.
     def self.number_significant_components
         @@number_significant_components
     end

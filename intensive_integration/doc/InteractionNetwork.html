@@ -104,15 +104,13 @@
     
 <h2 id="label-InteractionNetwork">InteractionNetwork</h2>
 
-<p>This is a representation of a gene interaction network.</p>
+<p>InteractionNetwork class allows us to identify interactions between genes from an input gene list.  Interactors are fetched from Psiquic IntAct database and interaction networks are built using  We use Ruby Graph Library (RGL) framework to build interaction networks connecting previously identified interactors with a defined maximum network depth.</p>
 
 <h2 id="label-Summary">Summary</h2>
 
-<p>InteractionNetwork class allows us to identify interactions within an input gene list from the IntAct database. We can also generate interaction networks connecting previously identified interactors with a defined maximum network depth (default = 3 nodes).</p>
-
 <p>The initialize method takes two arguments, depth and gene_list, and sets default values for these arguments if they are not provided when the object is created. The method then calls the find_first_interactors method on the gene_list argument,  passing in a value of 1 for the second argument. This is followed by a loop that calls the find_first_interactors method again, but this time with the @@multi_gene_list array  and the current loop iteration as arguments.</p>
 
-<p>Next, the code iterates over the @@full_interactions array and adds each edge to the  @@full_network object, setting the edge weight to 1. It then creates an array of connected components in the network, and loops over these components to find any that contain the seed genes. For each component that contains seed genes, the code uses the combination method  to find all possible pairs of genes, and then uses the dijkstra_shortest_path method  to find the shortest path between these pairs. If the length of the path is less than or equal  to 4, the path is added to the @@significant_paths hash with the gene pair as the key and the  path as the value.</p>
+<p>Next, the code iterates over the @@full_interactions array and adds each edge to the  @@full_network RGL::Adjacency Graph, setting the edge weight to 1. It then creates an array of connected components in the network, and loops over these components to find any that contain the seed genes. For each component that contains seed genes, the code uses the combination method  to find all possible pairs of genes, and then uses the dijkstra_shortest_path method  to find the shortest path between these pairs. If the length of the path is less than or equal  to 4, the path is added to the @@significant_paths hash with the gene pair as the key and the  path as the value.</p>
 
 
   </div>
@@ -159,7 +157,7 @@
           <div class="docstring">
   <div class="discussion">
     
-<p>All interactions, dertivitave of full_network for ease</p>
+<p>All pairwise interactions between our query genes and their interactors fetched form IntAct database.</p>
 
 
   </div>
@@ -238,7 +236,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#full_interactions-class_method" title="full_interactions (class method)">.<strong>full_interactions</strong>  &#x21d2; Object </a>
+      <a href="#full_interactions-class_method" title="full_interactions (class method)">.<strong>full_interactions</strong>  &#x21d2; Array </a>
     
 
     
@@ -252,7 +250,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Return all pairwise interactions between our query genes and their interactors fetched form IntAct database.</p>
+</div></span>
   
 </li>
 
@@ -260,7 +260,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#full_network-class_method" title="full_network (class method)">.<strong>full_network</strong>  &#x21d2; Object </a>
+      <a href="#full_network-class_method" title="full_network (class method)">.<strong>full_network</strong>  &#x21d2; RGL::AdjacencyGraph </a>
     
 
     
@@ -274,7 +274,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Return full adjacency graph object containing all interactions (edges) between our query genes and their interactors fetched from IntAct database.</p>
+</div></span>
   
 </li>
 
@@ -304,7 +306,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#number_significant_components-class_method" title="number_significant_components (class method)">.<strong>number_significant_components</strong>  &#x21d2; Object </a>
+      <a href="#number_significant_components-class_method" title="number_significant_components (class method)">.<strong>number_significant_components</strong>  &#x21d2; Integer </a>
     
 
     
@@ -318,7 +320,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Return number of significant (not empty) connected components in full interaction graph.</p>
+</div></span>
   
 </li>
 
@@ -326,7 +330,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#significant_paths-class_method" title="significant_paths (class method)">.<strong>significant_paths</strong>  &#x21d2; Object </a>
+      <a href="#significant_paths-class_method" title="significant_paths (class method)">.<strong>significant_paths</strong>  &#x21d2; RGL::AdjacencyGraph </a>
     
 
     
@@ -340,7 +344,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Return full adjacency graph object containing all interactions (edges) between our query genes and their interactors fetched from IntAct database.</p>
+</div></span>
   
 </li>
 
@@ -500,7 +506,6 @@
       <pre class="lines">
 
 
-72
 73
 74
 75
@@ -541,10 +546,11 @@
 110
 111
 112
-113</pre>
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_depth'>depth</span><span class='op'>=</span><span class='int'>3</span><span class='comma'>,</span> <span class='id identifier rubyid_gene_list'>gene_list</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>    
 
@@ -644,12 +650,12 @@
       <pre class="lines">
 
 
-51
 52
-53</pre>
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_gene_list'>gene_list</span>
   <span class='ivar'>@gene_list</span>
@@ -669,24 +675,53 @@
       <div class="method_details first">
   <h3 class="signature first" id="full_interactions-class_method">
   
-    .<strong>full_interactions</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>full_interactions</strong>  &#x21d2; <tt>Array</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return all pairwise interactions between our query genes and their interactors fetched form IntAct database.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>full record of pairwise interactions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-224
-225
-226</pre>
+227
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 227</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_full_interactions'>full_interactions</span>
     <span class='cvar'>@@full_interactions</span>
@@ -699,24 +734,53 @@
       <div class="method_details ">
   <h3 class="signature " id="full_network-class_method">
   
-    .<strong>full_network</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>full_network</strong>  &#x21d2; <tt>RGL::AdjacencyGraph</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return full adjacency graph object containing all interactions (edges) between our query genes and their interactors fetched from IntAct database. Each connected component is an independent gene interaction network.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RGL::AdjacencyGraph</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>full interaction graph of our query genes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-228
-229
-230</pre>
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_full_network'>full_network</span>
     <span class='cvar'>@@full_network</span>
@@ -741,12 +805,12 @@
       <pre class="lines">
 
 
-232
-233
-234</pre>
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 238</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_multi_gene_list'>multi_gene_list</span>
     <span class='cvar'>@@multi_gene_list</span>
@@ -759,24 +823,53 @@
       <div class="method_details ">
   <h3 class="signature " id="number_significant_components-class_method">
   
-    .<strong>number_significant_components</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>number_significant_components</strong>  &#x21d2; <tt>Integer</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return number of significant (not empty) connected components in full interaction graph. Each connected component is an independent gene interaction network. an independent gene interaction network.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>number of significant connected components in the interaction graph.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-240
-241
-242</pre>
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_number_significant_components'>number_significant_components</span>
     <span class='cvar'>@@number_significant_components</span>
@@ -789,24 +882,53 @@
       <div class="method_details ">
   <h3 class="signature " id="significant_paths-class_method">
   
-    .<strong>significant_paths</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>significant_paths</strong>  &#x21d2; <tt>RGL::AdjacencyGraph</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return full adjacency graph object containing all interactions (edges) between our query genes and their interactors fetched from IntAct database. Each connected component is an independent gene interaction network.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RGL::AdjacencyGraph</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>full interaction graph of our query genes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-236
-237
-238</pre>
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_significant_paths'>significant_paths</span>
     <span class='cvar'>@@significant_paths</span>
@@ -886,7 +1008,6 @@
       <pre class="lines">
 
 
-130
 131
 132
 133
@@ -905,10 +1026,11 @@
 146
 147
 148
-149</pre>
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_first_interactors'>find_first_interactors</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_list'>gene_list</span><span class='comma'>,</span> <span class='id identifier rubyid_current_degree'>current_degree</span><span class='rparen'>)</span>
             
@@ -1003,7 +1125,6 @@
       <pre class="lines">
 
 
-164
 165
 166
 167
@@ -1061,10 +1182,11 @@
 219
 220
 221
-222</pre>
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'InteractionNetwork.rb', line 165</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_interactions'>find_interactions</span><span class='lparen'>(</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='op'>=</span><span class='ivar'>@gene_id</span><span class='rparen'>)</span>
     
@@ -1135,7 +1257,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 15:07:03 2022 by
+  Generated on Mon Dec 19 16:32:39 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.0).
 </div>

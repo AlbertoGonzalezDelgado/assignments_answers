@@ -1,11 +1,27 @@
 #import required gems
 require 'rest-client'
-require_relative "fetch"
 require "csv"
+require_relative "fetch"
 require "json"
 
+# == GOTerms
+# GoTerms class that retrieves Gene Ontology (GO) terms for a given list of genes.
+#
 class GoTerms
-    attr_accessor :go_terms, :gene_list
+    
+    # Get/Set the list of Gene Ontology terms.
+    # @!attribute [rw]
+    # @attr [Array] go_terms the array of GO terms
+    attr_accessor :go_terms
+    # Get/Set the list of Genes.
+    # @!attribute [rw]
+    # @attr [Array] gene_list the array of genes
+    attr_accessor :gene_list
+
+  
+    # Initialize the GoTerms instance given a gene list.
+    #
+    # @param gene_list [Array] the array of genes
 
     def initialize(gene_list=nil)
         genes = gene_list.join(",")
@@ -22,6 +38,10 @@ class GoTerms
         end
     end
 
+
+    # Return the Gene Ontology array
+    #
+    # @return [Array] the go_terms array
     def self.go_terms
         return @go_terms
     end
