@@ -9,10 +9,9 @@ unless ARGV.length == 3
 end
 
 #Checking if the files pathways are well specified
-ARGV[0..2].each do |arg|
-    unless File.file?(arg)
-       abort("FATAL ERROR: File #{arg} does not exist or the pathway provided is not correct.")
-    end
+
+unless File.file?(ARGV[0])
+    abort("FATAL ERROR: File #{ARGV[0]} does not exist or the pathway provided is not correct.")
 end
 
 #Checking if the output files pathways are not the same
@@ -58,7 +57,9 @@ exons_list=Array.new
 
 genes_without = Set[]
 gff_lines = Set[]
-puts('Searching for cttctt in exons')
+puts('')
+puts('Searching for cttctt in exons...')
+sleep 1
 gene_list.each do |i|
     sequence=i[0]
     forward, reverse = Data_base.get_sequences(gene_id: sequence)
