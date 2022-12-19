@@ -84,7 +84,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="KeggTerms.html" title="KeggTerms (class)">KeggTerms</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Genes.html" title="Genes (class)">Genes</a></span>, <span class='object_link'><a href="GoTerms.html" title="GoTerms (class)">GoTerms</a></span>, <span class='object_link'><a href="InteractionNetwork.html" title="InteractionNetwork (class)">InteractionNetwork</a></span>, <span class='object_link'><a href="KeggTerms.html" title="KeggTerms (class)">KeggTerms</a></span>
     
   
 </p>
@@ -95,12 +95,132 @@
 
 
 
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
 
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="top-level-namespace.html#fetch-instance_method" title="#fetch (instance method)">#<strong>fetch</strong>(url:, headers: {accept: &quot;*/*&quot;}, user: &quot;&quot;, pass: &quot;&quot;)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a function called “fetch” that we can re-use everywhere in our code.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="fetch-instance_method">
+  
+    #<strong>fetch</strong>(url:, headers: {accept: &quot;*/*&quot;}, user: &quot;&quot;, pass: &quot;&quot;)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a function called “fetch” that we can re-use everywhere in our code</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'fetch.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>headers:</span> <span class='lbrace'>{</span><span class='label'>accept:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*/*</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>user:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>pass:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+    <span class='label'>method:</span> <span class='symbol'>:get</span><span class='comma'>,</span>
+    <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+    <span class='label'>user:</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span>
+    <span class='label'>password:</span> <span class='id identifier rubyid_pass'>pass</span><span class='comma'>,</span>
+    <span class='label'>headers:</span> <span class='id identifier rubyid_headers'>headers</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span>
+  
+  <span class='kw'>rescue</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>ExceptionWithResponse</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span>  <span class='comment'># now we are returning &#39;False&#39;, and we will check that with an \&quot;if\&quot; statement in our main code
+</span>  <span class='kw'>rescue</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span>  <span class='comment'># now we are returning &#39;False&#39;, and we will check that with an \&quot;if\&quot; statement in our main code
+</span>  <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_response'>response</span>  <span class='comment'># now we are returning &#39;False&#39;, and we will check that with an \&quot;if\&quot; statement in our main code
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 22:22:47 2022 by
+  Generated on Mon Dec 19 22:35:38 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.0).
 </div>
