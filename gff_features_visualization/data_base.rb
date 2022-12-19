@@ -13,9 +13,6 @@ require 'bio'
 # The gene_id and file_path variables are accessible through read and write attributes (attr_accessor).
 # The @@genelist variable is a class variable that is an array and is used to store a list of genes.
 #
-# The self.search_for_SNPs method is a class method that takes a gene_id argument and returns a list of single nucleotide polymorphisms (SNPs) for the specified gene.
-# It first retrieves the sequences for the gene from a remote database, and then searches for SNPs in the sequences. It returns a list of the SNPs that it finds.
-#
 # @authors Julian Elijah Politsch, Angelo D'angelo, Alberto Gonzalez, Adrian Barreno, Pablo Mata
 class Data_base
 

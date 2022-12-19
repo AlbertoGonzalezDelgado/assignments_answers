@@ -110,8 +110,6 @@
 
 <p>This class can be used to retrieve features and information about the genes. The class has four instance variables: gene_id, file_path, sequence, and @@genelist. The gene_id and file_path variables are accessible through read and write attributes (attr_accessor). The @@genelist variable is a class variable that is an array and is used to store a list of genes.</p>
 
-<p>The self.search_for_SNPs method is a class method that takes a gene_id argument and returns a list of single nucleotide polymorphisms (SNPs) for the specified gene. It first retrieves the sequences for the gene from a remote database, and then searches for SNPs in the sequences. It returns a list of the SNPs that it finds.</p>
-
 
   </div>
 </div>
@@ -386,13 +384,13 @@
       <pre class="lines">
 
 
-44
-45
-46
-47</pre>
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'data_base.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>gene_id:</span> <span class='comma'>,</span><span class='label'>file_path:</span><span class='rparen'>)</span>
     <span class='ivar'>@gene_id</span> <span class='op'>=</span> <span class='id identifier rubyid_gene_id'>gene_id</span>
@@ -454,12 +452,12 @@
       <pre class="lines">
 
 
-30
-31
-32</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'data_base.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_file_path'>file_path</span>
   <span class='ivar'>@file_path</span>
@@ -515,12 +513,12 @@
       <pre class="lines">
 
 
-25
-26
-27</pre>
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'data_base.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_gene_id'>gene_id</span>
   <span class='ivar'>@gene_id</span>
@@ -576,12 +574,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'data_base.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sequence'>sequence</span>
   <span class='ivar'>@sequence</span>
@@ -662,6 +660,9 @@
       <pre class="lines">
 
 
+54
+55
+56
 57
 58
 59
@@ -675,13 +676,10 @@
 67
 68
 69
-70
-71
-72
-73</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'data_base.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_genelist'>get_genelist</span><span class='lparen'>(</span><span class='label'>file_path:</span><span class='rparen'>)</span>
     <span class='cvar'>@@gene_list</span><span class='op'>=</span><span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>    <span class='comment'>#Creating an empty array for saving the list of genes
@@ -751,6 +749,9 @@
       <pre class="lines">
 
 
+78
+79
+80
 81
 82
 83
@@ -831,13 +832,10 @@
 158
 159
 160
-161
-162
-163
-164</pre>
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'data_base.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_sequences'>get_sequences</span><span class='lparen'>(</span><span class='label'>gene_id:</span><span class='rparen'>)</span>
 
@@ -933,7 +931,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 19 16:52:41 2022 by
+  Generated on Mon Dec 19 17:14:37 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.0).
 </div>
