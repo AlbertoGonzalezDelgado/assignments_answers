@@ -104,6 +104,7 @@ genes_without.each do |i|
 end
 outfile.close
 
+#Source: https://www.asciiart.eu/art-and-design/borders
 puts' __| |____________________________________________| |__'
 puts'(__   ____________________________________________   __)'
 puts'   | |                                            | |'
