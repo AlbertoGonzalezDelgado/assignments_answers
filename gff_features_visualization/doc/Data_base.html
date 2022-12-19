@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Data_base
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Data_base";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (D)</a> &raquo;
+    
+    
+    <span class="title">Data_base</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Data_base
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Data_base</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>data_base.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<h2 id="label-Data_base">Data_base</h2>
+
+<p>Class that searches for genes based on gene IDs into EMBL-EBI database, for storing and retrieving information about genes.</p>
+
+<h2 id="label-Summary">Summary</h2>
+
+<p>This class can be used to retrieve features and information about the genes. The class has four instance variables: gene_id, file_path, sequence, and @@genelist. The gene_id and file_path variables are accessible through read and write attributes (attr_accessor). The @@genelist variable is a class variable that is an array and is used to store a list of genes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="genelist-classvariable" class="">@@genelist =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file_path-instance_method" title="#file_path (instance method)">#<strong>file_path</strong>  &#x21d2; string </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Contains the path to the file with the gene IDs that are tested.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#gene_id-instance_method" title="#gene_id (instance method)">#<strong>gene_id</strong>  &#x21d2; string </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Saves the gene ID that is going to be used for analysis.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sequence-instance_method" title="#sequence (instance method)">#<strong>sequence</strong>  &#x21d2; string </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Contains the sequence of the gene.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_genelist-class_method" title="get_genelist (class method)">.<strong>get_genelist</strong>(file_path:)  &#x21d2; array&lt;string&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The self.get_genelist method is a class method that takes a file_path argument and returns an array of gene IDs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_sequences-class_method" title="get_sequences (class method)">.<strong>get_sequences</strong>(gene_id:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The self.get_sequences method is a class method that takes a gene_id argument and returns a list of sequences for the specified gene.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(gene_id:, file_path:)  &#x21d2; Data_base </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The initialize method is a constructor that is called when a new instance of the Data_base class is created.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(gene_id:, file_path:)  &#x21d2; <tt><span class='object_link'><a href="" title="Data_base (class)">Data_base</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The initialize method is a constructor that is called when a new instance of the Data_base class is created.  It takes two arguments: gene_id and file_path, and sets the values of the corresponding instance variables.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>gene_id</span>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a gene ID</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file_path</span>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a file containing gene IDs</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>gene_id:</span> <span class='comma'>,</span><span class='label'>file_path:</span><span class='rparen'>)</span>
+    <span class='ivar'>@gene_id</span> <span class='op'>=</span> <span class='id identifier rubyid_gene_id'>gene_id</span>
+    <span class='ivar'>@file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_file_path'>file_path</span> 
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="file_path=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="file_path-instance_method">
+  
+    #<strong>file_path</strong>  &#x21d2; <tt>string</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Contains the path to the file with the gene IDs that are tested</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>path to the file containing the genes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+27
+28
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 27</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_file_path'>file_path</span>
+  <span class='ivar'>@file_path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="gene_id=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="gene_id-instance_method">
+  
+    #<strong>gene_id</strong>  &#x21d2; <tt>string</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Saves the gene ID that is going to be used for analysis.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a single gene_id.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_gene_id'>gene_id</span>
+  <span class='ivar'>@gene_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="sequence=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="sequence-instance_method">
+  
+    #<strong>sequence</strong>  &#x21d2; <tt>string</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Contains the sequence of the gene.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a gene sequence.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sequence'>sequence</span>
+  <span class='ivar'>@sequence</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="get_genelist-class_method">
+  
+    .<strong>get_genelist</strong>(file_path:)  &#x21d2; <tt>array&lt;string&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The self.get_genelist method is a class method that takes a file_path argument and returns an array of gene IDs.  It first checks if the file specified by the file_path argument exists. If it does not, it aborts the program with an error message. If the file does exist, it reads the contents of the file and checks each line to see if it is a valid gene ID. If it is not, it aborts the program with an error message. If the line is a valid gene ID, it is added to the @@gene_list array.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>file_path</span>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>takes the path to the specified file containing gene IDs</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>array&lt;string&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an array with the gene IDs</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_genelist'>get_genelist</span><span class='lparen'>(</span><span class='label'>file_path:</span><span class='rparen'>)</span>
+    <span class='cvar'>@@gene_list</span><span class='op'>=</span><span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>    <span class='comment'>#Creating an empty array for saving the list of genes
+</span>    <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span> <span class='comment'>#Checking if the file path is correct
+</span>        <span class='id identifier rubyid_abort'>abort</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>FATAL ERROR: File </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_path'>file_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> does not exist or the pathway specified is not correct</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>else</span> 
+        <span class='id identifier rubyid_temp_file'>temp_file</span><span class='op'>=</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span> <span class='label'>col_sep:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_temp_file'>temp_file</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span>    <span class='comment'>#Checking if the genes have the correct format
+</span>            <span class='kw'>unless</span> <span class='id identifier rubyid_line'>line</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>AT\dG\d{5}</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span> <span class='comment'># Ignoring case sensitive in match method https://stackoverflow.com/questions/41149008/case-insensitive-regex-matching-in-ruby
+</span>                <span class='id identifier rubyid_abort'>abort</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ERROR: the gene list have some errors. </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_line'>line</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> has not correct format</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+            <span class='kw'>else</span>
+              <span class='cvar'>@@gene_list</span><span class='period'>.</span><span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_line'>line</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='comment'>#Saving the gene list
+</span>            
+            <span class='kw'>end</span>
+        <span class='kw'>end</span>
+    <span class='kw'>end</span>   
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_sequences-class_method">
+  
+    .<strong>get_sequences</strong>(gene_id:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The self.get_sequences method is a class method that takes a gene_id argument and returns a list of sequences for the specified gene. It first retrieves the sequences for the gene from a remote database, and saves them in the @@sequences_list array.  It then retrieves information about the positions of exons in the gene, and saves them in the @@exon_seqs array. Finally, it returns the @@sequences_list array.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>gene_id</span>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>takes a single gene_id</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'data_base.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_sequences'>get_sequences</span><span class='lparen'>(</span><span class='label'>gene_id:</span><span class='rparen'>)</span>
+
+    <span class='comment'>#This function retreives a list in which the sequences of the genes are contained (header = True ) from a specified gene ID
+</span>
+    <span class='id identifier rubyid_forward_positions'>forward_positions</span> <span class='op'>=</span> <span class='const'>Set</span><span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_reverse_positions'>reverse_positions</span> <span class='op'>=</span> <span class='const'>Set</span><span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+
+    <span class='comment'>#Saving sequences
+</span>    <span class='cvar'>@@sequences_list</span><span class='op'>=</span><span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='comment'>#Creating an empty array for saving the sequences
+</span>    <span class='id identifier rubyid_url'>url</span><span class='op'>=</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&amp;format=fasta&amp;id=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'>#Searching for sequences
+</span>    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='label'>method:</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span> 
+    <span class='id identifier rubyid_body'>body</span><span class='op'>=</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\:</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>6</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@sequences_list</span> <span class='op'>&lt;&lt;</span> <span class='const'>Bio</span><span class='op'>::</span><span class='const'>Sequence</span><span class='period'>.</span><span class='id identifier rubyid_auto'>auto</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span> <span class='comment'>#Saving the sequences without the header (all the sequences have a number in the beggining so [1..-1 to eliminate them])
+</span>
+    <span class='comment'>#Searching for positions of exons 
+</span>    <span class='id identifier rubyid_url'>url</span><span class='op'>=</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&amp;format=embl&amp;id=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gene_id'>gene_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'>#Searching for sequences
+</span>    <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>RestClient</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='label'>method:</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span> 
+    <span class='id identifier rubyid_record'>record</span> <span class='op'>=</span> <span class='const'>Bio</span><span class='op'>::</span><span class='const'>EMBL</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_seq'>seq</span> <span class='op'>=</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_to_biosequence'>to_biosequence</span>
+
+    <span class='cvar'>@@exon_seqs</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='rparen'>)</span>
+
+    
+    <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_features'>features</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_feature'>feature</span><span class='op'>|</span>
+        
+        <span class='id identifier rubyid_chromosome'>chromosome</span><span class='comma'>,</span> <span class='id identifier rubyid_abs_start'>abs_start</span><span class='comma'>,</span> <span class='id identifier rubyid_abs_stop'>abs_stop</span> <span class='op'>=</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_sv'>sv</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>2</span><span class='op'>..</span><span class='int'>4</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rbrace'>}</span>
+
+        <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_feature'>feature</span><span class='period'>.</span><span class='id identifier rubyid_feature'>feature</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exon</span><span class='tstring_end'>&quot;</span></span>
+
+        <span class='id identifier rubyid_exon_range'>exon_range</span> <span class='op'>=</span> <span class='id identifier rubyid_feature'>feature</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>..</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rbrace'>}</span>
+
+        <span class='id identifier rubyid_feature'>feature</span><span class='period'>.</span><span class='id identifier rubyid_locations'>locations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_loc'>loc</span><span class='op'>|</span>
+
+            <span class='id identifier rubyid_strand'>strand</span> <span class='op'>=</span> <span class='id identifier rubyid_feature'>feature</span><span class='period'>.</span><span class='id identifier rubyid_locations'>locations</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_strand'>strand</span>
+            <span class='id identifier rubyid_start'>start</span><span class='comma'>,</span> <span class='id identifier rubyid_stop'>stop</span> <span class='op'>=</span> <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span>
+            <span class='id identifier rubyid_exon_seq'>exon_seq</span> <span class='op'>=</span> <span class='id identifier rubyid_seq'>seq</span><span class='period'>.</span><span class='id identifier rubyid_subseq'>subseq</span><span class='lparen'>(</span><span class='id identifier rubyid_start'>start</span><span class='comma'>,</span> <span class='id identifier rubyid_stop'>stop</span><span class='rparen'>)</span>
+
+            <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_exon_seq'>exon_seq</span> <span class='op'>==</span> <span class='kw'>nil</span>
+
+            <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_start'>start</span> <span class='op'>==</span> <span class='id identifier rubyid_stop'>stop</span>
+            
+            <span class='cvar'>@@exon_seqs</span><span class='period'>.</span><span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_start'>start</span><span class='comma'>,</span> <span class='id identifier rubyid_stop'>stop</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_exon_seq'>exon_seq</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+
+            <span class='kw'>if</span> <span class='id identifier rubyid_strand'>strand</span> <span class='op'>==</span> <span class='int'>+1</span>
+                
+                <span class='id identifier rubyid_start_f'>start_f</span> <span class='op'>=</span> <span class='id identifier rubyid_exon_seq'>exon_seq</span><span class='period'>.</span><span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:scan</span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?=(cttctt))</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_last_match'>last_match</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbrace'>}</span> <span class='comment'># +1 so it is 1-indexed
+</span>            
+                <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_start_f'>start_f</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> 
+
+                <span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_start_f'>start_f</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_pos'>pos</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pos'>pos</span><span class='op'>+</span><span class='id identifier rubyid_abs_start'>abs_start</span><span class='op'>+</span><span class='id identifier rubyid_start'>start</span><span class='op'>-</span><span class='int'>2</span><span class='comma'>,</span> <span class='id identifier rubyid_pos'>pos</span><span class='op'>+</span><span class='id identifier rubyid_abs_start'>abs_start</span><span class='op'>+</span><span class='id identifier rubyid_start'>start</span>  <span class='op'>+</span> <span class='int'>3</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+
+                <span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_loc'>loc</span><span class='op'>|</span>
+
+                    <span class='id identifier rubyid_forward_positions'>forward_positions</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Chr</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_chromosome'>chromosome</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ruby</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CTTCTT_Direct</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_loc'>loc</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_loc'>loc</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Forward_CTTCTT</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+                <span class='kw'>end</span>
+            <span class='kw'>end</span>
+
+            <span class='kw'>if</span> <span class='id identifier rubyid_strand'>strand</span> <span class='op'>==</span> <span class='op'>-</span><span class='int'>1</span>
+                
+                                   
+                <span class='id identifier rubyid_start_f'>start_f</span> <span class='op'>=</span> <span class='id identifier rubyid_exon_seq'>exon_seq</span><span class='period'>.</span><span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:scan</span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?=(aagaag))</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_last_match'>last_match</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbrace'>}</span> <span class='comment'># +1 so it is 1-indexed
+</span>            
+                <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_start_f'>start_f</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> 
+
+                <span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_start_f'>start_f</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_pos'>pos</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pos'>pos</span><span class='op'>+</span><span class='id identifier rubyid_abs_start'>abs_start</span><span class='op'>+</span><span class='id identifier rubyid_start'>start</span><span class='op'>-</span><span class='int'>2</span><span class='comma'>,</span> <span class='id identifier rubyid_pos'>pos</span><span class='op'>+</span><span class='id identifier rubyid_abs_start'>abs_start</span><span class='op'>+</span><span class='id identifier rubyid_start'>start</span>  <span class='op'>+</span> <span class='int'>3</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+
+                <span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_loc'>loc</span><span class='op'>|</span>
+
+                    <span class='id identifier rubyid_reverse_positions'>reverse_positions</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Chr</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_chromosome'>chromosome</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ruby</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CTTCTT_Direct</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_loc'>loc</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_loc'>loc</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Reverse_CTTCTT</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+                <span class='kw'>end</span>
+            <span class='kw'>end</span>
+
+
+
+
+        <span class='kw'>end</span>
+        
+
+    <span class='kw'>end</span> 
+    <span class='kw'>return</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_forward_positions'>forward_positions</span><span class='comma'>,</span> <span class='id identifier rubyid_reverse_positions'>reverse_positions</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Mon Dec 19 17:14:37 2022 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-3.0.0).
+</div>
+
+    </div>
+  </body>
+</html>

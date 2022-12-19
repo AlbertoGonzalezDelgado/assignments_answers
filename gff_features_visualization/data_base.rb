@@ -2,25 +2,56 @@ require 'csv'
 require 'rest-client'
 require 'bio'
 
+# == Data_base
+#
+# Class that searches for genes based on gene IDs into EMBL-EBI database, for storing and retrieving information about genes.
+# 
+# == Summary
+#
+# This class can be used to retrieve features and information about the genes.
+# The class has four instance variables: gene_id, file_path, sequence, and @@genelist.
+# The gene_id and file_path variables are accessible through read and write attributes (attr_accessor).
+# The @@genelist variable is a class variable that is an array and is used to store a list of genes.
+#
+# @authors Julian Elijah Politsch, Angelo D'angelo, Alberto Gonzalez, Adrian Barreno, Pablo Mata
 class Data_base
+
+    # Saves the gene ID that is going to be used for analysis.
+    # @!attribute [rw]
+    # @return [string] a single gene_id.
     attr_accessor :gene_id
+
+    # Contains the path to the file with the gene IDs that are tested
+    # @!attribute [rw]
+    # @return [string] path to the file containing the genes.
     attr_accessor :file_path
+
+    # Contains the sequence of the gene.
+    # @!Attribute [rw]
+    # @return [string] a gene sequence.
     attr_accessor :sequence
 
     @@genelist=Array.new
 
+    # The initialize method is a constructor that is called when a new instance of the Data_base class is created. 
+    # It takes two arguments: gene_id and file_path, and sets the values of the corresponding instance variables.
+    #
     # @param gene_id [string] a gene ID
     # @param file_path [string] a file containing gene IDs
     def initialize(gene_id: ,file_path:)
         @gene_id = gene_id
-        @file_path = file_path
-        
+        @file_path = file_path 
     end
 
+
+    # The self.get_genelist method is a class method that takes a file_path argument and returns an array of gene IDs. 
+    # It first checks if the file specified by the file_path argument exists. If it does not, it aborts the program with an error message.
+    # If the file does exist, it reads the contents of the file and checks each line to see if it is a valid gene ID. If it is not, it aborts the program with an error message.
+    # If the line is a valid gene ID, it is added to the @@gene_list array.
+    #
     # @param file_path [string] takes the path to the specified file containing gene IDs
     # @return [array<string>] an array with the gene IDs
     def self.get_genelist(file_path:)
-        #This function retreives a list of genes ID from a specified file
         @@gene_list=Array.new    #Creating an empty array for saving the list of genes
         unless File.file?(file_path) #Checking if the file path is correct
             abort("FATAL ERROR: File #{file_path} does not exist or the pathway specified is not correct")
@@ -37,11 +68,20 @@ class Data_base
         end   
 
     end
-
+    
+    #The self.get_sequences method is a class method that takes a gene_id argument and returns a list of sequences for the specified gene.
+    #It first retrieves the sequences for the gene from a remote database, and saves them in the @@sequences_list array. 
+    #It then retrieves information about the positions of exons in the gene, and saves them in the @@exon_seqs array. Finally, it returns the @@sequences_list array.
+    #
     # @param gene_id [string] takes a single gene_id
     # @return list [Array<String>]
     def self.get_sequences(gene_id:)
-    #This function retreives a list in which the sequences of the genes are contained (header = True ) from a specified gene ID
+
+        #This function retreives a list in which the sequences of the genes are contained (header = True ) from a specified gene ID
+
+        forward_positions = Set[]
+        reverse_positions = Set[]
+
 
         #Saving sequences
         @@sequences_list=Array.new #Creating an empty array for saving the sequences
@@ -53,63 +93,71 @@ class Data_base
         #Searching for positions of exons 
         url=("http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=ensemblgenomesgene&format=embl&id=#{gene_id}") #Searching for sequences
         response = RestClient::Request.execute(method: :get, url: url) 
-        record=response.body
-        File.open("#{gene_id}.embl", 'w') do |myfile|  # w makes it writable
-            myfile.puts record
-        end
-        datafile = Bio::FlatFile.auto("#{gene_id}.embl")
-        entry =  datafile.next_entry   # this is a way to get just one entry from the FlatFile
-        @@exon_positions = []
-        entry.features.each do |feature|
+        record = Bio::EMBL.new(response)
+        seq = record.to_biosequence
+
+        @@exon_seqs = Array.new()
+
+        
+        record.features.each do |feature|
+            
+            chromosome, abs_start, abs_stop = record.sv.split(":")[2..4].map{|s| s.to_i}
+
             next unless feature.feature == "exon"
-            match = feature.position.match(/(\d+)\.\.(\d+)/)
-            start,stop = match[1], match[2]
-            @@exon_positions << [start,stop]
-        end
 
-        @@exon_positions = @@exon_positions[1..-1]
+            exon_range = feature.position.split("..").map{|s| s.to_i}
+
+            feature.locations.each do |loc|
+
+                strand = feature.locations[0].strand
+                start, stop = loc.from, loc.to
+                exon_seq = seq.subseq(start, stop)
+
+                next if exon_seq == nil
+
+                next if start == stop
+                
+                @@exon_seqs.append([[start, stop],exon_seq])
 
 
-        #Searching for the position of the contig 
-        datafile = Bio::FlatFile.auto("#{gene_id}.embl")
-        entry =  datafile.next_entry   # this is a way to get just one entry from the FlatFile
-        @@contig_position=[]
-        entry.features.each do |feature|
-            next unless feature.feature == "misc_feature"
-            match= feature.qualifiers[0].value.match(/(\d+)\.\.(\d+)/)
-            start,stop = match[1], match[2]
-            @@contig_position << [start,stop]
-        end
-      
-        
+                if strand == +1
+                    
+                    start_f = exon_seq.enum_for(:scan, /(?=(cttctt))/i).map { Regexp.last_match.begin(0) + 1} # +1 so it is 1-indexed
+                
+                    next if start_f.empty? 
 
-        #From absolute position to relative position
-        @@relative_position=[]
-        @@exon_positions.each do |pos|
-            init=@@contig_position[0][0]
-            start,stop= pos[0].to_i-init.to_i,pos[1].to_i-init.to_i
-            @@relative_position << [start,stop]
-        end
-        
-        p @@relative_position
+                    location = start_f.map{|pos| [pos+abs_start+start-2, pos+abs_start+start  + 3]}
 
-        puts @@sequences_list[0].length #??????????¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿¿¿
-        #Searching for ccttctt match in exons
-        #@@sequences_match=[]
-        #@@exon_positions.each do |pos|
-        #    puts pos[0]
-        #    puts ""
-        #    start, stop= (pos[0].to_i-1),(pos[1].to_i-1) #-1 due to the position in a string starts from 0 
-        #    exon = @@sequences_list[0][start..stop] 
-        #    puts exon
-        #    puts pos[1]
-            #next unless exon.match(/cttctt/i)
-           # puts exon.match(/cttctt/i)
-        #end
+                    location.each do |loc|
 
-        #Removing the file created (we don't want to waste memory) 
-        File.delete("#{gene_id}.embl")
+                        forward_positions.add(["Chr#{chromosome}", "Ruby", "CTTCTT_Direct", loc[0], loc[1], ".", "+", ".", "Forward_CTTCTT"])
+                    end
+                end
+
+                if strand == -1
+                    
+                                       
+                    start_f = exon_seq.enum_for(:scan, /(?=(aagaag))/i).map { Regexp.last_match.begin(0) + 1} # +1 so it is 1-indexed
+                
+                    next if start_f.empty? 
+
+                    location = start_f.map{|pos| [pos+abs_start+start-2, pos+abs_start+start  + 3]}
+
+                    location.each do |loc|
+
+                        reverse_positions.add(["Chr#{chromosome}", "Ruby", "CTTCTT_Direct", loc[0], loc[1], ".", "-", ".", "Reverse_CTTCTT"])
+
+                    end
+                end
+
+
+
+
+            end
+            
+    
+        end 
+        return([forward_positions, reverse_positions])
     end
-
+    
 end
-
