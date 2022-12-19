@@ -45,6 +45,7 @@ If output pathway specified already exists, the program will ask you if you want
 
 ## Output
 GFF file: Gff3 file containing locations of motif
+
 final_report.txt: List of genes in your list that do not contain the motif in their exons
 
 ## References
