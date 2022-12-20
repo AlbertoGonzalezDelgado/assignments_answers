@@ -130,7 +130,7 @@ class Data_base
 
                     location.each do |loc|
 
-                        forward_positions.add(["Chr#{chromosome}", "Ruby", "CTTCTT_Direct", loc[0], loc[1], ".", "+", ".", "Forward_CTTCTT"])
+                        forward_positions.add(["Chr#{chromosome}", "Ruby", "repeat_component", loc[0], loc[1], ".", "+", ".", "Type=Forward_CTTCTT; Gene_Id=#{gene_id}"])
                     end
                 end
 
@@ -145,7 +145,7 @@ class Data_base
 
                     location.each do |loc|
 
-                        reverse_positions.add(["Chr#{chromosome}", "Ruby", "CTTCTT_Direct", loc[0], loc[1], ".", "-", ".", "Reverse_CTTCTT"])
+                        reverse_positions.add(["Chr#{chromosome}", "Ruby", "repeat_component", loc[0], loc[1], ".", "-", ".", "Type=Reverse_CTTCTT; Gene_Id=#{gene_id}"])
 
                     end
                 end
