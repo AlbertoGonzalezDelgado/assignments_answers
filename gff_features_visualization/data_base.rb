@@ -9,8 +9,8 @@ require 'bio'
 # == Summary
 #
 # This class can be used to retrieve features and information about the genes.
-# The class has four instance variables: gene_id, file_path, sequence, and @@genelist.
-# The gene_id and file_path variables are accessible through read and write attributes (attr_accessor).
+# The class has three instance variables: gene_id, file_path and sequence.
+# The gene_id, sequence and file_path variables are accessible through read and write attributes (attr_accessor).
 # The @@genelist variable is a class variable that is an array and is used to store a list of genes.
 #
 # @authors Julian Elijah Politsch, Angelo D'angelo, Alberto Gonzalez, Adrian Barreno, Pablo Mata
@@ -85,15 +85,13 @@ class Data_base
 
     end
     
-    #The self.get_sequences method is a class method that takes a gene_id argument and returns a list of sequences for the specified gene.
-    #It first retrieves the sequences for the gene from a remote database, and saves them in the @@sequences_list array. 
-    #It then retrieves information about the positions of exons in the gene, and saves them in the @@exon_seqs array. Finally, it returns the @@sequences_list array.
+    # The self.get_sequences method is a class method that takes a gene_id argument and returns a list of sequences for the specified gene.
+    # It first retrieves the sequences for the gene from a remote database, and saves them in the @@sequences_list array. 
+    # It then retrieves information about the positions of exons in the gene, and saves them in the @@exon_seqs array. Finally, it returns the @@sequences_list array.
     #
     # @param gene_id [string] takes a single gene_id
     # @return list [Array<String>]
     def self.get_sequence(gene_id:)
-
-        #This function retreives a list in which the sequences of the genes are contained (header = True ) from a specified gene ID
 
         forward_positions = Set[]
         reverse_positions = Set[]
@@ -114,11 +112,7 @@ class Data_base
 
         record.features.each do |feature|
             
-            chromosome, abs_start, abs_stop = record.sv.split(":")[2..4].map{|s| s.to_i}
-
             next unless feature.feature == "exon"
-
-            exon_range = feature.position.split("..").map{|s| s.to_i}
 
             feature.locations.each do |loc|
 
@@ -142,7 +136,8 @@ class Data_base
 
                     location.each do |loc|
 
-                        forward_positions.add(["Chr#{chromosome}", "Ruby", "repeat_component", loc[0], loc[1], ".", "+", ".", "Type = Forward_CTTCTT; Gene_ID = #{gene_id}"])
+                        forward_positions.add(["Chr#{chromosome}", "Ruby", "repeat_component", loc[0], loc[1], ".", "+", ".", "Type=Forward_CTTCTT; Gene_Id=#{gene_id}"])
+                    
                     end
 
                 end
@@ -157,7 +152,7 @@ class Data_base
 
                     location.each do |loc|
 
-                        reverse_positions.add(["Chr#{chromosome}", "Ruby", "repeat_component", loc[0], loc[1], ".", "-", ".", "Type = Reverse_CTTCTT; Gene_ID = #{gene_id}"])
+                        reverse_positions.add(["Chr#{chromosome}", "Ruby", "repeat_component", loc[0], loc[1], ".", "-", ".", "Type=Reverse_CTTCTT; Gene_Id=#{gene_id}"])
 
                     end
                 end
