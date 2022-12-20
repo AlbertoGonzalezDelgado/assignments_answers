@@ -15,6 +15,6 @@ git clone git@github.com:AlbertoGonzalezDelgado/assignments_answers.git
 
 3. The Third assignment is contained here: [GFF feature files and visualization](gff_features_visualization/)
 
-4. The Fourth assignment is contained here: [orthologues](orthologues/)
+4. The Fourth assignment is contained here: [Orthologues](orthologues/)
 
 5. The Fifth assignment is contained here
