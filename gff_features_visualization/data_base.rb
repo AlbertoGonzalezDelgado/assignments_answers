@@ -25,10 +25,12 @@ class Data_base
     # @!Attribute [rw]
     # @return [String] a gene sequence.
     attr_accessor :sequence
+
     # Array of arrays containing the start and stop positions of each exon and its full sequence.
     # @!attribute [rw]
-    # @return [Array] array of arrays containing exon information.
+    # @return [Array] array of arrays containing exon information.    
     attr_accessor :exon_seqs
+
     # Feature information in forward position (GFF3 format).
     # @!attribute [rw]
     # @return [Set] feature information.
@@ -112,6 +114,8 @@ class Data_base
 
         record.features.each do |feature|
             
+            chromosome, abs_start, abs_stop = record.sv.split(":")[2..4].map{|s| s.to_i}
+
             next unless feature.feature == "exon"
 
             feature.locations.each do |loc|
