@@ -49,11 +49,7 @@ puts('Loading files...')
 sleep 1
 gene_file_path = ARGV[0]
 
-gene_list=Data_base.get_genelist(file_path: gene_file_path)
-
-sequences_list=Array.new
-
-exons_list=Array.new
+gene_list = Data_base.get_genelist(file_path: gene_file_path)
 
 genes_without = Set[]
 gff_lines = Set[]
@@ -62,20 +58,20 @@ puts('Searching for cttctt in exons...')
 sleep 1
 gene_list.each do |i|
     sequence=i[0]
-    forward, reverse = Data_base.get_sequences(gene_id: sequence)
+    gene = Data_base.get_sequence(gene_id: sequence)
 
-    if forward.empty? and reverse.empty?
+    if gene.forward_features.empty? and gene.reverse_features.empty?
         genes_without.add(sequence)
         
     else
-        unless forward.empty?
-            forward.each do |l|
+        unless gene.forward_features.empty?
+            gene.forward_features.each do |l|
                 gff_lines.add(l)
             end
         end
 
-        unless reverse.empty?
-            reverse.each do |l|
+        unless gene.reverse_features.empty?
+            gene.reverse_features.each do |l|
                 gff_lines.add(l)
             end
         end

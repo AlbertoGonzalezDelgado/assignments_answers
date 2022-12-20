@@ -26,5 +26,4 @@ Tasks:  for 10% (harder)
 
 Along with your code, for this assignment please submit a screen-shot of your GFF track beside the AT2G46340 gene on the ENSEMBL website to show me that you were successful.  (note that the menu in the top-left of the ENSEMBL track-browser has an “export as image” option - or you can just take a screenshot - whichever you prefer)
 
-
 PLEASE LISTEN TO ME!   Create a small sequence (~20nt) that has CTTCTT on both the + and - strands, then test your code on that - make sure that the results are correct before you test it on large sequences.  Counting the positions on the minus strand is hard!!!!!  Be careful!!! 
