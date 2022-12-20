@@ -30,10 +30,6 @@ if File.file?(ARGV[1])
   end
 end
 
-gene_information = ARGV[0]
-
-gene_info = {}
-taxid = "taxid:3702\(arath\)" # Since we are grepping make sure regex is consistant
 gene_file = File.readlines(ARGV[0], chomp: true)
 
 gene_list = []
