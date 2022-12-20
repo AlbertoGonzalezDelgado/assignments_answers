@@ -56,14 +56,6 @@ path =  paths.values.to_a # the shortest path between said proteins
 go_terms = GoTerms.new(interactors)
 kegg_terms = KeggTerms.new(interactors)
 
-puts
-puts InteractionNetwork.full_interactions
-puts
-puts InteractionNetwork.full_network
-puts
-puts InteractionNetwork.multi_gene_list
-puts
-
 #puts go_terms
 outfile = File.new(ARGV[1], "w+")
 
