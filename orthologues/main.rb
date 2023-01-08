@@ -59,8 +59,8 @@ spombe_db_path =  ARGV[1]
 # Create a BLAST factory for each species
 #system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
 
-arabidopsis_factory = Bio::Blast.local('blastp', arabidopsis_db_path.to_s)
-spombe_factory = Bio::Blast.local('blastp', spombe_db_path.to_s)
+arabidopsis_factory = Bio::Blast.local('blastp', arabidopsis_db_path, "-F ‘m S’ -s T")
+spombe_factory = Bio::Blast.local('blastp', spombe_db_path, "-F ‘m S’ -s T -e 1e-3")
 
 # Read the Arabidopsis and S. pombe sequences from fasta files
 arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
@@ -73,7 +73,7 @@ reciprocal_best_hits = {}
 #arabidopsis_fasta.each_entry do |arabidopsis_seq|
  
 arabidopsis_fasta.each_entry do |arabidopsis_seq|
-
+  
   # BLAST the Arabidopsis sequence against the S. pombe database
   arabidopsis_results = spombe_factory.query(arabidopsis_seq)
 
@@ -84,16 +84,16 @@ arabidopsis_fasta.each_entry do |arabidopsis_seq|
 
     hit = arabidopsis_results.hits[0]
 
-    puts hit.query_id
-    puts hit.target_id
+    puts hit.class
     puts
-    puts hit.definition
+    puts "#{arabidopsis_seq.entry_id} <==> #{hit.definition.split("|")[0]}"
     puts
-    puts "Identity: #{hit.percent_identity}\t e-value: #{hit.evalue}"
+    puts "Identity: #{hit.identity}\t e-value: #{hit.evalue}"
     puts
     print arabidopsis_results.statistics
   
   end
+  
 end
   '''
 # BLAST the S. pombe sequence of the best hit against the Arabidopsis database
