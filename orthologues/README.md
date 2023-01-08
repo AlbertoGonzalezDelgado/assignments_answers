@@ -20,7 +20,12 @@ gem install bio-gem
 ```
 gem install csv
 ```
-*[Fasta files](https://drive.google.com/drive/folders/0B7FLMiAz5IXPTWJDSkk1MTFPMjg?resourcekey=0-yhXCH6PxXIvg9xwMSolpMw)
+* [Fasta files](https://drive.google.com/drive/folders/0B7FLMiAz5IXPTWJDSkk1MTFPMjg?resourcekey=0-yhXCH6PxXIvg9xwMSolpMw)
+
+* Create the BLAST-formatted databases for BLAST analysis. We need to create a database for each reference proteome using the following command:
+```
+makeblastdb -in ./files/{Fasta File} -dbtype 'prot' -out ./databases/{BLAST Database}
+```
 
 ## Usage:
 
