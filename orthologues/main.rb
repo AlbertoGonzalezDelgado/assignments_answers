@@ -25,30 +25,13 @@ ARGV[0..1].each do |arg|'''
 #    end
 #end
 
-
-
-
+puts ''
 puts 'The files are being imported sucesfully'
 puts ''
-puts ''
-sleep 1
+sleep 0.5
 puts "Searching for orthologues between Arabidopsis and S. pombe"
-sleep 1
-#Source: https://www.asciiart.eu/computers/computers
-puts ' _______________                        |*\_/*|________'
-puts '|  ___________  |     .-.     .-.      ||_/-\_|______  |'
-puts '| |           | |    .****. .****.     | |           | |'
-puts '| |   0   0   | |    .*****.*****.     | |   0   0   | |'
-puts '| |     -     | |     .*********.      | |     -     | |'
-puts '| |   \___/   | |      .*******.       | |   \___/   | |'
-puts '| |___     ___| |       .*****.        | |___________| |'
-puts '|_____|\_/|_____|        .***.         |_______________|'
-puts '  _|__|/ \|_|_.............*.............._|________|_'
-puts ' / ********** \                          / ********** \ '
-puts '/  ************\                        /  ************\ '
-puts '------------------                      -----------------'
-
-sleep 1
+puts ''
+puts ''
 
 ################################# CHECK FROM HERE ##########################################
 
@@ -60,7 +43,7 @@ spombe_db_path =  ARGV[1]
 #system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
 
 arabidopsis_factory = Bio::Blast.local('blastp', arabidopsis_db_path, "-F ‘m S’ -s T")
-spombe_factory = Bio::Blast.local('blastp', spombe_db_path, "-F ‘m S’ -s T -e 1e-3")
+spombe_factory = Bio::Blast.local('blastp', spombe_db_path, "-F ‘m S’ -s T -e 1e-4")
 
 # Read the Arabidopsis and S. pombe sequences from fasta files
 arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
@@ -69,32 +52,45 @@ spombe_fasta = Bio::FlatFile.auto(ARGV[3])
 # Create a hash to store the reciprocal best hits
 reciprocal_best_hits = {}
 
-# Iterate over the Arabidopsis sequences
-#arabidopsis_fasta.each_entry do |arabidopsis_seq|
- 
+## Create a file to save the results of Arabidopsis BLAST on S. pombe genome.
+
+first_blast = File.new("files/first_blast.txt", "w")
+
+# Iterate over the Arabidopsis sequences 
 arabidopsis_fasta.each_entry do |arabidopsis_seq|
   
   # BLAST the Arabidopsis sequence against the S. pombe database
   arabidopsis_results = spombe_factory.query(arabidopsis_seq)
 
   # Get the best hit from the BLAST results
-  #best_hit = arabidopsis_results.hits.first
 
   unless arabidopsis_results.hits.empty?
 
-    hit = arabidopsis_results.hits[0]
-
-    puts hit.class
+    # Print hits
+    hit = arabidopsis_results.hits.first
     puts
     puts "#{arabidopsis_seq.entry_id} <==> #{hit.definition.split("|")[0]}"
     puts
     puts "Identity: #{hit.identity}\t e-value: #{hit.evalue}"
     puts
-    print arabidopsis_results.statistics
+    puts arabidopsis_results.statistics
   
+    # Save hits in file
+    first_blast.write("#{arabidopsis_seq.entry_id}<=>#{hit.definition.split("|")[0]}\n")
   end
-  
 end
+
+file.close()
+
+## We can now read the results of the first Blast
+first_hits = Hash.new
+
+first_blast = File.readlines("files/first_blast.txt", chomp:true)
+first_blast.each{ |hit|
+  first_hits[hit.split("<=>")[0]] = hit.split("<=>")[1]
+}
+
+
   '''
 # BLAST the S. pombe sequence of the best hit against the Arabidopsis database
 spombe_seq = Bio::FastaFormat.new(best_hit.accession)
@@ -113,3 +109,24 @@ reciprocal_best_hits.each do |arabidopsis, spombe|
   puts "#{arabidopsis} => #{spombe}"
 end
 '''
+
+#Source: https://www.asciiart.eu/computers/computers
+puts ''
+puts ''
+puts "Analysis finished succesfully"
+puts ''
+puts ''
+puts ' _______________                        |*\_/*|________'
+puts '|  ___________  |     .-.     .-.      ||_/-\_|______  |'
+puts '| |           | |    .****. .****.     | |           | |'
+puts '| |   0   0   | |    .*****.*****.     | |   0   0   | |'
+puts '| |     -     | |     .*********.      | |     -     | |'
+puts '| |   \___/   | |      .*******.       | |   \___/   | |'
+puts '| |___     ___| |       .*****.        | |___________| |'
+puts '|_____|\_/|_____|        .***.         |_______________|'
+puts '  _|__|/ \|_|_.............*.............._|________|_'
+puts ' / ********** \                          / ********** \ '
+puts '/  ************\                        /  ************\ '
+puts '------------------                      -----------------'
+
+
