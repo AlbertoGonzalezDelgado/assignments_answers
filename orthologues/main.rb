@@ -33,16 +33,17 @@ puts "Searching for orthologues between Arabidopsis and S. pombe"
 puts ''
 puts ''
 
-################################# CHECK FROM HERE ##########################################
+################################# RECIPROCAL BEST HIT ##########################################
 
 # Set the database paths for Arabidopsis and S. pombe
 arabidopsis_db_path =  ARGV[0]
 spombe_db_path =  ARGV[1]
 
 # Create a BLAST factory for each species
+#system("makeblastdb -in files/TAIR10_cds_20101214_updated.fa -dbtype 'prot' -out databases/TAIR 2> /dev/null")
 #system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
 
-arabidopsis_factory = Bio::Blast.local('blastp', arabidopsis_db_path, "-F ‘m S’ -s T")
+arabidopsis_factory = Bio::Blast.local('blastp', arabidopsis_db_path, "-F ‘m S’ -s T -e 1e-4")
 spombe_factory = Bio::Blast.local('blastp', spombe_db_path, "-F ‘m S’ -s T -e 1e-4")
 
 # Read the Arabidopsis and S. pombe sequences from fasta files
@@ -65,33 +66,34 @@ arabidopsis_fasta.each_entry do |arabidopsis_seq|
   # Get the best hit from the BLAST results
 
   unless arabidopsis_results.hits.empty?
-
-    # Print hits
-    hit = arabidopsis_results.hits.first
-    puts
-    puts "#{arabidopsis_seq.entry_id} <==> #{hit.definition.split("|")[0]}"
-    puts
-    puts "Identity: #{hit.identity}\t e-value: #{hit.evalue}"
-    puts
-    puts arabidopsis_results.statistics
-  
-    # Save hits in file
-    first_blast.write("#{arabidopsis_seq.entry_id}<=>#{hit.definition.split("|")[0]}\n")
+    
+    if arabidopsis_results.hits.first.identity >= 50
+      # Print hits
+      hit = arabidopsis_results.hits.first
+      puts
+      puts "#{arabidopsis_seq.entry_id} <==> #{hit.definition.split("|")[0]}"
+      puts
+      puts "Identity: #{hit.identity}\t e-value: #{hit.evalue}"
+      puts
+      puts hit.hsps[0].qseq
+      puts hit.hsps[0].hseq
+    
+      # Save hits in file
+      first_blast.write("#{arabidopsis_seq.entry_id}\t#{hit.definition.split("|")[0]}\t#{hit.evalue}\t#{hit.identity}\n")
+    end
   end
 end
 
-file.close()
+first_blast.close()
 
 ## We can now read the results of the first Blast
 first_hits = Hash.new
 
-first_blast = File.readlines("files/first_blast.txt", chomp:true)
-first_blast.each{ |hit|
-  first_hits[hit.split("<=>")[0]] = hit.split("<=>")[1]
+File.readlines("files/first_blast.txt", chomp:true).each{ |hit|
+  first_hits[hit.split("\t")[0]] = hit.split("\t")[1]
 }
 
-
-  '''
+'''
 # BLAST the S. pombe sequence of the best hit against the Arabidopsis database
 spombe_seq = Bio::FastaFormat.new(best_hit.accession)
 spombe_results = spombe_factory.query(spombe_seq)
