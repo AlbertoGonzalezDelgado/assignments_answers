@@ -84,10 +84,15 @@ arabidopsis_fasta.each_entry do |arabidopsis_seq|
 
     hit = arabidopsis_results.hits[0]
 
-    print hit.query_id, hit.query_def
-    print hit.target_id, hit.target_def
-
+    puts hit.query_id
+    puts hit.target_id
+    puts
+    puts hit.definition
+    puts
+    puts "Identity: #{hit.percent_identity}\t e-value: #{hit.evalue}"
+    puts
     print arabidopsis_results.statistics
+  
   end
 end
   '''
