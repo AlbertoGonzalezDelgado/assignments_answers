@@ -48,8 +48,8 @@ ruby main.rb <Arabidopsis_Database> <S_pombe_Database> <Arabidopsis.fa>  <S_pomb
 ## Output
 - blast_results.txt contains the results of the BLAST after quality filtering as well as other statistical information following the next format:
    >Query_ID|Target_ID|e-value|identity%
-   Query_sequence
-   Target_sequence
+   - Query_sequence
+   - Target_sequence
 
 - Query_ID is the sequence ID in the S. pombe proteome.
 - Target_ID is the ID of the sequence in the Arabidopsis genome
