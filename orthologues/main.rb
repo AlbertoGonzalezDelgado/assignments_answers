@@ -1,5 +1,5 @@
 require 'bio'
-'''
+
 #Checking the number of inputs
 unless ARGV.length == 4
     abort("FATAL ERROR: BLAST databases and FASTA files paths are required.
@@ -20,13 +20,13 @@ end
 
 #Checking if the files specified have fasta format
 #Source: https://es.wikipedia.org/wiki/Formato_FASTA
-'''
-#ARGV[2..3].each do |arg|
-  #if arg.split('.')[-1]!="fasta" && arg.split('.')[-1]!="fa"  && arg.split('.')[-1]!="ffn" && arg.split('.')[-1]!="fna" && arg.split('.')[-1]!="faa" && arg.split('.')[-1]!="frn"    
-    # abort("FATAL ERROR: File #{arg} is not Fasta format")
-  #end
-#end
-'''
+
+ARGV[2..3].each do |arg|
+  if arg.split('.')[-1]!="fasta" && arg.split('.')[-1]!="fa"  && arg.split('.')[-1]!="ffn" && arg.split('.')[-1]!="fna" && arg.split('.')[-1]!="faa" && arg.split('.')[-1]!="frn"    
+     abort("FATAL ERROR: File #{arg} is not Fasta format")
+  end
+end
+
 puts ''
 puts "The files are being imported sucesfully"
 puts ''
@@ -40,18 +40,18 @@ puts ''
 # Set the database paths for Arabidopsis and S. pombe
 arabidopsis_db_path =  ARGV[0]
 spombe_db_path =  ARGV[1]
-'''
+
 # Create a BLAST factory for each species
-#system("makeblastdb -in files/TAIR10_cds_20101214_updated.fa -dbtype 'prot' -out databases/TAIR 2> /dev/null")
-#system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
-#arabidopsis_factory = Bio::Blast.local('tblastn', arabidopsis_db_path, "-F T")  # protein query nucleic database
-#spombe_factory = Bio::Blast.local('blastx', spombe_db_path, "-F T")             # nucleic query protein database
+system("makeblastdb -in files/TAIR10_cds_20101214_updated.fa -dbtype 'nucl' -out databases/TAIR 2> /dev/null")
+system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
+arabidopsis_factory = Bio::Blast.local('tblastn', arabidopsis_db_path, "-F T")  # protein query nucleic database
+spombe_factory = Bio::Blast.local('blastx', spombe_db_path, "-F T")             # nucleic query protein database
 
 # Read the Arabidopsis and S. pombe sequences from fasta files
-#arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
-#spombe_fasta = Bio::FlatFile.auto(ARGV[3])
+arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
+spombe_fasta = Bio::FlatFile.auto(ARGV[3])
 
-'''
+
 ### ------------------ FIRST BLAST ------------------- ###
 
 # Create a file to save the unfiltered results of Arabidopsis BLAST on S. pombe genome. This
@@ -110,7 +110,7 @@ puts
 second_blast = File.new("files/second_blast_unfiltered.txt", "w")
 second_blast.write("query\ttarget\te-value\tidentity\toverlap\tquery_length\tbit-score\tquery_seq\ttarget_seq\n")
 
-# We will only blast S. pombe sequences that are best hits of the first blast
+# We will only blast S. pombe sequences that are best hits of the first blast to reduce computational cost
 spombe_fasta.each_entry do |spombe_seq|  
   if first_hits.values.include?(spombe_seq.entry_id)
     
@@ -140,22 +140,24 @@ spombe_fasta.each_entry do |spombe_seq|
 end
 
 second_blast.close()
-'''
-# We now retrieve the results of the second Blast into a new Hash
-second_hits = Hash.new
-filtered_blast = File.new("files/blast_results.txt", "w")
+
+# We now retrieve the results of the second Blast into a list
 hits_lines = File.readlines("files/second_blast_unfiltered.txt", chomp:true)
 
+# Creating a second file to save the results after filter
+filtered_blast = File.new("files/blast_results.txt", "w")
+#filtered_blast.write(query\ttarget\te-value\tidentity%\tquery_seq\ttarget_seq\n)
 
+# Now we can filter based on identity% and e-value to ensure homology
 hits_lines.each{ |hitt|
+  # As bioruby's identity is not identity% we calculate it manually
   real_identity = (hitt.split("\t")[3].to_f / hitt.split("\t")[4].to_f) * 100
   unless hitt =~ /query/ # Skip header
     if hitt.split("\t")[2].to_f < 1e-5 && real_identity > 30
-      puts hitt.split("\t")[0], hitt.split("\t")[1]
-      puts hitt.split("\t")[2].to_f 
-      puts hitt.split("\t")[3].to_f
-      puts real_identity
-      second_hits[hitt.split("\t")[0]] = hitt.split("\t")[1]
+      puts ""
+      puts ""
+      puts "Saving results into files/blast_results.txt"
+      #Then we save the results into a file
       filtered_blast.write(">\n#{hitt.split("\t")[0]}<=>#{hitt.split("\t")[1]}\n")
       filtered_blast.write("e-value=#{hitt.split("\t")[2]}\nidentity%=#{real_identity}\n")
       filtered_blast.write("#{hitt.split("\t")[7]}\n#{hitt.split("\t")[8]}\n")
@@ -164,24 +166,6 @@ hits_lines.each{ |hitt|
 }
 
 filtered_blast.close()
-'''
-# BLAST the S. pombe sequence of the best hit against the Arabidopsis database
-spombe_seq = Bio::FastaFormat.new(best_hit.accession)
-spombe_results = spombe_factory.query(spombe_seq)
-
-# Check if the Arabidopsis sequence of the best hit is the reciprocal best hit
-reciprocal_best_hit = spombe_results.hits.first.accession == arabidopsis_seq.accession
-
-# If the best hit is reciprocal, store the pair in the hash
-if reciprocal_best_hit
-  reciprocal_best_hits[arabidopsis_seq.accession] = best_hit.accession
-end
-
-# Print the orthologue pairs
-reciprocal_best_hits.each do |arabidopsis, spombe|
-  puts "#{arabidopsis} => #{spombe}"
-end
-'''
 
 #Source: https://www.asciiart.eu/computers/computers
 puts ''
