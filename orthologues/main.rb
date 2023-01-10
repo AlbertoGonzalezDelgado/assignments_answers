@@ -149,15 +149,15 @@ hits_lines = File.readlines("files/second_blast_unfiltered.txt", chomp:true)
 
 
 hits_lines.each{ |hitt|
+  real_identity = (hitt.split("\t")[3].to_f / hitt.split("\t")[4].to_f) * 100
   unless hitt =~ /query/ # Skip header
-    if hitt.split("\t")[2].to_f < 1e-5 && hitt.split("\t")[3].to_f > 30
+    if hitt.split("\t")[2].to_f < 1e-5 && real_identity > 30
       puts hitt.split("\t")[0], hitt.split("\t")[1]
       puts hitt.split("\t")[2].to_f 
       puts hitt.split("\t")[3].to_f
+      puts real_identity
       second_hits[hitt.split("\t")[0]] = hitt.split("\t")[1]
-      filtered_blast.write("#{hitt.split("\t")[0]}\t#{hitt.split("\t")[1]}\t
-      #{hitt.split("\t")[2]}\t#{hitt.split("\t")[3]}\t#{hitt.split("\t")[4]}\t
-      #{hitt.split("\t")[5]}\t#{hitt.split("\t")[6]}\t#{hitt.split("\t")[7]}\t#{hitt.split("\t")[8]}\n")
+      filtered_blast.write("#{hitt.split("\t")[0]}\t#{hitt.split("\t")[1]}\t#{hitt.split("\t")[2]}\t#{real_identity}\t#{hitt.split("\t")[4]}\t#{hitt.split("\t")[5]}\t#{hitt.split("\t")[6]}\t#{hitt.split("\t")[7]}\t#{hitt.split("\t")[8]}\n")
     end
   end
 }
