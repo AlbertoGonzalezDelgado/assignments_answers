@@ -8,7 +8,7 @@ end
 
 #Checking if the files pathways are well specified
 ARGV[0..1].each do |arg|
-  unless File.file?(arg+".phr")
+  unless File.file?(arg+".phr") || File.file?(arg+".nhr")
     abort("FATAL ERROR: Database #{arg} does not exist or the pathway provided is not correct.")
   end
 end
@@ -50,7 +50,7 @@ spombe_factory = Bio::Blast.local('blastx', spombe_db_path, "-F T")             
 arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
 spombe_fasta = Bio::FlatFile.auto(ARGV[3])
 
-
+'''
 ### ------------------ FIRST BLAST ------------------- ###
 
 # Create a file to save the unfiltered results of Arabidopsis BLAST on S. pombe genome. This
@@ -85,7 +85,7 @@ arabidopsis_fasta.each_entry do |arabidopsis_seq|
 end
 
 first_blast.close()
-
+'''
 # We now retrieve the results of the first Blast into a new Hash
 first_hits = Hash.new
 
@@ -95,11 +95,12 @@ File.readlines("files/first_blast_unfiltered.txt", chomp:true).each{ |hit|
   end
 }
 
+puts
 puts "BLAST of Arabidopsis sequences on S.pombe proteome is finished with a total number of #{first_hits.length} hits"
 puts  
 sleep 1
 puts "Finding reciprocal best hits in Arabidopsis proteome..."
-
+puts
 
 ### ----------------- SECOND BLAST ------------------ ###
 
@@ -140,11 +141,13 @@ second_blast.close()
 # We now retrieve the results of the second Blast into a new Hash
 second_hits = Hash.new
 
-File.readlines("files/first_blast_unfiltered.txt", chomp:true).each{ |hit|
+File.readlines("files/second_blast_unfiltered.txt", chomp:true).each{ |hit|
   unless hit =~ /query/ # Skip header
     second_hits[hit.split("\t")[0]] = hit.split("\t")[1]
   end
 }
+
+puts second_hits
 
 '''
 # BLAST the S. pombe sequence of the best hit against the Arabidopsis database
