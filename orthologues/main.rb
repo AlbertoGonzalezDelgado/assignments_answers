@@ -140,7 +140,6 @@ spombe_fasta.each_entry do |spombe_seq|
 end
 
 second_blast.close()
-
 '''
 # We now retrieve the results of the second Blast into a new Hash
 second_hits = Hash.new
@@ -157,7 +156,9 @@ hits_lines.each{ |hitt|
       puts hitt.split("\t")[3].to_f
       puts real_identity
       second_hits[hitt.split("\t")[0]] = hitt.split("\t")[1]
-      filtered_blast.write("#{hitt.split("\t")[0]}\t#{hitt.split("\t")[1]}\t#{hitt.split("\t")[2]}\t#{real_identity}\t#{hitt.split("\t")[4]}\t#{hitt.split("\t")[5]}\t#{hitt.split("\t")[6]}\t#{hitt.split("\t")[7]}\t#{hitt.split("\t")[8]}\n")
+      filtered_blast.write(">\n#{hitt.split("\t")[0]}<=>#{hitt.split("\t")[1]}\n")
+      filtered_blast.write("e-value=#{hitt.split("\t")[2]}\nidentity%=#{real_identity}\n")
+      filtered_blast.write("#{hitt.split("\t")[7]}\n#{hitt.split("\t")[8]}\n")
     end
   end
 }
