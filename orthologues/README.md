@@ -46,10 +46,19 @@ ruby main.rb <Arabidopsis_Database> <S_pombe_Database> <Arabidopsis.fa>  <S_pomb
 4. **S_pombe.fa**
 
 ## Output
-- blast_results.txt contains the results of the BLAST as well as other statistical information
+- blast_results.txt contains the results of the BLAST after quality filtering as well as other statistical information following the next format:
+   >Query_ID|Target_ID|e-value|identity%
+   Query_sequence
+   Target_sequence
 
-- The command line output is verbose, some of which will be saved into a [output txt file](documents/). 
+- Query_ID is the sequence ID in the S. pombe proteome.
+- Target_ID is the ID of the sequence in the Arabidopsis genome
+- e-value is the e-value of the blast hit between these two sequences.
+- identity% is the percentaje of the sequences that are the same divided by the total length of the overlap
 
+- Some other text files (first_blast.txt and second_blast.txt) will be generated in the process and can be used to obtain more info about each blast.
+
+The command line output is verbose, some of which will be saved into a [output txt file](documents/). 
 
 ## Bonus Point:
 
