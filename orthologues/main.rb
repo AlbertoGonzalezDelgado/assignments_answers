@@ -1,37 +1,3 @@
-
-Skip to content
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
-@abarrenos
-AlbertoGonzalezDelgado /
-assignments_answers
-Public
-
-Fork your own copy of AlbertoGonzalezDelgado/assignments_answers
-
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-
-    Insights
-
-assignments_answers/orthologues/main.rb /
-@Shettland
-Shettland final changes
-Latest commit cca6fd3 Jan 10, 2023
-History
-3 contributors
-@abarrenos
-@Shettland
-@AlbertoGonzalezDelgado
-189 lines (153 sloc) 6.93 KB
 require 'bio'
 
 #Checking the number of inputs
@@ -61,7 +27,7 @@ ARGV[2..3].each do |arg|
   end
 end
 
-puts ''
+puts ""
 puts "The files are being imported sucesfully"
 puts ''
 sleep 0.5
@@ -127,17 +93,29 @@ first_blast.close()
 first_hits = Hash.new
 
 File.readlines("files/first_blast_unfiltered.txt", chomp:true).each{ |hit|
-  unless hit =~ /query/ # Skip header
-    first_hits[hit.split("\t")[0]] = hit.split("\t")[1]
+  
+  unless hit =~ /query/   # Skip header
+
+    query = hit.split("\t")[0].strip
+    target = hit.split("\t")[1].strip
+    evalue = hit.split("\t")[2].strip.to_f
+    perc_identity = 100 * (hit.split("\t")[3].strip.to_f) / (hit.split("\t")[7].length) # Identity / query sequence length
+    puts perc_identity
+    puts    
+    if evalue <= 1e-10 && perc_identity >= 50                             # e-value < 1e-5 and identity > 50%
+      first_hits[query] = target
+    end
   end
 }
 
 puts
 puts "BLAST of Arabidopsis sequences on S.pombe proteome is finished with a total number of #{first_hits.length} hits"
 puts  
-sleep 1
-puts "Finding reciprocal best hits in Arabidopsis proteome..."
+sleep 2
+puts "Finding reciprocal best hits in Arabidopsis genome..."
 puts
+sleep 1
+
 
 ### ----------------- SECOND BLAST ------------------ ###
 
@@ -177,30 +155,57 @@ end
 
 second_blast.close()
 
-# We now retrieve the results of the second Blast into a list
-hits_lines = File.readlines("files/second_blast_unfiltered.txt", chomp:true)
+second_hits = Hash.new
 
-# Creating a second file to save the results after filter
-filtered_blast = File.new("files/blast_results.txt", "w")
+File.readlines("files/second_blast_unfiltered.txt", chomp:true).each{ |hit|
+  unless hit =~ /query/   # Skip header
 
-# Now we can filter based on identity% and e-value to ensure homology
-hits_lines.each{ |hitt|
-  # As bioruby's identity is not identity% we calculate it manually
-  real_identity = (hitt.split("\t")[3].to_f / hitt.split("\t")[4].to_f) * 100
-  unless hitt =~ /query/ # Skip header
-    if hitt.split("\t")[2].to_f < 1e-5 && real_identity > 30
-      #Then we save the results into a file
-      filtered_blast.write(">#{hitt.split("\t")[0]}|#{hitt.split("\t")[1].chop}|")
-      filtered_blast.write("#{hitt.split("\t")[2]}|#{real_identity}\n")
-      filtered_blast.write("#{hitt.split("\t")[7]}\n#{hitt.split("\t")[8]}\n\n")
+    query = hit.split("\t")[0].strip
+    target = hit.split("\t")[1].strip
+    evalue = hit.split("\t")[2].strip.to_f
+    perc_identity = 100 * (hit.split("\t")[3].strip.to_f) / (hit.split("\t")[7].length) # Identity / query sequence length
+
+    if evalue <= 1e-10 && perc_identity >= 50                             # # e-value < 1e-5 and identity > 50%
+      second_hits[query] = target
+      #puts query, target, evalue, perc_identity
     end
   end
 }
 
-filtered_blast.close()
+puts
+puts "Reciprocal BLAST of S.pombe sequences on Arabidopsis genome is finished with a total number of #{second_hits.length} hits"
+puts  
+sleep 2
+puts "Finding reciprocal best hits in Arabidopsis proteome..."
+puts
+sleep 1
+
+### ----------------- RECIPROCAL BEST HITS ------------------ ###
+
+reciprocal_hits = Hash.new
+
+first_hits.each do |key, value|
+  if second_hits[value].eql?(key) then
+    reciprocal_hits[key] = value
+  end
+end
+
+reciprocal_report = File.new("files/reciprocal_best_hits.txt", "w")
+reciprocal_report.write("A total number of #{reciprocal_hits.length} potential orthologs have been identified:\n\n")
+reciprocal_hits.each { |arab, spombe|
+  reciprocal_report.write("\t#{arab} <==> #{spombe}\n")
+}
+reciprocal_report.close
+
+
+#Source: https://www.asciiart.eu/computers/computers
+puts ''
+puts ''
+puts "Analysis finished succesfully!"
+puts "A total number of #{reciprocal_hits.length} potential orthologs have been identified."
 puts ""
 puts ""
-puts "Saving results into files/blast_results.txt"
+puts "Saving results into files/reciprocal_best_hits.txt"
 sleep 1
 #Source: https://www.asciiart.eu/computers/computers
 puts ''
@@ -220,21 +225,4 @@ puts '  _|__|/ \|_|_.............*.............._|________|_'
 puts ' / ********** \                          / ********** \ '
 puts '/  ************\                        /  ************\ '
 puts '------------------                      -----------------'
-puts
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-
-    Terms
-    Privacy
-    Security
-    Status
-    Docs
-    Contact GitHub
-    Pricing
-    API
-    Training
-    Blog
-    About
-
-assignments_answers/main.rb at main · AlbertoGonzalezDelgado/assignments_answers
+puts ""
