@@ -43,8 +43,8 @@ spombe_db_path =  ARGV[1]
 #system("makeblastdb -in files/TAIR10_cds_20101214_updated.fa -dbtype 'prot' -out databases/TAIR 2> /dev/null")
 #system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
 
-arabidopsis_factory = Bio::Blast.local('blastp', arabidopsis_db_path, "-F ‘m S’ -s T -e 1e-4")
-spombe_factory = Bio::Blast.local('blastp', spombe_db_path, "-F ‘m S’ -s T -e 1e-4")
+arabidopsis_factory = Bio::Blast.local('blastp', arabidopsis_db_path, "-F ‘m S’ -s T")
+spombe_factory = Bio::Blast.local('blastp', spombe_db_path, "-F ‘m S’ -s T")
 
 # Read the Arabidopsis and S. pombe sequences from fasta files
 arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
@@ -53,9 +53,11 @@ spombe_fasta = Bio::FlatFile.auto(ARGV[3])
 # Create a hash to store the reciprocal best hits
 reciprocal_best_hits = {}
 
-## Create a file to save the results of Arabidopsis BLAST on S. pombe genome.
 
-first_blast = File.new("files/first_blast.txt", "w")
+### ------------------ FIRST BLAST ------------------- ###
+# Create a file to save the results of Arabidopsis BLAST on S. pombe genome.
+first_blast = File.new("files/first_blast_unfiltered.txt", "w")
+first_blast.write("query\ttarget\te-value\tidentity\toverlap\tquery_length\tbit-score\tquery_seq\ttarget_seq\n")
 
 # Iterate over the Arabidopsis sequences 
 arabidopsis_fasta.each_entry do |arabidopsis_seq|
@@ -67,20 +69,19 @@ arabidopsis_fasta.each_entry do |arabidopsis_seq|
 
   unless arabidopsis_results.hits.empty?
     
-    if arabidopsis_results.hits.first.identity >= 50
-      # Print hits
-      hit = arabidopsis_results.hits.first
-      puts
-      puts "#{arabidopsis_seq.entry_id} <==> #{hit.definition.split("|")[0]}"
-      puts
-      puts "Identity: #{hit.identity}\t e-value: #{hit.evalue}"
-      puts
-      puts hit.hsps[0].qseq
-      puts hit.hsps[0].hseq
-    
-      # Save hits in file
-      first_blast.write("#{arabidopsis_seq.entry_id}\t#{hit.definition.split("|")[0]}\t#{hit.evalue}\t#{hit.identity}\n")
-    end
+    # Print hits
+    hit = arabidopsis_results.hits.first
+    puts
+    puts "#{arabidopsis_seq.entry_id} <==> #{hit.definition.split("|")[0]}"
+    puts
+    puts "Identity: #{hit.identity}\t e-value: #{hit.evalue}\t overlap: #{hit.identity}"
+    puts
+    puts hit.query_seq
+    puts hit.target_seq
+    puts
+  
+    # Save hits in file
+    first_blast.write("#{arabidopsis_seq.entry_id}\t#{hit.definition.split("|")[0]}\t#{hit.evalue}\t#{hit.identity}\t#{hit.overlap}\t#{hit.query_len}\t#{hit.bit_score}\t#{hit.query_seq}\t#{hit.target_seq}\n")
   end
 end
 
@@ -89,9 +90,50 @@ first_blast.close()
 ## We can now read the results of the first Blast
 first_hits = Hash.new
 
-File.readlines("files/first_blast.txt", chomp:true).each{ |hit|
-  first_hits[hit.split("\t")[0]] = hit.split("\t")[1]
+File.readlines("files/first_blast_unfiltered.txt", chomp:true).each{ |hit|
+  unless hit =~ /query/ # Skip header
+    first_hits[hit.split("\t")[0]] = hit.split("\t")[1]
+  end
 }
+
+
+### ----------------- SECOND BLAST ------------------ ###
+
+# Create a file to save the resutls of the reciprocal blast.
+second_blast = File.new("files/second_blast_unfiltered.txt", "w")
+second_blast.write("query\ttarget\te-value\tidentity\toverlap\tquery_length\tbit-score\tquery_seq\ttarget_seq\n")
+
+# We will only blast S. pombe sequences that are hits of the first blast
+spombe_fasta.each_entry do |fasta|  
+  if first_hits.values.include?(fasta.entry_id)
+    
+    #puts fasta.entry_id
+
+    spombe_results = arabidopsis_factory.query(fasta)
+
+    # Get the best hit from the BLAST results
+    unless spombe_results.hits.empty?
+              
+      # Print hits
+      hit = spombe_results.hits.first
+      puts
+      puts "#{fasta.entry_id} <==> #{hit.definition.split("|")[0]}"
+      puts
+      puts "Identity: #{hit.identity}\t e-value: #{hit.evalue}\t overlap: #{hit.identity}"
+      puts
+      puts hit.query_seq
+      puts hit.target_seq
+      puts
+      puts
+    
+      # Save hits in file
+      second_blast.write("#{fasta.entry_id}\t#{hit.definition.split("|")[0]}\t#{hit.evalue}\t#{hit.identity}\t#{hit.overlap}\t#{hit.query_len}\t#{hit.bit_score}\t#{hit.query_seq}\t#{hit.target_seq}\n")
+    end
+  end
+end
+
+second_blast.close()
+
 
 '''
 # BLAST the S. pombe sequence of the best hit against the Arabidopsis database
@@ -130,5 +172,4 @@ puts '  _|__|/ \|_|_.............*.............._|________|_'
 puts ' / ********** \                          / ********** \ '
 puts '/  ************\                        /  ************\ '
 puts '------------------                      -----------------'
-
-
+puts

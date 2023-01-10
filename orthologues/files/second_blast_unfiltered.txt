@@ -1,0 +1,1 @@
+query	target	e-value	identity	overlap	query_length	bit-score	query_seq	target_seq
