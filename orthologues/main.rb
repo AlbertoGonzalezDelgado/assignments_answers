@@ -100,8 +100,7 @@ File.readlines("files/first_blast_unfiltered.txt", chomp:true).each{ |hit|
     target = hit.split("\t")[1].strip
     evalue = hit.split("\t")[2].strip.to_f
     perc_identity = 100 * (hit.split("\t")[3].strip.to_f) / (hit.split("\t")[7].length) # Identity / query sequence length
-    puts perc_identity
-    puts    
+  
     if evalue <= 1e-10 && perc_identity >= 50                             # e-value < 1e-5 and identity > 50%
       first_hits[query] = target
     end
@@ -167,7 +166,6 @@ File.readlines("files/second_blast_unfiltered.txt", chomp:true).each{ |hit|
 
     if evalue <= 1e-10 && perc_identity >= 50                             # # e-value < 1e-5 and identity > 50%
       second_hits[query] = target
-      #puts query, target, evalue, perc_identity
     end
   end
 }
@@ -179,6 +177,7 @@ sleep 2
 puts "Finding reciprocal best hits in Arabidopsis proteome..."
 puts
 sleep 1
+
 
 ### ----------------- RECIPROCAL BEST HITS ------------------ ###
 
