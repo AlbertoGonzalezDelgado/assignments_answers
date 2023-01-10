@@ -27,7 +27,7 @@ gem install bio-gem
 ```
 * [Fasta files](https://drive.google.com/drive/folders/0B7FLMiAz5IXPTWJDSkk1MTFPMjg?resourcekey=0-yhXCH6PxXIvg9xwMSolpMw)
 
-* Create the BLAST-formatted databases for BLAST analysis. We need to create a database for each reference genome/proteome using the following commands:
+* BLAST-formatted databases for the analysis. We need to create a database for each reference genome/proteome using the following commands:
 
 For Arabidopsis genome
 ```
@@ -46,7 +46,7 @@ To run the program, execute the following command (inside orthologues/ folder), 
 cd assignments_answers/orthologues/
 ```
 ```
-ruby main.rb <Arabidopsis_db> <S_pombe_Database> <Arabidopsis.fa>  <S_pombe.fa> <output_file>
+ruby main.rb <Arabidopsis_Database> <S_pombe_Database> <Arabidopsis.fa>  <S_pombe.fa> <output_file>
 ```
 **Arguments:**
 1. **Arabidopsis_Database**
