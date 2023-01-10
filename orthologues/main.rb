@@ -1,3 +1,37 @@
+
+Skip to content
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+@abarrenos
+AlbertoGonzalezDelgado /
+assignments_answers
+Public
+
+Fork your own copy of AlbertoGonzalezDelgado/assignments_answers
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+
+    Insights
+
+assignments_answers/orthologues/main.rb /
+@Shettland
+Shettland final changes
+Latest commit cca6fd3 Jan 10, 2023
+History
+3 contributors
+@abarrenos
+@Shettland
+@AlbertoGonzalezDelgado
+189 lines (153 sloc) 6.93 KB
 require 'bio'
 
 #Checking the number of inputs
@@ -187,3 +221,20 @@ puts ' / ********** \                          / ********** \ '
 puts '/  ************\                        /  ************\ '
 puts '------------------                      -----------------'
 puts
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+
+    Terms
+    Privacy
+    Security
+    Status
+    Docs
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
+assignments_answers/main.rb at main · AlbertoGonzalezDelgado/assignments_answers
