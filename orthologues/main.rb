@@ -1,5 +1,5 @@
 require 'bio'
-'''
+
 #Checking the number of inputs
 unless ARGV.length == 4
     abort("FATAL ERROR: BLAST databases and FASTA files paths are required.
@@ -20,10 +20,10 @@ end
 
 #Checking if the files specified have fasta format
 #Source: https://es.wikipedia.org/wiki/Formato_FASTA
-'''
-#ARGV[2..3].each do |arg|
- # if arg.split('.')[-1]!="fasta" && arg.split('.')[-1]!="fa"  && arg.split('.')[-1]!="ffn" && arg.split('.')[-1]!="fna" && arg.split('.')[-1]!="faa" && arg.split('.')[-1]!="frn"    
-  '''   abort("FATAL ERROR: File #{arg} is not Fasta format")
+
+ARGV[2..3].each do |arg|
+  if arg.split('.')[-1]!="fasta" && arg.split('.')[-1]!="fa"  && arg.split('.')[-1]!="ffn" && arg.split('.')[-1]!="fna" && arg.split('.')[-1]!="faa" && arg.split('.')[-1]!="frn"    
+     abort("FATAL ERROR: File #{arg} is not Fasta format")
   end
 end
 
@@ -40,13 +40,15 @@ puts ''
 # Set the database paths for Arabidopsis and S. pombe
 arabidopsis_db_path =  ARGV[0]
 spombe_db_path =  ARGV[1]
-'''
+
+# Executing command from shell to create a blast database for each file
+system("makeblastdb -in files/TAIR10_cds_20101214_updated.fa -dbtype 'nucl' -out #{arabidopsis_db_path} 2> /dev/null")
+system("makeblastdb -in files/pep.fa -dbtype 'prot' -out #{spombe_db_path} 2> /dev/null")
+
 # Create a BLAST factory for each species
-#system("makeblastdb -in files/TAIR10_cds_20101214_updated.fa -dbtype 'nucl' -out databases/TAIR 2> /dev/null")
-#system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
-#arabidopsis_factory = Bio::Blast.local('tblastn', arabidopsis_db_path, "-F T")  # protein query nucleic database
-#spombe_factory = Bio::Blast.local('blastx', spombe_db_path, "-F T")             # nucleic query protein database
-'''
+arabidopsis_factory = Bio::Blast.local('tblastn', arabidopsis_db_path, "-F T")  # protein query nucleic database
+spombe_factory = Bio::Blast.local('blastx', spombe_db_path, "-F T")             # nucleic query protein database
+
 # Read the Arabidopsis and S. pombe sequences from fasta files
 arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
 spombe_fasta = Bio::FlatFile.auto(ARGV[3])
@@ -140,7 +142,7 @@ spombe_fasta.each_entry do |spombe_seq|
 end
 
 second_blast.close()
-'''
+
 # We now retrieve the results of the second Blast into a list
 hits_lines = File.readlines("files/second_blast_unfiltered.txt", chomp:true)
 
