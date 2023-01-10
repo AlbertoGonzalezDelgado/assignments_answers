@@ -115,6 +115,8 @@ spombe_fasta.each_entry do |spombe_seq|
     
     spombe_results = arabidopsis_factory.query(spombe_seq)
 
+    puts spombe_results.filtering
+
     # Get the best hit from the BLAST results
     unless spombe_results.hits.empty?
               
