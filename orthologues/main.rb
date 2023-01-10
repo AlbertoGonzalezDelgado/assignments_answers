@@ -1,5 +1,5 @@
 require 'bio'
-
+'''
 #Checking the number of inputs
 unless ARGV.length == 4
     abort("FATAL ERROR: BLAST databases and FASTA files paths are required.
@@ -20,14 +20,15 @@ end
 
 #Checking if the files specified have fasta format
 #Source: https://es.wikipedia.org/wiki/Formato_FASTA
-ARGV[2..3].each do |arg|
-  if arg.split('.')[-1]!='fasta' && arg.split('.')[-1]!='fa'  && arg.split('.')[-1]!='ffn' && arg.split('.')[-1]!='fna' && arg.split('.')[-1]!='faa' && arg.split('.')[-1]!='frn'    
-     abort("FATAL ERROR: File #{arg} is not Fasta format")
-  end
-end
-
+'''
+#ARGV[2..3].each do |arg|
+  #if arg.split('.')[-1]!="fasta" && arg.split('.')[-1]!="fa"  && arg.split('.')[-1]!="ffn" && arg.split('.')[-1]!="fna" && arg.split('.')[-1]!="faa" && arg.split('.')[-1]!="frn"    
+    # abort("FATAL ERROR: File #{arg} is not Fasta format")
+  #end
+#end
+'''
 puts ''
-puts 'The files are being imported sucesfully'
+puts "The files are being imported sucesfully"
 puts ''
 sleep 0.5
 puts "BLASTing Arabidopsis sequences on S. pombe proteome..."
@@ -39,16 +40,16 @@ puts ''
 # Set the database paths for Arabidopsis and S. pombe
 arabidopsis_db_path =  ARGV[0]
 spombe_db_path =  ARGV[1]
-
+'''
 # Create a BLAST factory for each species
 #system("makeblastdb -in files/TAIR10_cds_20101214_updated.fa -dbtype 'prot' -out databases/TAIR 2> /dev/null")
 #system("makeblastdb -in files/pep.fa -dbtype 'prot' -out databases/spombe 2> /dev/null")
-arabidopsis_factory = Bio::Blast.local('tblastn', arabidopsis_db_path, "-F T")  # protein query nucleic database
-spombe_factory = Bio::Blast.local('blastx', spombe_db_path, "-F T")             # nucleic query protein database
+#arabidopsis_factory = Bio::Blast.local('tblastn', arabidopsis_db_path, "-F T")  # protein query nucleic database
+#spombe_factory = Bio::Blast.local('blastx', spombe_db_path, "-F T")             # nucleic query protein database
 
 # Read the Arabidopsis and S. pombe sequences from fasta files
-arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
-spombe_fasta = Bio::FlatFile.auto(ARGV[3])
+#arabidopsis_fasta = Bio::FlatFile.auto(ARGV[2])
+#spombe_fasta = Bio::FlatFile.auto(ARGV[3])
 
 '''
 ### ------------------ FIRST BLAST ------------------- ###
@@ -85,7 +86,7 @@ arabidopsis_fasta.each_entry do |arabidopsis_seq|
 end
 
 first_blast.close()
-'''
+
 # We now retrieve the results of the first Blast into a new Hash
 first_hits = Hash.new
 
@@ -140,17 +141,28 @@ end
 
 second_blast.close()
 
+'''
 # We now retrieve the results of the second Blast into a new Hash
 second_hits = Hash.new
+filtered_blast = File.new("files/blast_results.txt", "w")
+hits_lines = File.readlines("files/second_blast_unfiltered.txt", chomp:true)
 
-File.readlines("files/second_blast_unfiltered.txt", chomp:true).each{ |hit|
-  unless hit =~ /query/ # Skip header
-    second_hits[hit.split("\t")[0]] = hit.split("\t")[1]
+
+hits_lines.each{ |hitt|
+  unless hitt =~ /query/ # Skip header
+    if hitt.split("\t")[2].to_f < 1e-5 && hitt.split("\t")[3].to_f > 30
+      puts hitt.split("\t")[0], hitt.split("\t")[1]
+      puts hitt.split("\t")[2].to_f 
+      puts hitt.split("\t")[3].to_f
+      second_hits[hitt.split("\t")[0]] = hitt.split("\t")[1]
+      filtered_blast.write("#{hitt.split("\t")[0]}\t#{hitt.split("\t")[1]}\t
+      #{hitt.split("\t")[2]}\t#{hitt.split("\t")[3]}\t#{hitt.split("\t")[4]}\t
+      #{hitt.split("\t")[5]}\t#{hitt.split("\t")[6]}\t#{hitt.split("\t")[7]}\t#{hitt.split("\t")[8]}\n")
+    end
   end
 }
 
-puts second_hits
-
+filtered_blast.close()
 '''
 # BLAST the S. pombe sequence of the best hit against the Arabidopsis database
 spombe_seq = Bio::FastaFormat.new(best_hit.accession)
@@ -162,8 +174,8 @@ reciprocal_best_hit = spombe_results.hits.first.accession == arabidopsis_seq.acc
 # If the best hit is reciprocal, store the pair in the hash
 if reciprocal_best_hit
   reciprocal_best_hits[arabidopsis_seq.accession] = best_hit.accession
-end'''
-'''
+end
+
 # Print the orthologue pairs
 reciprocal_best_hits.each do |arabidopsis, spombe|
   puts "#{arabidopsis} => #{spombe}"
