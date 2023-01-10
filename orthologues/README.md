@@ -27,16 +27,7 @@ gem install bio-gem
 ```
 * [Fasta files](https://drive.google.com/drive/folders/0B7FLMiAz5IXPTWJDSkk1MTFPMjg?resourcekey=0-yhXCH6PxXIvg9xwMSolpMw)
 
-* BLAST-formatted databases for the analysis. We need to create a database for each reference genome/proteome using the following commands:
-
-For Arabidopsis genome
-```
-makeblastdb -in ./files/{Fasta File} -dbtype 'nucl' -out ./databases/{BLAST Database}
-```
-And for S. pombe proteome
-```
-makeblastdb -in ./files/{Fasta File} -dbtype 'prot' -out ./databases/{BLAST Database}
-```
+* BLAST-formatted databases are created within the script
 
 ## Usage:
 
